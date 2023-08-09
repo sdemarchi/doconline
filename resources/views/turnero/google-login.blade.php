@@ -1,0 +1,1 @@
+<livewire:turnero.google-login :user = "$user" />
