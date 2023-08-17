@@ -104,6 +104,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/pacientes/{id}/edit',function($id){
         return view('backend.pacientes.form-paciente-edit', compact('id'));
     })->name('pacientes.edit');
+    Route::get('/pacientes/{id}/editFirma',function($id){
+        return view('backend.pacientes.form-firmas-edit', compact('id'));
+    })->name('pacientes.editFirma');
     
     Route::view('/grows', 'backend.grows.grows')->name('grows');
     Route::view('/grows/create', 'backend.grows.form-grow')->name('grows.create');
