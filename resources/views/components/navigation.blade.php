@@ -13,6 +13,7 @@
                 </span>
               </a>
             </li>
+            @if(Auth::user()->esAdmin() || Auth::user()->esEditor())
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
                 <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
@@ -117,6 +118,7 @@
                 </a>
               </div>
             </li>
+            @endif
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
                 <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
@@ -126,9 +128,11 @@
                 </span>
               </a>
               <div class="dropdown-menu">
+                @if(Auth::user()->esAdmin() || Auth::user()->esEditor())
                 <a class="dropdown-item" href="{{ route('configuracion') }}" >
                   Configuración
                 </a>
+                @endif
                 @if(Auth::user()->esAdmin())
                 <a class="dropdown-item" href="{{ route('usuarios') }}" >
                   Usuarios

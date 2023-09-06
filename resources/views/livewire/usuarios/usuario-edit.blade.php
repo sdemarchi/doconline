@@ -40,7 +40,16 @@
                 <input type="text" class="form-control" wire:model.defer="email">
                 @error('email')<div class="text-danger">{{ $message }}</div>@enderror
             </div>
-            
+            <div class="col-md-6 mt-4">
+                <div class="col-lg-6">
+                    <label class="form-label">Rol del Usuario</label>
+                    <select class="form-select" wire:model.defer="role_id">
+                        <@foreach ($roles as $role)
+                            <option value="{{ $role->id }}">{{ $role->name }}</option>
+                        @endforeach
+                      </select>
+                </div>
+            </div>
         </div>
         <div class="row">
             <div class="col-md-6 mt-4">

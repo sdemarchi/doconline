@@ -18,6 +18,7 @@
                 <th>Nombre</th>
                 <th>Login</th>
                 <th>E-Mail</th>
+                <th>Rol</th>
                 <th></th>
               </tr>
             </thead>
@@ -30,6 +31,7 @@
                 <td>{{ $usuario->name }}</td>
                 <td>{{ $usuario->username }}</td>
                 <td>{{ $usuario->email }}</td>
+                <td>{{ $usuario->role->name }}</td>
                 <td>
                   <div class="dropdown">
                     <button class="btn btn-sm btn-dark dropdown-toggle align-text-top" data-bs-boundary="viewport"

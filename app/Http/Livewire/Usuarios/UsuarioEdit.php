@@ -8,17 +8,19 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 
 use App\Models\User;
+use App\Models\Role;
 
 class UsuarioEdit extends Component
 {
-    public $usuario, $usuarioId, $name, $username, $email, $password, $repassword;
+    public $usuario, $usuarioId, $name, $username, $email, $role_id, $password, $repassword;
 
     protected $rules = [
         'name' => 'required|max:255',
         'username' => 'required|max:255',
         'email' => 'required|email|max:255',
         'password' => '',
-        'repassword' => ''
+        'repassword' => '',
+        'role_id' => 'required',
     ];
     
     public function mount(){
@@ -27,12 +29,16 @@ class UsuarioEdit extends Component
             $this->name = $this->usuario->name;
             $this->username = $this->usuario->username; 
             $this->email = $this->usuario->email;
+            $this->role_id = $this->usuario->role_id;
+        } else {
+            $this->role_id = 1;
         }
     }
     
     public function render()
     {
-        return view('livewire.usuarios.usuario-edit');
+        $roles = Role::get();
+        return view('livewire.usuarios.usuario-edit', compact('roles'));
     }
 
     public function update(){
@@ -61,6 +67,7 @@ class UsuarioEdit extends Component
             $this->usuario->name = $this->name; 
             $this->usuario->username = $this->username;
             $this->usuario->email = $this->email;
+            $this->usuario->role_id = $this->role_id;
             if($this->password){
                 $this->usuario->password = Hash::make($this->password);
             }
@@ -83,6 +90,7 @@ class UsuarioEdit extends Component
                 'username' => $this->username,
                 'email' => $this->email,
                 'password' => Hash::make($this->password),
+                'role_id' => $this->role_id,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 

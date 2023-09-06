@@ -121,7 +121,7 @@ class formController extends Controller
             
             'patologia' => $part3b['patologia'],
             'idcontacto' => $part3b['idcontacto'],
-            'contacto_otro' => $part3b['contacto_otro'],
+            'contacto_otro' => array_key_exists('contacto_otro',$part3b) ? $part3b['contacto_otro'] : '',
             'es_menor' => $esMenor,
             'version' => 2, //Versión 2 es el formulario generado desde la app React
             

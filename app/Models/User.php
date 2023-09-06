@@ -22,6 +22,7 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
+        'role_id'
     ];
 
     /**
@@ -44,12 +45,24 @@ class User extends Authenticatable
     ];
 
     public function esAdmin(){
-        if($this->username == 'sdemarchi' || $this->username == 'jjozami'){
+        if($this->role_id == 2){
             return true;
         } else {
             return false;
         }
-    }   
+    } 
+    
+    public function esEditor(){
+        if($this->role_id == 1){
+            return true;
+        } else {
+            return false;
+        }
+    } 
+    
+    public function role(){
+        return $this->belongsTo(Role::class, 'role_id');
+    }
 
     public function ingresoActivo(){
         $ingreso = ControlHorario::where('user_id',$this->id)
