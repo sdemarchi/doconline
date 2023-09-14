@@ -36,7 +36,7 @@
           border-color: #2f405d;
           color: #fff;
       }
-      .select2-results { 
+      .select2-results {
           background-color: #1b2434;
           border-color: #2f405d;
       }
@@ -70,7 +70,7 @@
             <x-footer />
         </div>
     </div>
-    
+
     <!-- Template Core -->
     <!--     <script src="{{ URL::asset('/libs/jquery/jquery.min.js')}}"></script>-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -80,13 +80,13 @@
     <script src="{{ URL::asset('/js/flashcanvas.js') }}"></script>
     <script src="{{ URL::asset('/js/jSignature.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-            
+
     @livewireScripts
 
     <script type="text/javascript">
-        
-      window.addEventListener('alert', event => { 
-          toastr[event.detail.type](event.detail.message, 
+
+      window.addEventListener('alert', event => {
+          toastr[event.detail.type](event.detail.message,
           event.detail.title ?? ''), toastr.options = {
                   "closeButton": true,
                   "positionClass": "toast-bottom-right",
@@ -94,7 +94,7 @@
               }
           });
     </script>
-    
+
     @stack('scripts')
 
   </body>

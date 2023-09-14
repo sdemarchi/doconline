@@ -42,7 +42,7 @@ class Pacientes extends Component
 
     private function _query(){
         session(['pacienteSearchString' => $this->searchString]);
-            
+
         $pacientes = Paciente::where('idpaciente','>',0);
         if($this->searchString != ''){
             if(is_numeric($this->searchString)){
@@ -56,9 +56,10 @@ class Pacientes extends Component
                     ->orWhere('celular','like', '%' . $this->searchString . '%')
                     ->orWhere('dni',$this->searchString);
             }
-            
+
         }
         $this->_setSortClasses();
+        $this->emit('searchCompleted');
         return $pacientes->orderBy($this->sortField,$this->sortDir)->paginate(10);
     }
 
@@ -124,7 +125,7 @@ class Pacientes extends Component
         $this->tut_apeynomSort = '';
         $this->tut_tipo_nro_docSort = '';
         $this->tut_vinculoSort = '';
-              
+
         switch($this->sortField){
             case 'idpaciente':
                 $this->idpacienteSort = $this->sortDir;
@@ -238,14 +239,15 @@ class Pacientes extends Component
                 $this->tut_vinculoSort = $this->sortDir;
                 break;
         }
-    }            
+    }
 
     public function eliminar($idPaciente){
         Paciente::find($idPaciente)->delete();
         $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Se eliminó el registro del Paciente"]);
     }
 
-    public function resetPagination(){ 
+    public function resetPagination(){
+        $this->emit('inSearch');
         $this->resetPage();
     }
 

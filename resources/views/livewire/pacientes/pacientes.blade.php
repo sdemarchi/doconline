@@ -1,20 +1,28 @@
 <div class="row row-cards">
     <div class="col-12">
-        <div class="card">
-            <div class="card-body border-bottom py-3">
+        <div class="card" style="min-width: 96vw;min-height:500px">
+            <div class="card-body border-bottom py-3" style="max-height:60px">
                 <div class="d-flex">
-                    <div class="me-auto text-muted">
-                        <div class="ms-2 d-inline-block mx-auto">
-                            <input type="text" class="form-control form-control-sm" placeholder="Buscar Paciente"
+
+                    <div style="display:flex;align-items:center;" class="me-auto text-muted">
+                        <div>
+                            <input id="search-input" style="height:30px;font-size:15px;" type="text" class="form-control form-control-sm" placeholder="Buscar Paciente"
                                 wire:model.defer="searchString" wire:keydown.enter="resetPagination">
                         </div>
-                        <div class="ms-2 d-inline-block mx-auto">
-                            <button class="btn btn-success float-sm-end" wire:click="generarCsv">Generar CSV</button>
+                        <div>
+                            <button class="btn btn-success" style="height:30px !important;margin-left:15px;" wire:click="generarCsv">Generar CSV</button>
                         </div>
                     </div>
+
                 </div>
             </div>
-            <div class="table-responsive">
+
+            <div id="loader">
+                @include('components.loader')
+            </div>
+
+
+            <div id="pacientes-table" class="table-responsive">
                <table class="table table-vcenter card-table">
                     <thead>
                         <tr>
@@ -264,6 +272,15 @@
                     </tbody>
                 </table>
                 {{ $pacientes->links() }}
+
+
+                @if(count($pacientes)== 0)
+                <div style="width:100vw;display:flex;align-items:center;justify-content:center;height:200px;">
+                    <div>No hay coincidencias para la busqueda</div>
+                </div>
+                @endif
+
+
             </div>
         </div>
     </div>
@@ -271,7 +288,28 @@
 
 @push('scripts')
 <script type="text/javascript">
+    let loader;
+    let table;
+    let searchInput;
+
     document.addEventListener('DOMContentLoaded', function () {
+        loader = document.querySelector("#loader");
+        table = document.querySelector("#pacientes-table");
+        searchInput = document.querySelector("#search-input");
+
+        Livewire.on('searchCompleted', () => {
+          loader.style.zIndex = "-1";
+        });
+
+        searchInput.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            table.style.opacity = "0";
+            loader.style.zIndex = "8000";
+        }});
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+
           @this.on('triggerDelete', itemId => {
               Swal.fire({
                   title: 'Está Seguro?',
@@ -284,14 +322,15 @@
                   confirmButtonText: 'Eliminar!'
               }).then((result) => {
                   if (result.value) {
-              
+
                       @this.call('eliminar',itemId)
-              
+
                   }
               });
           });
       })
-      
+
+
 </script>
 
 @endpush

@@ -32,7 +32,7 @@
       .select2-search__field{
           background-color: #000;
       }
-            .select2-results { 
+            .select2-results {
           background-color: #000;
       }
     </style>
@@ -40,25 +40,33 @@
   </head>
   <body class="antialiased theme-dark">
     <div class="wrapper">
-      <x-header />
-      <x-navigation />
+
+        <div style="margin-bottom:20px;">
+            <x-header />
+            <x-navigation />
+        </div>
+
       <div class="page-wrapper">
+
         <div class="container-fluid">
           <div class="page-header d-print-none">
             {{ $header }}
           </div>
         </div>
+
         <div class="page-body">
-          <div class="container-fluid">
-            <div class="row row-deck row-cards">
-							{{ $slot }}
+            <div class="container-fluid" style="padding-right:0 !important; padding-left:0; overflow-x:hidden;">
+              <div class="row row-deck row-cards" style="max-width:100vw;overflow-x:scroll; padding-left:20px; padding-right:20px; padding-bottom:15px !important;">
+                  {{ $slot }}
+              </div>
             </div>
           </div>
-        </div>
+
         <x-footer />
+
       </div>
     </div>
-    
+
     <!-- Template Core -->
     <script src="{{ URL::asset('/js/tabler.min.js') }}"></script>
     <!--     <script src="{{ URL::asset('/libs/jquery/jquery.min.js')}}"></script>-->
@@ -66,14 +74,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-                    
-    
+
+
 		@livewireScripts
 
     <script type="text/javascript">
-        
-      window.addEventListener('alert', event => { 
-          toastr[event.detail.type](event.detail.message, 
+
+      window.addEventListener('alert', event => {
+          toastr[event.detail.type](event.detail.message,
           event.detail.title ?? ''), toastr.options = {
                   "closeButton": true,
                   "positionClass": "toast-bottom-right",
