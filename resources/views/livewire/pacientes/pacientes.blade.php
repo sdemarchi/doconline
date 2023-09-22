@@ -6,11 +6,32 @@
 
                     <div style="display:flex;align-items:center;" class="me-auto text-muted">
                         <div>
-                            <input id="search-input" style="height:30px;font-size:15px;" type="text" class="form-control form-control-sm" placeholder="Buscar Paciente"
-                                wire:model.defer="searchString" wire:keydown.enter="resetPagination">
+                            <button class="btn btn-danger btn-icon" style="height:30px !important;margin-right:5px;" wire:click="limpiarBusqueda">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash"
+                                    width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                                    stroke="currentColor" fill="none" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <line x1="4" y1="7" x2="20" y2="7"></line>
+                                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
+                                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
+                                </svg>
+                            </button>
                         </div>
                         <div>
-                            <button class="btn btn-success" style="height:30px !important;margin-left:15px;" wire:click="generarCsv">Generar CSV</button>
+                            <input id="search-input" style="height:30px;font-size:15px;" type="text" class="form-control form-control-sm" placeholder="búsqueda"
+                                wire:model.defer="searchString" wire:keydown.enter="buscarPorDatos">
+                        </div>
+                        <div>
+                            <button class="btn btn-primary" style="height:30px !important;margin-left:5px;" wire:click="buscarPorDatos">Buscar</button>
+                        </div>
+                        <div>
+                            <button class="btn btn-primary" style="height:30px !important;margin-left:5px;" wire:click="buscarPorDNI">Buscar por DNI</button>
+                        </div>
+                        <div>
+                            <button class="btn btn-success" style="height:30px !important;margin-left:25px;" wire:click="generarCsv">Generar CSV</button>
                         </div>
                     </div>
 

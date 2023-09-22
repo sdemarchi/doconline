@@ -26,10 +26,11 @@ class Pacientes extends Component
             $doloresSort, $conc_thcSort, $conc_cbdSort, $cant_plantasSort, $dosisSort, $frecuenciaSort, $domicilioSort,
             $localidadSort, $idprovinciaSort, $cpSort, $fe_nacimSort, $osocialSort, $emailSort, $celularSort, $es_menorSort,
             $tut_apeynomSort, $tut_tipo_nro_docSort, $tut_vinculoSort;
-    public $searchString;
+    public $searchMode, $searchString;
 
     public function mount(){
         $this->searchString = session('pacienteSearchString');
+        $this->searchMode = session('pacienteSearchMode');
         $this->sortField = 'idpaciente';
         $this->sortDir = 'DESC';
     }
@@ -42,25 +43,49 @@ class Pacientes extends Component
 
     private function _query(){
         session(['pacienteSearchString' => $this->searchString]);
+        session(['pacienteSearchMode' => $this->searchMode]);
 
         $pacientes = Paciente::where('idpaciente','>',0);
-        if($this->searchString != ''){
-            if(is_numeric($this->searchString)){
-                $pacientes->where('idpaciente', $this->searchString)
-                    ->orWhere('email','like', '%' . $this->searchString . '%')
-                    ->orWhere('celular','like', '%' . $this->searchString . '%')
-                    ->orWhere('dni',$this->searchString);
-            } else {
-                $pacientes->where('nom_ape','like', '%' . $this->searchString . '%')
-                    ->orWhere('email','like', '%' . $this->searchString . '%')
-                    ->orWhere('celular','like', '%' . $this->searchString . '%')
-                    ->orWhere('dni',$this->searchString);
-            }
 
+        if($this->searchMode == 'datos'){
+            if($this->searchString != ''){
+                if(is_numeric($this->searchString)){
+                    $pacientes->where('idpaciente', $this->searchString)
+                        ->orWhere('email','like', '%' . $this->searchString . '%')
+                        ->orWhere('celular','like', '%' . $this->searchString . '%');
+                } else {
+                    $pacientes->where('nom_ape','like', '%' . $this->searchString . '%')
+                        ->orWhere('email','like', '%' . $this->searchString . '%')
+                        ->orWhere('celular','like', '%' . $this->searchString . '%');
+                }
+            }
         }
+
+        if($this->searchMode == 'dni'){
+            if($this->searchString != ''){
+                $pacientes->where('dni', $this->searchString);
+            }
+        }
+        
         $this->_setSortClasses();
         $this->emit('searchCompleted');
         return $pacientes->orderBy($this->sortField,$this->sortDir)->paginate(10);
+    }
+
+    public function limpiarBusqueda(){
+        $this->resetPagination();
+        $this->searchMode = '';
+        $this->searchString = '';
+    }
+        
+    public function buscarPorDatos(){
+        $this->resetPagination();
+        $this->searchMode = 'datos';
+    }
+
+    public function buscarPorDNI(){
+        $this->resetPagination();
+        $this->searchMode = 'dni';
     }
 
     public function convertirFirmaAclaracion($id){
