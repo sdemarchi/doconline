@@ -23,7 +23,7 @@ Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'i
 Route::get('/google-login', function () {
     return Socialite::driver('google')->redirect();
 })->name('google.login');
- 
+
 Route::get('/google-callback', function () {
     $user = Socialite::driver('google')->user();
     $email = $user->email;
@@ -31,11 +31,11 @@ Route::get('/google-callback', function () {
     if($paciente){
         $paciente->es_gmail = 1;
         $paciente->save();
-            
+
         session(['pacienteId' => $paciente->id]);
         session(['pacienteDni' => $paciente->dni]);
         session(['pacienteFechaNac' => $paciente->fecha_nac]);
-        
+
         if($paciente->nombre && $paciente->dni && $paciente->fecha_nac) { //Ya ingresó sus datos
             return redirect()->route('turnero.panel');
         } else {
@@ -51,7 +51,7 @@ Route::get('/google-callback', function () {
         session(['pacienteId' => $id]);
         session(['pacienteDni' => null]);
         session(['pacienteFechaNac' => null]);
-        
+
         return redirect()->route('turnero.datos');
     }
     // $user->token
@@ -76,13 +76,13 @@ Route::get('paciente/declaracion/{id}', [PrintController::class, 'declaracionPac
 Route::get('paciente/consentimiento/{id}', [PrintController::class, 'consentimientoPaciente'])->name('paciente.consentimiento');
 Route::get('paciente/pronto-despacho/{id}', [PrintController::class, 'prontoDespacho'])->name('paciente.pronto-despacho');
 Route::get('receta/impresion/{id}', [PrintController::class, 'receta'])->name('receta.impresion');
-    
+
 //Rutas con Auth
 Route::group(['middleware' => ['auth']], function () {
     Route::view('/dashboard', 'backend.dashboard')->name('dashboard');
     Route::view('/configuracion', 'backend.configuracion')->name('configuracion');
     Route::view('/cupones', 'backend.cupones.cupones')->name('cupones');
-    
+
     Route::view('/usuarios', 'backend.usuarios.usuarios')->name('usuarios');
     Route::view('/usuarios/create', 'backend.usuarios.usuario-create')->name('usuarios.create');
     Route::get('/usuarios/{id}/edit',function($id){
@@ -98,7 +98,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/usuarios/egreso/{id}/edit',function($id){
         return view('backend.usuarios.usuario-egreso-edit', compact('id'));
     })->name('usuarios.egreso.edit');
-    
+
     Route::view('/pacientes', 'backend.pacientes.pacientes')->name('pacientes');
     Route::view('/pacientes/create', 'backend.pacientes.form-paciente')->name('pacientes.create');
     Route::get('/pacientes/{id}/edit',function($id){
@@ -107,13 +107,13 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/pacientes/{id}/editFirma',function($id){
         return view('backend.pacientes.form-firmas-edit', compact('id'));
     })->name('pacientes.editFirma');
-    
+
     Route::view('/grows', 'backend.grows.grows')->name('grows');
     Route::view('/grows/create', 'backend.grows.form-grow')->name('grows.create');
     Route::get('/grows/{id}/edit',function($id){
         return view('backend.grows.form-grow-edit', compact('id'));
     })->name('grows.edit');
-    
+
 
     /*Route::get('/datos-medico/{id}/edit',function($id){
         return view('backend.datos-medico', compact('id'));
@@ -124,7 +124,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/recetas/{id}/edit',function($id){
         return view('backend.pacientes.receta-edit', compact('id'));
     })->name('recetas.edit');
-    
+
     Route::view('/beneficios', 'backend.beneficios')->name('beneficios');
     Route::view('/dolencias', 'backend.dolencias')->name('dolencias');
     Route::view('/datos-medico', 'backend.datos-medico')->name('datos-medico');
@@ -134,7 +134,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::view('/productos', 'backend.productos')->name('productos');
     Route::view('/tratamientos', 'backend.tratamientos')->name('tratamientos');
     Route::view('/ocupaciones', 'backend.ocupaciones')->name('ocupaciones');
-    
+
     Route::view('/turnos', 'backend.turnero.turnos')->name('turnos');
     Route::view('/turnos/configuracion', 'backend.turnero.turno-conf')->name('turnos.configuracion');
     Route::view('/calendario', 'backend.turnero.calendario')->name('calendario');
@@ -146,21 +146,21 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/turnos/{id}/edit',function($id){
         return view('backend.turnero.turno-edit', compact('id'));
     })->name('turnos.edit');
-    
+
 });
 
 //Rutas del turnero
 Route::view('/turnero', 'turnero.login')->name('turnero');
 Route::group(['middleware' => [TurneroLogin::class]], function () {
     Route::view('/turnero/mipanel', 'turnero.panel')->name('turnero.panel');
-    
+
     Route::view('/turnero/datos', 'turnero.datos')->name('turnero.datos');
     Route::view('/turnero/turnos', 'turnero.turnos')->name('turnero.turnos');
     Route::view('/turnero/misturnos', 'turnero.mis-turnos')->name('turnero.misturnos');
-    
+
     Route::view('/turnero/confirmar', 'turnero.confirmar')->name('turnero.confirmar');
     Route::view('/turnero/pagos', 'turnero.pagos')->name('turnero.pagos');
-    
+
     Route::get('/turnero/pagar/{medio}',function($medio){
         $result = 0;
         return view('turnero.pagar', compact('medio','result'));
@@ -180,10 +180,10 @@ Route::group(['middleware' => [TurneroLogin::class]], function () {
         $result = 3;
         return view('turnero.pagar', compact('medio','result'));
     })->name('turnero.mp-pending');
-    
+
 
     Route::view('/turnero/confirmado', 'turnero.confirmado')->name('turnero.confirmado');
-    
+
 });
 
 require __DIR__.'/auth.php';

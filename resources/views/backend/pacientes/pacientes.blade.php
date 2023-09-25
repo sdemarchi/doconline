@@ -10,8 +10,8 @@
                 <a href="{{ route('pacientes.create') }}" class="btn btn-primary float-sm-end">Nuevo Paciente</a>
             </div>
         </div>
-        
-        
+
+
     </x-slot>
 
     <div class="py-12" style="width:auto !important; max-width:none !important;">
@@ -25,6 +25,6 @@
     </div>
 
     <x-slot name="scripts">
-        
+
     </x-slot>
 </x-backend-fluid-layout>

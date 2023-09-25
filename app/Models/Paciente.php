@@ -14,7 +14,7 @@ class Paciente extends Model
 
     protected $fillable = ['cod_descto','email','nom_ape','dni','fe_nacim','edad','domicilio','localidad','idprovincia','cp','ocupacion',
                             'celular','osocial','patologia','dolores','cod_vincu','foto_firma','comentario','arritmia',
-                            'salud_mental','idcontacto','contacto_otro','salud_ment_esp','alergia','embarazada','maneja_maq', 
+                            'salud_mental','idcontacto','contacto_otro','salud_ment_esp','alergia','embarazada','maneja_maq',
                             'fe_carga','fe_aprobacion','es_menor','tut_apeynom','tut_tipo_nro_doc','tut_fe_nacim','tut_domicilio','tut_localidad',
                             'tut_idprovincia','tut_cp','tut_vinculo','tut_tel_part','tut_tel_cel','tut_mail','tut_osocial','tut_reg_fam',
                             'res_historia','cant_plantas','dosis','conc_thc','conc_cbd','frecuencia','beneficios','diagnostico',
@@ -27,8 +27,7 @@ class Paciente extends Model
         return date_format(date_create($this->fe_nacim),"d/m/Y");
     }*/
 
-    public function getOcupacionIdAttribute()
-    {
+    public function getOcupacionIdAttribute(){
         $ocup = Ocupacion::where('ocupacion',$this->ocupacion)->first();
         if($ocup){
             return $ocup->id;
@@ -48,7 +47,7 @@ class Paciente extends Model
     public function modo_contacto(){
         return $this->belongsTo(ModoContacto::class, 'idcontacto');
     }
-    
+
     public function getEstado(){
         switch($this->estado){
             case 'P':
@@ -56,10 +55,10 @@ class Paciente extends Model
                 break;
             case 'H':
                 return 'Hecho';
-                break; 
+                break;
             case '3':
                 return 'Hecho 2023';
-                break; 
+                break;
             case 'E':
                 return 'Espera';
             break;
@@ -92,5 +91,5 @@ class Paciente extends Model
         }
         return $str;
     }
-    
+
 }

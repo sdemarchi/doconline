@@ -10,7 +10,7 @@ use App\Models\TurnoPaciente;
 class Turno extends Model
 {
     public $timestamps = false;
-    
+
     protected $fillable = ['prestador_id','fecha','hora','fecha_emision','paciente_id','comprobante_pago',
                             'cupon','importe','descuento','atendido','comentarios'];
 

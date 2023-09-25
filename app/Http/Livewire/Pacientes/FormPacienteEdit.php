@@ -18,6 +18,7 @@ use App\Models\Diagnostico;
 use App\Models\Tratamiento;
 use App\Models\Producto;
 use App\Models\ModoContacto;
+use App\Models\Turno;
 
 
 class FormPacienteEdit extends Component
@@ -25,10 +26,11 @@ class FormPacienteEdit extends Component
     use WithFileUploads;
 
     public $pacienteId, $patologias, $patologiaAgregar;
+    public $turno;
     public $pagado, $estado, $fe_carga, $fe_aprobacion, $email, $nom_ape, $dni, $fe_nacim, $cod_vincu,
             $edad, $domicilio, $localidad, $idprovincia, $cp, $ocupacion, $celular, $osocial,
             $comentario, $foto_firma, $foto_firma_img, $firma, $aclaracion, $arritmia, $salud_mental,
-            $salud_ment_esp, $alergia, $embarazada, $maneja_maq, $dolores = [], $doloresNombres = [], $patologia, $idcontacto, 
+            $salud_ment_esp, $alergia, $embarazada, $maneja_maq, $dolores = [], $doloresNombres = [], $patologia, $idcontacto,
             $contacto_otro, $es_menor, $tut_apeynom, $tut_tipo_nro_doc, $tut_fe_nacim,
             $tut_domicilio, $tut_localidad, $tut_idprovincia, $tut_cp, $tut_vinculo, $tut_tel_part,
             $tut_tel_cel, $tut_mail, $tut_osocial, $tut_reg_fam,
@@ -55,11 +57,11 @@ class FormPacienteEdit extends Component
         'celular' => 'required',
         'osocial' => '',
         'comentario' => '',
-        'arritmia' => '', 
+        'arritmia' => '',
         'salud_mental' => '',
-        'salud_ment_esp' => 'max:80', 
-        'alergia' => '', 
-        'embarazada' => '', 
+        'salud_ment_esp' => 'max:80',
+        'alergia' => '',
+        'embarazada' => '',
         'maneja_maq' => '',
         'patologia' => '',
         'contacto_otro' => '',
@@ -98,58 +100,61 @@ class FormPacienteEdit extends Component
         'patologias.*.dolor_intensidad' => 'numeric|nullable|min:0|max:10',
         'patologias.*.partes_cuerpo' => 'max:100',
         'patologias.*.atenua_dolor' => ''
-        
+
     ];
 
-    
+    public function getTurno(){
+        $_turno = Turno::where('paciente_id', $this->pacienteId)->first();
+    }
+
     public function mount(){
         if($this->pacienteId){
             $paciente = Paciente::where('idpaciente', $this->pacienteId)->first();
             $this->pagado = $paciente->pagado;
             $this->estado = $paciente->estado;
-            $this->fe_carga = $paciente->fe_carga; 
-            $this->fe_aprobacion = $paciente->fe_aprobacion; 
-            $this->email = $paciente->email; 
-            $this->nom_ape = $paciente->nom_ape; 
-            $this->dni = $paciente->dni; 
-            $this->fe_nacim = $paciente->fe_nacim; 
+            $this->fe_carga = $paciente->fe_carga;
+            $this->fe_aprobacion = $paciente->fe_aprobacion;
+            $this->email = $paciente->email;
+            $this->nom_ape = $paciente->nom_ape;
+            $this->dni = $paciente->dni;
+            $this->fe_nacim = $paciente->fe_nacim;
             $this->cod_vincu = $paciente->cod_vincu;
-            $this->edad = $paciente->edad; 
-            $this->domicilio = $paciente->domicilio; 
-            $this->localidad = $paciente->localidad; 
-            $this->idprovincia = $paciente->idprovincia; 
-            $this->cp = $paciente->cp; 
-            $this->ocupacion = $paciente->ocupacion; 
-            $this->celular = $paciente->celular; 
+            $this->edad = $paciente->edad;
+            $this->domicilio = $paciente->domicilio;
+            $this->localidad = $paciente->localidad;
+            $this->idprovincia = $paciente->idprovincia;
+            $this->cp = $paciente->cp;
+            $this->ocupacion = $paciente->ocupacion;
+            $this->celular = $paciente->celular;
             $this->osocial = $paciente->osocial;
-            $this->comentario = $paciente->comentario; 
+            $this->comentario = $paciente->comentario;
             $this->dolores = explode(',',$paciente->dolores);
             $this->foto_firma_img = $paciente->foto_firma;
             $this->firma = $paciente->firma_v2;
             $this->aclaracion = $paciente->aclaracion_v2;
-            $this->arritmia = $paciente->arritmia; 
+            $this->arritmia = $paciente->arritmia;
             $this->salud_mental = $paciente->salud_mental;
-            $this->salud_ment_esp = $paciente->salud_ment_esp; 
-            $this->alergia = $paciente->alergia; 
+            $this->salud_ment_esp = $paciente->salud_ment_esp;
+            $this->alergia = $paciente->alergia;
             $this->embarazada = $paciente->embarazada;
             $this->maneja_maq = $paciente->maneja_maq;
-            $this->patologia = $paciente->patologia; 
-            $this->idcontacto = $paciente->idcontacto; 
-            $this->contacto_otro = $paciente->contacto_otro; 
-            $this->es_menor = $paciente->es_menor; 
-            
-            $this->tut_apeynom = $paciente->tut_apeynom; 
-            $this->tut_tipo_nro_doc = $paciente->tut_tipo_nro_doc; 
+            $this->patologia = $paciente->patologia;
+            $this->idcontacto = $paciente->idcontacto;
+            $this->contacto_otro = $paciente->contacto_otro;
+            $this->es_menor = $paciente->es_menor;
+
+            $this->tut_apeynom = $paciente->tut_apeynom;
+            $this->tut_tipo_nro_doc = $paciente->tut_tipo_nro_doc;
             $this->tut_fe_nacim = $paciente->tut_fe_nacim;
-            $this->tut_domicilio = $paciente->tut_domicilio; 
-            $this->tut_localidad = $paciente->tut_localidad; 
-            $this->tut_idprovincia = $paciente->tut_idprovincia; 
-            $this->tut_cp = $paciente->tut_cp; 
-            $this->tut_vinculo = $paciente->tut_vinculo; 
+            $this->tut_domicilio = $paciente->tut_domicilio;
+            $this->tut_localidad = $paciente->tut_localidad;
+            $this->tut_idprovincia = $paciente->tut_idprovincia;
+            $this->tut_cp = $paciente->tut_cp;
+            $this->tut_vinculo = $paciente->tut_vinculo;
             $this->tut_tel_part = $paciente->tut_tel_part;
-            $this->tut_tel_cel = $paciente->tut_tel_cel; 
-            $this->tut_mail = $paciente->tut_mail; 
-            $this->tut_osocial = $paciente->tut_osocial; 
+            $this->tut_tel_cel = $paciente->tut_tel_cel;
+            $this->tut_mail = $paciente->tut_mail;
+            $this->tut_osocial = $paciente->tut_osocial;
             $this->tut_reg_fam = $paciente->tut_reg_fam;
 
             $this->res_historia = $paciente->res_historia;
@@ -206,15 +211,15 @@ class FormPacienteEdit extends Component
             }
             $this->producto = ['1','2'];
             if($this->diagnostico == '') $this->diagnostico = $this->_generarDoloresNombres();
-            
+
         } else {  //Nuevo paciente
             $this->fe_carga = date('Y-m-d');
             $this->dolores = [];
-            $this->es_menor = 0; 
+            $this->es_menor = 0;
             $this->tut_reg_fam = 0;
-            $this->arritmia = 0; 
+            $this->arritmia = 0;
             $this->salud_mental = 0;
-            $this->alergia = 0; 
+            $this->alergia = 0;
             $this->embarazada = 0;
             $this->maneja_maq = 0;
             $this->res_historia = "Paciente de __ años. Que trabaja como ocupacion. Con antecedentes de __ desde el año __. Dicho problema de salud "
@@ -231,9 +236,9 @@ class FormPacienteEdit extends Component
             $this->conc_thc = "1.00";
             $this->conc_cbd = "5.00";
             $this->tratam_previo = "No medicado";
-            
+
         }
-        
+
     }
 
     private function _generarDoloresNombres(){
@@ -246,8 +251,8 @@ class FormPacienteEdit extends Component
         return implode(',',$this->doloresNombres);
     }
 
-    public function render()
-    {
+    public function render(){
+        $this -> getTurno();
         $provincias = Provincia::orderBy('Provincia', 'ASC')->get();
         $dolencias = Dolencia::get();
         $modos_contacto = ModoContacto::get();
@@ -256,15 +261,15 @@ class FormPacienteEdit extends Component
         $diagnosticos = Diagnostico::get();
         $tratamientos = Tratamiento::get();
         $productos = Producto::get();
-        $this->dispatchBrowserEvent('refresh');  
+        $this->dispatchBrowserEvent('refresh');
         if($this->pacienteId) $this->patologias = PacientePatologia::where('idpaciente',$this->pacienteId)->get();
         return view('livewire.pacientes.form-paciente-edit', compact('provincias', 'dolencias', 'modos_contacto','beneficiosList','justificaciones','diagnosticos','tratamientos','productos'));
     }
-    
+
     public function refresh(){
-        //$this->dispatchBrowserEvent('refresh');        
+        //$this->dispatchBrowserEvent('refresh');
     }
-    
+
     public function setFirma($firma){
         $this->firma = $firma;
     }
@@ -272,7 +277,7 @@ class FormPacienteEdit extends Component
     public function setAclaracion($aclaracion){
         $this->aclaracion = $aclaracion;
     }
-    
+
     public function guardarFirma($firma){
         $this->firma = $firma;
         Paciente::find($this->pacienteId)->update(['firma_v2' => $this->firma]);
@@ -284,7 +289,7 @@ class FormPacienteEdit extends Component
         Paciente::find($this->pacienteId)->update(['aclaracion_v2' => $this->aclaracion]);
         $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Se guardó la aclaracion"]);
     }
-    
+
     public function update(){
         $this->validate();
         $dataPaciente = [
@@ -308,13 +313,13 @@ class FormPacienteEdit extends Component
             'comentario' =>  $this->comentario,
             'dolores' => implode(',',$this->dolores),
             'foto_firma' => $this->foto_firma_img,
-            'arritmia' => $this->arritmia, 
+            'arritmia' => $this->arritmia,
             'salud_mental' => $this->salud_mental,
-            'salud_ment_esp' => $this->salud_ment_esp, 
-            'alergia' => $this->alergia, 
+            'salud_ment_esp' => $this->salud_ment_esp,
+            'alergia' => $this->alergia,
             'embarazada' => $this->embarazada,
             'maneja_maq' => $this->maneja_maq,
-            
+
             'patologia' =>  $this->patologia,
             'idcontacto' => $this->idcontacto,
             'contacto_otro' => $this->contacto_otro,
@@ -356,9 +361,9 @@ class FormPacienteEdit extends Component
             $dataPaciente['aclaracion_v2'] = $this->aclaracion;
             $this->pacienteId = Paciente::create($dataPaciente)->idpaciente;
         }
-        
+
         $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "El Paciente se modificó con éxito"]);
-        
+
     }
 
     public function updatedFotoFirma(){
@@ -373,14 +378,14 @@ class FormPacienteEdit extends Component
 
         $this->foto_firma->storeAs('assets/img/uploads', $fileName);
         rename($storagePath . $fileName, $path . $fileName);
-        
+
         //$this->datos->firma = $fileName;
         //$this->datos->save();
-        
+
         //$fileName = Str::random(30).'.png';
-        
+
         //$this->foto_firma->storeAs('public/firmas/', $fileName);
-                
+
         $this->foto_firma_img = $fileName;
         if($this->pacienteId){ //Si está editando, actualiza el registro directamente
             Paciente::find($this->pacienteId)->update(['foto_firma' => $this->foto_firma_img]);
@@ -424,7 +429,7 @@ class FormPacienteEdit extends Component
             unset($this->producto[$index]);
         }
     }
-    
+
     public function switchBeneficio($id){
         $string = Beneficio::where('idbeneficio',$id)->first()->beneficio;
         $pos = strpos($this->beneficios, $string);
@@ -511,12 +516,12 @@ class FormPacienteEdit extends Component
 
     public function eliminar(){
         $paciente = Paciente::find($this->pacienteId)->delete();
-        $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Se eliminó el registro del Paciente"]); 
-        return redirect(route('pacientes'));   
+        $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Se eliminó el registro del Paciente"]);
+        return redirect(route('pacientes'));
     }
 
     public function actualizarFechaEdad(){
-        $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Se actualizó la Fecha de carga y Edad del Paciente"]); 
+        $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Se actualizó la Fecha de carga y Edad del Paciente"]);
         $this->fe_carga = Carbon::now()->format('Y-m-d');
         $this->edad = $this->_getEdad($this->fe_nacim);
     }

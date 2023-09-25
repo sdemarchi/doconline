@@ -132,7 +132,7 @@
                   @error('email')<div class="text-danger">{{ $message }}</div>@enderror
                 </div>
               </div>
-              
+
               <div class="row">
                 <div class="col-md-3 mt-4">
                   <label class="form-label">Apellido y Nombre *</label>
@@ -155,7 +155,7 @@
                   @error('instagram')<div class="text-danger">{{ $message }}</div>@enderror
                 </div>
               </div>
-              
+
               <div class="row">
                 <div class="col-md-2 mt-4">
                   <label class="form-label">Fecha de Nac. *</label>
@@ -190,7 +190,7 @@
                     Actualiz. Fecha de carga y Edad</button>
                 </div>
               </div>
-              
+
               <div class="row">
                 <div class="col-md-3 mt-4">
                   <label class="form-label">Domicilio *</label>
@@ -218,7 +218,7 @@
                   @error('cp')<div class="text-danger">{{ $message }}</div>@enderror
                 </div>
               </div>
-              
+
               <div class="row">
                 <div class="col mt-4">
                   <label class="form-label">Comentarios sobre su estado de salud que quiera comentar o aclarar</label>
@@ -263,7 +263,7 @@
                       <path d="M14 4l0 4l-6 0l0 -4"></path>
                    </svg>
                   </button>
-                  
+
                 </div>
               </div>
               <div class="col-md-6 mt-3">
@@ -726,7 +726,7 @@
                     <label class="form-label">Tratamiento</label>
                     <textarea class="form-control" name="example-textarea-input" rows="6" wire:model.defer="tratamiento"></textarea>
                   </div>
-                </div>  
+                </div>
                 <div class="col-md-6 mt-3">
                   <div class="col-md-10">
                     <label class="form-label">Tratamiento Items</label>
@@ -826,14 +826,14 @@
           $("#firma").jSignature({syncFormat: 'PNG', height:200})
           $("#aclaracion").jSignature({syncFormat: 'PNG', height:200})
           $("#firma").jSignature("importData","<?php echo $firma ?>");
-          $("#aclaracion").jSignature("importData","<?php echo $aclaracion ?>");    
+          $("#aclaracion").jSignature("importData","<?php echo $aclaracion ?>");
 
       });
       document.addEventListener('refresh', function () {
         $("#firma").jSignature({syncFormat: 'PNG', height:200})
         $("#firma").jSignature("importData","<?php echo $firma ?>");
       });
-        
+
       document.addEventListener('DOMContentLoaded', function () {
         @this.on('guardar', ()  => {
           //e.preventDefault();
@@ -842,7 +842,7 @@
           @this.call('setFirma',firmaData);
           @this.call('setAclaracion',aclaracData);
           @this.call('update');
-          
+
         });
       });
       document.addEventListener('DOMContentLoaded', function () {
@@ -850,7 +850,7 @@
           //e.preventDefault();
           let firmaData =  $('#firma').jSignature('getData', 'default');
           @this.call('guardarFirma',firmaData);
-          
+
         });
       });
       document.addEventListener('DOMContentLoaded', function () {
@@ -889,9 +889,9 @@
               }).then((result) => {
           //if user clicks on delete
                   if (result.value) {
-              
+
                       @this.call('quitarPatologia',itemId)
-              
+
                   }
               });
           });
@@ -912,14 +912,14 @@
                   confirmButtonText: 'Eliminar!'
               }).then((result) => {
                   if (result.value) {
-              
+
                       @this.call('eliminar')
-              
+
                   }
               });
           });
       })
-      
+
 </script>
 
 

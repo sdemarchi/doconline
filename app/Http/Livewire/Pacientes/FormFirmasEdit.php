@@ -21,9 +21,9 @@ class FormFirmasEdit extends Component
 
     public function mount(){
         $paciente = Paciente::where('idpaciente', $this->pacienteId)->first();
-        $this->nom_ape = $paciente->nom_ape; 
-        $this->dni = $paciente->dni; 
-        $this->celular = $paciente->celular; 
+        $this->nom_ape = $paciente->nom_ape;
+        $this->dni = $paciente->dni;
+        $this->celular = $paciente->celular;
         $this->firma = $paciente->firma_v2;
         $this->aclaracion = $paciente->aclaracion_v2;
     }

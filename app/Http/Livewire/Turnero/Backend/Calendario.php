@@ -17,18 +17,19 @@ use App\Models\TurnoPaciente;
 use App\Models\Prestador;
 use App\Models\Turno;
 use App\Models\Paciente;
+use App\Models\PacientePatologia;
 
 class Calendario extends Component
 {
     use WithFileUploads;
 
     public $fileTurnos;
-    
-    public $pacienteId, $prestadorId, $calendario = [], $mesActual, $anioActual, $mesTexto, $turnos = [], 
+
+    public $pacienteId, $prestadorId, $calendario = [], $mesActual, $anioActual, $mesTexto, $turnos = [],
     $fechaSeleccionada, $turnoSeleccionado, $fechaSelFormateada;
     public $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
     public $dias = array("Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado");
-    
+
     public function mount(){
         $this->prestadorId = 1;
         if(session('mesActual')){
@@ -45,9 +46,9 @@ class Calendario extends Component
             $this->fechaSeleccionada = '';
             $this->fechaSelFormateada = '';
         }
-        
+
     }
-    
+
     public function render()
     {
         $this->mesTexto = $this->meses[$this->mesActual-1];
@@ -60,18 +61,18 @@ class Calendario extends Component
         $end = Carbon::createFromFormat('Y-n-d',"$this->anioActual-$this->mesActual-01")->endOfMonth()->next('saturday');
         $period = CarbonPeriod::create($start,$end);
         $diaLimite = Carbon::now()->addDays(3);
-        
+
         foreach ($period as $date) {
             $inactivo = '';
             $turnos = $this->_tieneTurnosDisp($date) ? 'turnos' : '';
             if($this->_tieneTurnosAsign($date)) $turnos = 'turnosAsign';
-            
+
             $calend[] = [
                 "fecha" => $date->toDateString(),
                 "dia" => $date->format('d'),
                 "enmes" => $date->format('m') == $this->mesActual ? 'enmes' : '',
                 "turnos" => $turnos
-            ]; 
+            ];
             //echo $date->format('Y-m-d');
         }
         $this->calendario = $calend;
@@ -82,9 +83,9 @@ class Calendario extends Component
         $this->turnoSeleccionado = '';
         $this->fechaSeleccionada = $fecha;
         session(['fechaActual' => $fecha]);
-        $this->_getTurnos($fecha);      
+        $this->_getTurnos($fecha);
     }
-    
+
     public function mesAnterior(){
         if($this->mesActual == 1){
             $this->mesActual = 12;
@@ -95,7 +96,7 @@ class Calendario extends Component
         session(['mesActual' => $this->mesActual]);
         session(['anioActual' => $this->anioActual]);
         session(['fechaActual' => '']);
-        
+
         $this->mesTexto = $this->meses[$this->mesActual-1];
         $this->_armarCalendario();
     }
@@ -110,7 +111,7 @@ class Calendario extends Component
         session(['mesActual' => $this->mesActual]);
         session(['anioActual' => $this->anioActual]);
         session(['fechaActual' => '']);
-            
+
         $this->mesTexto = $this->meses[$this->mesActual-1];
         $this->_armarCalendario();
     }
@@ -149,24 +150,31 @@ class Calendario extends Component
         foreach($turnosFecha as $turno){
             $date = date_create($fecha . ' ' . $turno->hora);
             if($turno->paciente){
+                $fichaDelPaciente = $this->_getFicha($turno->paciente->dni);
                 $nombrePaciente = $turno->paciente->nombre;
                 $telefono = $turno->paciente->telefono;
                 $pacienteId = $turno->paciente->id;
-                $fichaId = $this->_getIdFicha($turno->paciente->dni);
+                $fichaId = $fichaDelPaciente['idPaciente'];
+                $patologias = $fichaDelPaciente['patologias'];
                 $asignado = true;
+                $cupon = $turno->cupon;
             } else {
+                $patologias = '';
                 $nombrePaciente = '';
                 $telefono = '';
                 $pacienteId = 0;
                 $fichaId = 0;
                 $asignado = false;
+                $cupon =  "-";
             }
             $this->turnos[] = [
                 'id' => $turno->id,
                 'hora' => date_format($date,"H:i"),
+                'patologias' => $patologias,
                 'paciente' => $nombrePaciente,
                 'telefono' => $telefono,
                 'asignado' => $asignado,
+                'cupon' => $cupon,
                 'comprobante_pago' => $turno->comprobante_pago,
                 'pacienteId' => $pacienteId,
                 'fichaId' => $fichaId,
@@ -176,10 +184,19 @@ class Calendario extends Component
         }
     }
 
-    private function _getIdFicha($dni){
+    private function _getFicha($dni){
         $ficha = Paciente::where('dni',$dni)->first();
+        $patologiasDelPaciente = '';
+
         if($ficha){
-            return $ficha->idpaciente;
+            $patologias = PacientePatologia::where('dni',$dni)->get();
+
+
+            return [
+                'idPaciente' => $ficha->idpaciente,
+                'patologias' => $patologias,
+            ];
+
         } else {
             return 0;
         }
@@ -189,10 +206,10 @@ class Calendario extends Component
     public function guardarArchivoTurnos()
     {
         $this->validate([
-            'fileTurnos' => 'required', 
+            'fileTurnos' => 'required',
         ]);
         $fileName = Str::random(30).'.csv';
-              
+
         $this->fileTurnos->storeAs('imports', $fileName);
         $this->_processTurnos($fileName);
         $this->fileProducts = '';
@@ -200,15 +217,15 @@ class Calendario extends Component
     }
 
     private function _processTurnos($file){
-    
+
         $archivo = storage_path('app/imports/') . $file;
         //dd($archivo);
         $handle = fopen($archivo,"r");
 
         $header = false;
-        
+
         while ($csvLine = fgetcsv($handle, 10000, ";")) {
-            
+
             if ($header) {
                 $header = false;
             } else {
@@ -219,7 +236,7 @@ class Calendario extends Component
                 Turno::create([
                     'prestador_id' => 1,
                     'fecha' => $fecha,
-                    'hora' => $hora 
+                    'hora' => $hora
                 ]);
             }
         }
