@@ -79,7 +79,7 @@
           <h4 class="mt-4 mb-3 turnos-titulo">Turnos para el {{ $fechaSelFormateada }} </h4>
 
           <div class="table-responsive turnos-table">
-            <table class="table table-vcenter card-table">
+            <table class="table table-vcenter card-table" style="min-width:max-content;">
 
               <thead>
                 <tr>
@@ -87,10 +87,11 @@
                     <th>Hora</th>
                     <th>Paciente</th>
                     <th>Atendido</th>
+                    <th>Pedi captura</th>
+                    <th>Mando captura</th>
                     <th>Cancelar / Editar</th>
                     <th>Comentarios</th>
                     <th>Cupón</th>
-                    <th></th>
                 </tr>
               </thead>
 
@@ -144,12 +145,32 @@
                         @endif
                     </td>
 
-                    <td class="turno-atendido">
+                    <td class="turno-atendido" style="text-align:center;">
                         @if($turno['paciente'])
                         @if ($turno['atendido'])
                         <span class="btn badge bg-success me-1" wire:click="noAtendido('{{ $turno['id'] }}')"></span>Sí
                         @else
                         <span class="btn badge bg-danger me-1" wire:click="atendido('{{ $turno['id'] }}')"></span>No
+                        @endif
+                        @endif
+                    </td>
+
+                    <td class="turno-pedi-captura" style="text-align:center;">
+                        @if($turno['paciente'])
+                        @if ($turno['pedi_captura'])
+                        <span class="btn badge bg-success me-1" wire:click="noPediCaptura('{{ $turno['id'] }}')"></span>Sí
+                        @else
+                        <span class="btn badge bg-danger me-1" wire:click="pediCaptura('{{ $turno['id'] }}')"></span>No
+                        @endif
+                        @endif
+                    </td>
+
+                    <td class="turno-mando-captura" style="text-align:center;">
+                        @if($turno['paciente'])
+                        @if ($turno['mando_captura'])
+                        <span class="btn badge bg-success me-1" wire:click="noMandoCaptura('{{ $turno['id'] }}')"></span>Sí
+                        @else
+                        <span class="btn badge bg-danger me-1" wire:click="mandoCaptura('{{ $turno['id'] }}')"></span>No
                         @endif
                         @endif
                     </td>
@@ -197,16 +218,10 @@
                         </a>
                     </td>
 
-                    <td class="turno-comentarios">
+                    <td class="turno-comentarios" style="display:flex;flex-direction:row;align-items:center;max-width:240px">
                         <textarea class="form-control" rows="1"
                         id="com-{{$turno['id']}}">{{$turno['comentarios']}}</textarea>
-                    </td>
 
-                    <td>
-                       <span style="font-size:12px"> {{$turno['cupon']}} </span>
-                    </td>
-
-                    <td class="turno-guardar">
                         <button class="btn btn-ghost-light btn-icon"
                         wire:click="$emit('guardarComentario',{{ $turno['id'] }})" data-toggle="tooltip"
                         data-placement="right" title="Guardar Comentario">
@@ -221,6 +236,11 @@
                         </svg>
                         </button>
                     </td>
+
+
+                    <td>
+                        <span style="font-size:12px"> {{$turno['cupon']}} </span>
+                     </td>
 
                 </tr>
                 @endforeach

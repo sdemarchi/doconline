@@ -179,6 +179,8 @@ class Calendario extends Component
                 'pacienteId' => $pacienteId,
                 'fichaId' => $fichaId,
                 'atendido' => $turno->atendido,
+                'pedi_captura' => $turno->pedi_captura,
+                'mando_captura' => $turno->mando_captura,
                 'comentarios' => $turno->comentarios
             ];
         }
@@ -285,11 +287,42 @@ class Calendario extends Component
         $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "El Turno se marcó como no atendido"]);
     }
 
+    public function pediCaptura($id){
+        $turno = Turno::find($id);
+        $turno->pedi_captura = 1;
+        $turno->save();
+        $this->fechaSelect($this->fechaSeleccionada);
+        $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Cambio guardado"]);
+    }
+
+    public function noPediCaptura($id){
+        $turno = Turno::find($id);
+        $turno->pedi_captura = 0;
+        $turno->save();
+        $this->fechaSelect($this->fechaSeleccionada);
+        $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Cambio guardado"]);
+    }
+    public function mandoCaptura($id){
+        $turno = Turno::find($id);
+        $turno-> mando_captura = 1;
+        $turno-> save();
+        $this-> fechaSelect($this->fechaSeleccionada);
+        $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Cambio guardado"]);
+    }
+
+    public function noMandoCaptura($id){
+        $turno = Turno::find($id);
+        $turno->mando_captura = 0;
+        $turno->save();
+        $this->fechaSelect($this->fechaSeleccionada);
+        $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Cambio guardado"]);
+    }
+
     public function guardarComentario($id, $comentario){
         $turno = Turno::find($id);
         $turno->comentarios = $comentario;
         $turno->save();
-        $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Se guardó el comentario"]);
+        $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Cambio guardado"]);
     }
 
     public function mailFormulario($pacienteId){

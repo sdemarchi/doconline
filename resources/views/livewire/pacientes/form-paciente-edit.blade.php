@@ -690,7 +690,7 @@
               </div>
               <div class="col-md-6 mt-3">
                 <div class="col-md-10">
-                  <label class="form-label">Whatsapp</label>
+                  <label class=-"form-label">Whatsapp</label>
                   <a href="https://wa.me/{{ $celular }}" target="_blank">
                     <img src="{{ asset('img/logo-whatsapp.svg.webp')}}" width="50" /></a>
                 </div>

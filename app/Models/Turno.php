@@ -12,7 +12,7 @@ class Turno extends Model
     public $timestamps = false;
 
     protected $fillable = ['prestador_id','fecha','hora','fecha_emision','paciente_id','comprobante_pago',
-                            'cupon','importe','descuento','atendido','comentarios'];
+                            'cupon','importe','descuento','atendido','comentarios','pedi_captura','mando_captura'];
 
     public function prestador(){
         return $this->belongsTo(Prestador::class, 'prestador_id');
