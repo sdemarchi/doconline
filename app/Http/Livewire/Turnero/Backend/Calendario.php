@@ -200,7 +200,7 @@ class Calendario extends Component
             ];
 
         } else {
-            return 0;
+            return ['idPaciente' => 0, 'patologias' => 0];
         }
 
     }
