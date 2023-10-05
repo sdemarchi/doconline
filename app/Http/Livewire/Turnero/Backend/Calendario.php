@@ -245,6 +245,10 @@ class Calendario extends Component
         unlink($archivo);
     }
 
+    public function copiarAlPortapapeles($propiedad, $valor) {
+        $this->dispatchBrowserEvent('alert', ['type' => 'success', 'message' => $propiedad . " copiado al portapapeles"]);
+    }
+
     public function eliminarTurno($id){
         Turno::find($id)->delete();
         $this->fechaSelect($this->fechaSeleccionada);
@@ -308,6 +312,10 @@ class Calendario extends Component
         $turno-> save();
         $this-> fechaSelect($this->fechaSeleccionada);
         $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Cambio guardado"]);
+    }
+
+    public function notificacion($mensaje){
+        $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => $mensaje]);
     }
 
     public function noMandoCaptura($id){

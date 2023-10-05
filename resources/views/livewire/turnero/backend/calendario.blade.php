@@ -84,7 +84,7 @@
 
             </style>
           <div class="table-responsive turnos-table">
-            <table class="table table-vcenter card-table" style="min-width:max-content;margin-bottom:25px !important;">
+            <table class="table table-vcenter card-table" style="min-width:max-content;margin-bottom:25px !important;" >
 
               <thead>
                 <tr>
@@ -107,7 +107,7 @@
                         @if($turno['paciente'] && $turno['patologias'])
                             @foreach($turno['patologias'] as $index => $item)
 
-                            @if(isset($item->patologia))<p style="margin-bottom:5px">{{ $item->patologia->dolencia}}</p>@endif
+                            @if(isset($item->patologia))<p style="margin-bottom:5px">{{ $item->patologia->dolencia }}</p>@endif
 
                             @endforeach
                         @endif
@@ -123,6 +123,9 @@
                         @if($turno['paciente'])
                             <a style="max-width:fit-content;padding:7px 0px;" class="btn btn-ghost-light btn-icon" href="https://wa.me/{{ $turno['telefono'] }}" target="_blank" title="Hablar por Whatsapp">
                             <img src="{{ asset('img/logo-wsp-b.png')}}" height="19" style="opacity:60%"/></a>
+
+                            <button class="btn btn-ghost-light" onClick="copyTextToClipboard({{ $turno['telefono'] }});" style="margin:0 !important;padding:7px !important;opacity:70%;" wire:click="notificacion('Celular copiado al portapapeles')" title="Copiar celular"><img src="{{ asset('img/icon-cel.png')}}" width="19" height="21"/>
+                            </button>
                         @endif
 
                         @if($turno['comprobante_pago'])
@@ -275,6 +278,17 @@
 
 
 <script type="text/javascript">
+
+    function copyTextToClipboard(valor) {
+        const textArea = document.createElement("textarea");
+        textArea.value = valor;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textArea);
+    };
+
+
   document.addEventListener('DOMContentLoaded', function () {
           @this.on('triggerDelete', itemId => {
               Swal.fire({

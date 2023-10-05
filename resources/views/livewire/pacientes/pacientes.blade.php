@@ -173,7 +173,7 @@
                         <tr>
                             <td>
                                 <a class="btn btn-ghost-light btn-icon"
-                                    href="{{route('pacientes.edit',$paciente->idpaciente)}}" data-toggle="tooltip"
+                                    href="{{route('pacientes.edit', $paciente->idpaciente)}}" data-toggle="tooltip"
                                     data-placement="right" title="Editar">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit"
                                         width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
@@ -188,7 +188,7 @@
                                     </svg>
                                 </a>
                                 <button class="btn btn-ghost-light btn-icon"
-                                    wire:click="$emit('triggerDelete',{{ $paciente->idpaciente }})"
+                                    wire:click="$emit('triggerDelete', {{ $paciente->idpaciente }})"
                                     data-toggle="tooltip" data-placement="right" title="Eliminar Registro">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash"
                                         width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
