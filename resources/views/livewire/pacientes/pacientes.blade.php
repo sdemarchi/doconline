@@ -44,7 +44,7 @@
 
 
             <div id="pacientes-table" class="table-responsive">
-               <table class="table table-vcenter card-table">
+               <table id="calendario-table" class="table table-vcenter card-table">
                     <thead>
                         <tr>
                             <th></th>

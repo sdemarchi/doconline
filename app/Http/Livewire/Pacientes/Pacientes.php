@@ -35,8 +35,7 @@ class Pacientes extends Component
         $this->sortDir = 'DESC';
     }
 
-    public function render()
-    {
+    public function render(){
         $pacientes = $this->_query();
         return view('livewire.pacientes.pacientes', compact('pacientes'));
     }
@@ -66,7 +65,7 @@ class Pacientes extends Component
                 $pacientes->where('dni', $this->searchString);
             }
         }
-        
+
         $this->_setSortClasses();
         $this->emit('searchCompleted');
         return $pacientes->orderBy($this->sortField,$this->sortDir)->paginate(10);
@@ -77,7 +76,7 @@ class Pacientes extends Component
         $this->searchMode = '';
         $this->searchString = '';
     }
-        
+
     public function buscarPorDatos(){
         $this->resetPagination();
         $this->searchMode = 'datos';

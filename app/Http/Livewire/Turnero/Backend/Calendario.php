@@ -53,6 +53,7 @@ class Calendario extends Component
     {
         $this->mesTexto = $this->meses[$this->mesActual-1];
         $this->_armarCalendario();
+        $this->emit('calendario-loaded');
         return view('livewire.turnero.backend.calendario');
     }
 
@@ -79,6 +80,7 @@ class Calendario extends Component
     }
 
     public function fechaSelect($fecha){
+        $this->emit('calendario-loading');
         $this->turnos = [];
         $this->turnoSeleccionado = '';
         $this->fechaSeleccionada = $fecha;
@@ -306,6 +308,7 @@ class Calendario extends Component
         $this->fechaSelect($this->fechaSeleccionada);
         $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Cambio guardado"]);
     }
+
     public function mandoCaptura($id){
         $turno = Turno::find($id);
         $turno-> mando_captura = 1;
