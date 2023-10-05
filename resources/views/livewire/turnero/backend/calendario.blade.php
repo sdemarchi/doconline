@@ -323,7 +323,7 @@
             let calendarioMensaje = document.querySelector("#calendario-mensaje");
 
             loader.style.display='flex';
-            calendarioTable.style.display='none';
+            calendarioTable.style.visibility='hidden';
             calendarioMensaje.style.display='none';
         };
 
@@ -331,12 +331,12 @@
     document.addEventListener('DOMContentLoaded', function () {
         let loader = document.querySelector("#calendario-loader");
         let calendarioTable = document.querySelector("#calendario-table");
+        let calendarioMsj = document.querySelector("#calendario-mensaje");
 
         Livewire.on('calendario-loaded', () => {
           console.log('loaded');
-          loader.style.dislpay='none';
-          calendarioTable.style.display='block';
-          calendarioMensaje.style.display='block';
+          loader.style.display='none';
+          calendarioTable.style.visibility='visible';
         });
 
      })
