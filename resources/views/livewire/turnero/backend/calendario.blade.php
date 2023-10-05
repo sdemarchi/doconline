@@ -87,11 +87,12 @@
                 }
                 #calendario-loader{
                     display:block;z-index:200;
-                    !important; min-width:100%;
+                    !important;
+                    min-width:100%;
                     display:none
                     ;align-items:center;
                     justify-content:center;
-                    height:100px;
+                    height:120px;
                 }
                 #calendario-mensaje{
                     width: 100%;
