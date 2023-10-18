@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Models\Dolencia;
+use App\Models\TurnoPaciente;
 
 class Paciente extends Model
 {
@@ -91,5 +92,10 @@ class Paciente extends Model
         }
         return $str;
     }
+
+    public function paciente_turnero(){
+        return $this->hasMany(TurnoPaciente::class, 'dni', 'dni');
+    }
+
 
 }

@@ -20,4 +20,9 @@ class TurnoPaciente extends Model
             ->first();
         return $turno;
     }
+
+    public function turno(){
+        return $this->hasMany(Turno::class, 'id', 'paciente_id');
+    }
+
 }

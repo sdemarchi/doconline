@@ -420,7 +420,12 @@
 
                 <div class=" mt-3 mb-3 col-lg-6 col-md-8">
                     <label class="form-label">Cupón de descuento</label>
-                    <div type="text" class="form-control"></div>
+                    <div type="text" class="form-control">
+
+                        @if($cupon)
+                            {{$cupon}}
+                        @endif
+                    </div>
                   </div>
 
               </div>

@@ -26,7 +26,8 @@ class FormPacienteEdit extends Component
     use WithFileUploads;
 
     public $pacienteId, $patologias, $patologiaAgregar;
-    public $turno;
+    public $_turno = ['hola'];
+    public $cupon = 'No uso cupon';
     public $pagado, $estado, $fe_carga, $fe_aprobacion, $email, $nom_ape, $dni, $fe_nacim, $cod_vincu,
             $edad, $domicilio, $localidad, $idprovincia, $cp, $ocupacion, $celular, $osocial,
             $comentario, $foto_firma, $foto_firma_img, $firma, $aclaracion, $arritmia, $salud_mental,
@@ -107,9 +108,30 @@ class FormPacienteEdit extends Component
         $_turno = Turno::where('paciente_id', $this->pacienteId)->first();
     }
 
+    public function getCupon($paciente){
+        if ($paciente) {
+            $paciente_turnero = $paciente->paciente_turnero;
+            if ($paciente_turnero->isNotEmpty()) {
+                $paciente_id = $paciente_turnero[0]->id;
+                if ($paciente_id) {
+                    $_turno_paciente = Turno::where('paciente_id', $paciente_id)->first();
+                    if ($_turno_paciente !== null && $_turno_paciente->cupon !== null) {
+                        return $_turno_paciente->cupon;
+                    } else {
+                        return 'El paciente no usó cupón';
+                    }
+                } else {
+                    return 'El paciente no usó cupón';
+                }
+            }
+        }
+        return 'El paciente no usó cupón';
+    }
+
     public function mount(){
         if($this->pacienteId){
             $paciente = Paciente::where('idpaciente', $this->pacienteId)->first();
+            $this->cupon = $this->getCupon($paciente);
             $this->pagado = $paciente->pagado;
             $this->estado = $paciente->estado;
             $this->fe_carga = $paciente->fe_carga;

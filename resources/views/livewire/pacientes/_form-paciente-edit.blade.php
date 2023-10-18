@@ -420,6 +420,8 @@
         </div>
       </div>
 
+
+
       @if($es_menor)
       <div class="accordion-item theme-dark">
         <h2 class="accordion-header" id="heading-2">
