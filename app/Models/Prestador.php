@@ -10,4 +10,8 @@ class Prestador extends Model
     public $timestamps = false;
     protected $table = "turn_prestadores";
 
+    public function cambiarDiasAnticipacion($nuevoDiasAnticipacion)
+    {
+        $this->update(['dias_anticipacion' => $nuevoDiasAnticipacion]);
+    }
 }

@@ -61,7 +61,7 @@ class Calendario extends Component
         $start = Carbon::createFromFormat('Y-n-d',"$this->anioActual-$this->mesActual-01")->startOfMonth()->previous('sunday');
         $end = Carbon::createFromFormat('Y-n-d',"$this->anioActual-$this->mesActual-01")->endOfMonth()->next('saturday');
         $period = CarbonPeriod::create($start,$end);
-        $diaLimite = Carbon::now()->addDays(3);
+        $diaLimite = Carbon::now()->addDays(0);
 
         foreach ($period as $date) {
             $inactivo = '';

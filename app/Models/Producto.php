@@ -11,8 +11,4 @@ class Producto extends Model
 
     protected $fillable = ['producto'];
 
-    public function cambiarDiasAnticipacion($nuevoDiasAnticipacion)
-    {
-        $this->update(['dias_anticipacion' => $nuevoDiasAnticipacion]);
-    }
 }

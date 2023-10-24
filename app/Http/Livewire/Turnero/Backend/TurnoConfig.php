@@ -9,7 +9,7 @@ use App\Models\Prestador;
 
 class TurnoConfig extends Component
 {
-    public $diaAgregar, $desdeAgregar, $hastaAgregar, $duracionTurno;
+    public $diaAgregar, $desdeAgregar, $hastaAgregar, $duracionTurno, $prestadorDiasDeAnticipacion;
     public $prestadorId = 0;
 
     protected $rules = [
@@ -23,12 +23,28 @@ class TurnoConfig extends Component
     {
         $prestadores = Prestador::get();
         $dias = TurnoConf::where('prestador_id',$this->prestadorId)->orderBy('dia_semana','ASC')->get();
+        $this->initDiasDeAnticipacion();
         return view('livewire.turnero.backend.turno-config', compact('dias','prestadores'));
     }
 
+    public function initDiasDeAnticipacion(){
+        if($this->prestadorId !== 0){
+            $prestador = Prestador::find($this -> prestadorId);
+            $this->prestadorDiasDeAnticipacion = $prestador->dias_anticipacion;
+        }else{
+            $this->prestadorDiasDeAnticipacion = 0;
+        }
+    }
+
     public function setDiasAnticipacion($dias){
-        $prestador = Prestador::find($this -> prestadorId);
-        $prestador->cambiarDiasAnticipacion($dias);
+        if($this->prestadorId !== null){
+            $prestador = Prestador::find($this -> prestadorId);
+            $prestador->cambiarDiasAnticipacion($dias);
+            $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Cambiaste los dias de anticipacion."]);
+        }else{
+            $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Seleccione un prestador."]);
+        }
+
     }
 
     public function configurarDia(){
@@ -36,6 +52,7 @@ class TurnoConfig extends Component
             $this->dispatchBrowserEvent('alert', ['type' => 'error',  'message' => "Seleccione un Prestador"]);
             return;
         }
+
         $this->validate();
         $dia = TurnoConf::where('prestador_id',$this->prestadorId)->where('dia_semana',$this->diaAgregar)->first();
         if($dia){
@@ -44,6 +61,7 @@ class TurnoConfig extends Component
             $dia->duracion_turno = $this->duracionTurno;
             $dia->save();
             $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Se actualizó la configuración para el día seleccionado"]);
+
         } else {
             TurnoConf::create([
                 'prestador_id' => $this->prestadorId,
@@ -52,6 +70,7 @@ class TurnoConfig extends Component
                 'hora_hasta' => $this->hastaAgregar,
                 'duracion_turno' => $this->duracionTurno
             ]);
+
             $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Se agregó la configuración"]);
         }
 

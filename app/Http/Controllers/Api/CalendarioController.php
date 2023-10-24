@@ -19,11 +19,13 @@ class CalendarioController extends Controller
         $start = Carbon::createFromFormat('Y-n-d',"$anio-$mes-01")->startOfMonth()->previous('sunday');
         $end = Carbon::createFromFormat('Y-n-d',"$anio-$mes-01")->endOfMonth()->next('saturday');
         $period = CarbonPeriod::create($start,$end);
-        $diaLimite = Carbon::now()->addDays(0);
+        $prestador_model = Prestador::find($prestador);
+        $diaLimite = Carbon::now()->addDays($prestador_model->dias_anticipacion);
 
         $key = 1;
         $lineaKey = 1;
         $posicion = 1;
+
         foreach ($period as $date) {
             if($date < $diaLimite){
                 $activo = false;
@@ -47,6 +49,7 @@ class CalendarioController extends Controller
                     "linea" => $linea,
                     "key" => $lineaKey
                 ];
+
                 $linea = [];
                 $posicion = 1;
                 $lineaKey++;
@@ -99,6 +102,7 @@ class CalendarioController extends Controller
         }
 
         $end = false;
+
         while(!$end){
             $turno = Turno::where('fecha',$fecha)
                 ->where('hora',$rango)

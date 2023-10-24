@@ -5,7 +5,7 @@
                 <div class="row">
                     <div class="col-md-4 col-sm-5 mt-1">
                         <h4 style="color:rgba(255, 255, 255, 0.283);font-size:12px;font-weight:400">PRESTADOR</h4>
-                        <select class="form-select" wire:model="prestadorId" style="width:300px;">
+                        <select class="form-select" wire:change="initDiasDeAnticipacion($event.target.value)" wire:model="prestadorId" style="width:300px;">
                             <option value="0">Seleccione Prestador</option>
                             @foreach($prestadores as $prestador)
                             <option value="{{ $prestador->id }}">{{ $prestador->nombre }}</option>
@@ -14,11 +14,13 @@
                     </div>
                 </div>
             </div>
+
+            @if($prestadorId)
             <div class="border-bottom pt-3 pb-4">
                 <div class="row">
                     <div style="margin-left:18px;width:300px;">
                         <h4 style="color:rgba(255, 255, 255, 0.283);font-size:12px;font-weight:400">DIAS DE ANTICIPACION</h4>
-                        <select class="form-select" wire:change="setDiasAnticipacion($event.target.value)">
+                        <select class="form-select" wire:change="setDiasAnticipacion($event.target.value)" wire:model="prestadorDiasDeAnticipacion">
                             <option value="0">0</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -29,6 +31,8 @@
                     </div>
                 </div>
             </div>
+            @endif
+
             <div class="table-responsive">
                 <table class="table table-vcenter card-table">
                     <thead>

@@ -16,6 +16,6 @@
     </div>
 
     <x-slot name="scripts">
-        
+
     </x-slot>
 </x-backend-layout>
