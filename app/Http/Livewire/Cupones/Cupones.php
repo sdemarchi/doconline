@@ -12,7 +12,7 @@ class Cupones extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
-    
+
     public $cuponAgregar, $descripcionAgregar, $descuentoAgregar;
 
     public function render()
@@ -52,11 +52,11 @@ class Cupones extends Component
     }
 
     public function eliminar($id){
-        $turnos = Turno::where('id_cupon',$id)->first();
+        $turnos = Turno::where('id',$id)->first();
         if($turnos){
             $this->dispatchBrowserEvent('alert', ['type' => 'error',  'message' => "El cupón ya fue aplicado. No se puede eliminar"]);
             return;
-        } 
+        }
         Cupon::find($id)->delete();
         $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "El Cupón se eliminó con éxito"]);
     }

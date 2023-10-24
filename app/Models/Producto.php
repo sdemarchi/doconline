@@ -10,4 +10,9 @@ class Producto extends Model
     protected $primaryKey = 'idproducto';
 
     protected $fillable = ['producto'];
+
+    public function cambiarDiasAnticipacion($nuevoDiasAnticipacion)
+    {
+        $this->update(['dias_anticipacion' => $nuevoDiasAnticipacion]);
+    }
 }

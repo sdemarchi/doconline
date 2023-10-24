@@ -26,6 +26,11 @@ class TurnoConfig extends Component
         return view('livewire.turnero.backend.turno-config', compact('dias','prestadores'));
     }
 
+    public function setDiasAnticipacion($dias){
+        $prestador = Prestador::find($this -> prestadorId);
+        $prestador->cambiarDiasAnticipacion($dias);
+    }
+
     public function configurarDia(){
         if(!$this->prestadorId){
             $this->dispatchBrowserEvent('alert', ['type' => 'error',  'message' => "Seleccione un Prestador"]);

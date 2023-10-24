@@ -15,13 +15,12 @@ use App\Models\TurnoConf;
 
 class CalendarioController extends Controller
 {
-
     public function getCalendario($mes,$anio,$prestador){
         $start = Carbon::createFromFormat('Y-n-d',"$anio-$mes-01")->startOfMonth()->previous('sunday');
         $end = Carbon::createFromFormat('Y-n-d',"$anio-$mes-01")->endOfMonth()->next('saturday');
         $period = CarbonPeriod::create($start,$end);
-        $diaLimite = Carbon::now()->addDays(3);
-        
+        $diaLimite = Carbon::now()->addDays(0);
+
         $key = 1;
         $lineaKey = 1;
         $posicion = 1;
@@ -41,7 +40,8 @@ class CalendarioController extends Controller
                 "activo" => $activo,
                 "turnos" => $tieneTurnos,
                 "key" => $key
-            ]; 
+            ];
+
             if($posicion == 7){
                 $calend[] = [
                     "linea" => $linea,
@@ -55,7 +55,7 @@ class CalendarioController extends Controller
             }
             $key++;
         }
-        
+
         return response()->json($calend);
     }
 
@@ -83,11 +83,11 @@ class CalendarioController extends Controller
 
     private function _getProxTurno($fecha,$prestador){
         $setting = new Setting;
-        $ordenTurnos = $setting->getSetting('OrdenTurnos'); 
-        
+        $ordenTurnos = $setting->getSetting('OrdenTurnos');
+
         $conf = $this->_getConfDia($fecha,$prestador);
         if(!$conf) return null;
-        
+
         $rango = $conf->duracion_turno;
         if($ordenTurnos == 'ASC'){
             $hora = Carbon::createFromFormat('H:i:s', $conf->hora_desde);
@@ -97,7 +97,7 @@ class CalendarioController extends Controller
             $horaHasta = Carbon::createFromFormat('H:i:s', $conf->hora_desde);
             $hora->subMinutes($rango);
         }
-        
+
         $end = false;
         while(!$end){
             $turno = Turno::where('fecha',$fecha)
@@ -118,7 +118,7 @@ class CalendarioController extends Controller
         }
 
         return null;
-        
+
     }
 
     private function _getConfDia($fecha,$prestador){
@@ -128,6 +128,6 @@ class CalendarioController extends Controller
 
     }
 
-    
+
 }
 

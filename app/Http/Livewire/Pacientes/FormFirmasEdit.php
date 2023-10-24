@@ -1,9 +1,7 @@
 <?php
 
 namespace App\Http\Livewire\Pacientes;
-
 use Livewire\Component;
-
 use App\Models\Paciente;
 
 

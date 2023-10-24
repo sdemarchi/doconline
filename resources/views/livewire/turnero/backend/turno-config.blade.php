@@ -2,10 +2,10 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body border-bottom pt-3 pb-4">
-
                 <div class="row">
                     <div class="col-md-4 col-sm-5 mt-1">
-                        <select class="form-select" wire:model="prestadorId">
+                        <h4 style="color:rgba(255, 255, 255, 0.283);font-size:12px;font-weight:400">PRESTADOR</h4>
+                        <select class="form-select" wire:model="prestadorId" style="width:300px;">
                             <option value="0">Seleccione Prestador</option>
                             @foreach($prestadores as $prestador)
                             <option value="{{ $prestador->id }}">{{ $prestador->nombre }}</option>
@@ -13,7 +13,21 @@
                         </select>
                     </div>
                 </div>
-
+            </div>
+            <div class="border-bottom pt-3 pb-4">
+                <div class="row">
+                    <div style="margin-left:18px;width:300px;">
+                        <h4 style="color:rgba(255, 255, 255, 0.283);font-size:12px;font-weight:400">DIAS DE ANTICIPACION</h4>
+                        <select class="form-select" wire:change="setDiasAnticipacion($event.target.value)">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                </div>
             </div>
             <div class="table-responsive">
                 <table class="table table-vcenter card-table">
@@ -66,7 +80,7 @@
                                 <button class="btn btn-outline-primary" wire:click="configurarDia">Añadir</button></td>
 
                             </td>
-                            
+
                         </tr>
                         @foreach($dias as $dia)
                         <tr>
@@ -117,9 +131,9 @@
                 }).then((result) => {
             //if user clicks on delete
                     if (result.value) {
-                
+
                         @this.call('eliminarItem',itemId)
-                
+
                     }
                 });
             });

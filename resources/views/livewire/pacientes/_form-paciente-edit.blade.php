@@ -891,9 +891,7 @@
               }).then((result) => {
           //if user clicks on delete
                   if (result.value) {
-
                       @this.call('quitarPatologia',itemId)
-
                   }
               });
           });
