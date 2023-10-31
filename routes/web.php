@@ -79,6 +79,8 @@ Route::get('receta/impresion/{id}', [PrintController::class, 'receta'])->name('r
 
 //Rutas con Auth
 Route::group(['middleware' => ['auth']], function () {
+
+    Route::view('/grows/estadisticas', 'backend.grows.grow-estadisticas-layout')->name('grows.estadisticas');
     Route::view('/dashboard', 'backend.dashboard')->name('dashboard');
     Route::view('/configuracion', 'backend.configuracion')->name('configuracion');
     Route::view('/cupones', 'backend.cupones.cupones')->name('cupones');
@@ -113,7 +115,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/grows/{id}/edit',function($id){
         return view('backend.grows.form-grow-edit', compact('id'));
     })->name('grows.edit');
-
 
     /*Route::get('/datos-medico/{id}/edit',function($id){
         return view('backend.datos-medico', compact('id'));
@@ -151,13 +152,12 @@ Route::group(['middleware' => ['auth']], function () {
 
 //Rutas del turnero
 Route::view('/turnero', 'turnero.login')->name('turnero');
+
 Route::group(['middleware' => [TurneroLogin::class]], function () {
     Route::view('/turnero/mipanel', 'turnero.panel')->name('turnero.panel');
-
     Route::view('/turnero/datos', 'turnero.datos')->name('turnero.datos');
     Route::view('/turnero/turnos', 'turnero.turnos')->name('turnero.turnos');
     Route::view('/turnero/misturnos', 'turnero.mis-turnos')->name('turnero.misturnos');
-
     Route::view('/turnero/confirmar', 'turnero.confirmar')->name('turnero.confirmar');
     Route::view('/turnero/pagos', 'turnero.pagos')->name('turnero.pagos');
 
@@ -165,16 +165,19 @@ Route::group(['middleware' => [TurneroLogin::class]], function () {
         $result = 0;
         return view('turnero.pagar', compact('medio','result'));
     })->name('turnero.pagar');
+
     Route::get('/turnero/mp-success',function(){
         $medio = 3;
         $result = 1;
         return view('turnero.pagar', compact('medio','result'));
     })->name('turnero.mp-success');
+
     Route::get('/turnero/mp-failure',function(){
         $medio = 3;
         $result = 2;
         return view('turnero.pagar', compact('medio','result'));
     })->name('turnero.mp-failure');
+
     Route::get('/turnero/mp-pending',function(){
         $medio = 3;
         $result = 3;
@@ -183,7 +186,6 @@ Route::group(['middleware' => [TurneroLogin::class]], function () {
 
 
     Route::view('/turnero/confirmado', 'turnero.confirmado')->name('turnero.confirmado');
-
 });
 
 require __DIR__.'/auth.php';

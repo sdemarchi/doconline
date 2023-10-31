@@ -8,7 +8,7 @@ use App\Http\Controllers\Api\PacienteController;
 use App\Http\Controllers\Api\TurnosController;
 use App\Http\Controllers\Api\CalendarioController;
 use App\Http\Controllers\Api\FormController;
-
+use App\Http\Controllers\Api\GrowController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -49,6 +49,8 @@ Route::post('turnero.comprobante', [TurnosController::class, 'uploadComprobante'
 Route::get('turnero.calendario/{mes}/{anio}/{prestador}', [CalendarioController::class, 'getCalendario']);
 
 Route::get('provincias', [pacienteController::class, 'getProvincias']);
+Route::get('grow/{route}', [GrowController::class, 'getGrowByRoute']);
+
 Route::get('contactos', [pacienteController::class, 'getContactos']);
 Route::get('ocupaciones', [pacienteController::class, 'getOcupaciones']);
 Route::get('dolencias', [pacienteController::class, 'getDolencias']);

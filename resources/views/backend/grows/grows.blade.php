@@ -10,8 +10,8 @@
                 <a href="{{ route('grows.create') }}" class="btn btn-primary float-sm-end">Nuevo Grow</a>
             </div>
         </div>
-        
-        
+
+
     </x-slot>
 
     <div class="py-12" style="width:auto !important; max-width:none !important;">
@@ -25,6 +25,6 @@
     </div>
 
     <x-slot name="scripts">
-        
+
     </x-slot>
 </x-backend-fluid-layout>

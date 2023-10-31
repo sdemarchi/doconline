@@ -18,7 +18,7 @@ class HorasTrabajadas extends Component
 
     public $userId, $usuarios, $mesActual, $anioActual, $anioReferencia;
     public $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
-    
+
     public function mount(){
         $this->mesActual = date('n');
         $this->anioReferencia = date('Y');
@@ -51,11 +51,13 @@ class HorasTrabajadas extends Component
         $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "El período seleccionado se marcó como no liquidado"]);
     }
 
-    public function resetPagination(){ 
+    public function resetPagination(){
         $this->resetPage();
     }
 
-    public function refresh(){}
+    public function refresh(){
+
+    }
 
     public function liquidarMes($userId){
         $inicioMes = Carbon::createFromFormat('Y-n-d',"$this->anioActual-$this->mesActual-01");

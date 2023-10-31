@@ -32,9 +32,9 @@ class TurnosController extends Controller
         ];
 
         $date = Carbon::createFromFormat('Y-n-d',$fecha);
-        
+
         $proxTurno = $this->_getProxTurno($date, $prestadorId);
-        
+
         if($proxTurno){
             $prestador = Prestador::find($prestadorId)->nombre;
 
@@ -48,7 +48,7 @@ class TurnosController extends Controller
         }
 
         return response()->json($turno);
-        
+
     }
 
     private function _formatearFecha($fecha){
@@ -68,7 +68,7 @@ class TurnosController extends Controller
             'precioTransf' => $setting->getSetting('precioTransf'),
             'precioMP' => $setting->getSetting('precioMP')
         ];
-        
+
         return response()->json($data);
     }
 
@@ -114,13 +114,13 @@ class TurnosController extends Controller
             'descuento' => $request->input('descuento'),
         ];
         Turno::create($data);
-        
+
         $data = [
             'error' => 0
         ];
 
         return response()->json($data);
-        
+
     }
 
     public function cancelarTurno($pacienteId){
@@ -130,7 +130,7 @@ class TurnosController extends Controller
             'id' => 0,
             'detalle' => ''
         ];
-        
+
         return response()->json($data);
     }
 
@@ -162,7 +162,7 @@ class TurnosController extends Controller
 
         $request->file('file')->storeAs('assets/img/uploads',$fileName);
         rename($storagePath . $fileName, $path . $fileName);
-        
+
         $data = [
             'error' => 0,
             'filename' => $fileName,
@@ -173,11 +173,11 @@ class TurnosController extends Controller
 
     private function _getProxTurno($fecha,$prestador){
         $setting = new Setting;
-        $ordenTurnos = $setting->getSetting('OrdenTurnos'); 
-        
+        $ordenTurnos = $setting->getSetting('OrdenTurnos');
+
         $conf = $this->_getConfDia($fecha,$prestador);
         if(!$conf) return null;
-        
+
         $rango = $conf->duracion_turno;
         if($ordenTurnos == 'ASC'){
             $hora = Carbon::createFromFormat('H:i:s', $conf->hora_desde);
@@ -187,7 +187,7 @@ class TurnosController extends Controller
             $horaDesde = Carbon::createFromFormat('H:i:s', $conf->hora_desde);
             $hora->subMinutes($rango);
         }
-        
+
         $end = false;
         while(!$end){
             $turno = Turno::where('fecha',date_format($fecha,'Y-m-d'))
@@ -208,7 +208,7 @@ class TurnosController extends Controller
         }
 
         return null;
-        
+
     }
 
     private function _getConfDia($fecha,$prestador){

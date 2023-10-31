@@ -1,5 +1,4 @@
 <div>
-
     <div class="card mb-3">
         <div class="card-footer text-end">
             <div class="col">
@@ -92,6 +91,17 @@
                 </div>
 
             </div>
+<!--
+            <div class="row mb-3">
+                <div class="col-lg-6">
+                    <div class="col-sm-4">
+                        <label class="form-label">url</label>
+                        <input type="text" class="form-control" wire:model.defer="url">
+                        @error('celular')<div class="text-danger">{{ $message }}</div>@enderror
+                    </div>
+                </div>
+            </div>
+        -->
         </div>
     </div>
     <div class="card mb-3">
@@ -156,7 +166,6 @@
                         @error('observ')<div class="text-danger">{{ $message }}</div>@enderror
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -204,14 +213,14 @@
                   confirmButtonText: 'Eliminar!'
               }).then((result) => {
                   if (result.value) {
-              
+
                       @this.call('eliminar')
-              
+
                   }
               });
           });
       })
-      
+
 </script>
 
 

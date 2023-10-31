@@ -30,8 +30,8 @@ class userController extends Controller
 				$id = $usuario->id;
 				$nombre = $usuario->nombre;
 			}
-		}	
-		
+		}
+
 		$error = [
 			'code' => $code,
 			'message' => $message
@@ -61,8 +61,8 @@ class userController extends Controller
 				$id = $usuario->id;
 				$nombre = $usuario->nombre;
 			}
-		}	
-		
+		}
+
 		$error = [
 			'code' => $code,
 			'message' => $message
@@ -74,7 +74,7 @@ class userController extends Controller
 
 		return response()->json(['error' => $error, 'user' => $user]);
 	}
-	
+
 	public function loginGoogle(Request $request){
 		$email = $request->input('email');
 
@@ -89,8 +89,8 @@ class userController extends Controller
 				$message = '';
 				$id = $usuario->id;
 				$nombre = $usuario->nombre;
-		}	
-		
+		}
+
 		$error = [
 			'code' => $code,
 			'message' => $message
@@ -102,7 +102,7 @@ class userController extends Controller
 
 		return response()->json(['error' => $error, 'user' => $user]);
 	}
-	
+
 	public function loginTurnero(Request $request){
         $dni = $request->input('dni');
 		$fecha_nac = $request->input('fechaNac');
@@ -110,18 +110,18 @@ class userController extends Controller
 		$message = '';
 		$id = 0;
 		$nombre = '';
-		        
+
 		$paciente = TurnoPaciente::where('dni', $dni)->first();
         if($paciente){
 			$id = $paciente->id;
 			$nombre = $paciente->nombre ?? '';
 
 			if(!($paciente->fecha_nac == $fecha_nac)){
-				
+
 				if($paciente->nombre){//significa que ya completó el registro y no puede alterar su fecha de nacimiento
                     $code = 1;
 					$message = "Los datos de ingreso son incorrectos";
-                    
+
                 } else { //nunca completó el registro, así que puede ingresar con otra fecha de nacimiento
                     $paciente->fecha_nac = $fecha_nac;
                     $paciente->save();
@@ -132,7 +132,7 @@ class userController extends Controller
                 'dni' => $dni,
                 'fecha_nac' => $fecha_nac
             ])->id;
-            
+
         }
 		//$nombre = $nombre ?? 'No name';
 
@@ -145,7 +145,7 @@ class userController extends Controller
 			'name' => $nombre
 		];
 		return response()->json(['error' => $error, 'user' => $user]);
-		
+
     }
 
 	public function profile($id){
@@ -172,8 +172,9 @@ class userController extends Controller
 			'domicilio' => $request->input('domicilio'),
 			'telefono' => $request->input('telefono'),
 			'password' => Hash::make($request->input('password')),
+            'grow'=>$request->input('grow'),
 		];
-		
+
 
 		$user = TurnoPaciente::where('dni',$data['dni'])->first();
 		if($user){
@@ -208,13 +209,13 @@ class userController extends Controller
 			'code' => 0,
 			'message' => ''
 		];
-		
+
 		$user = [
 			'id' => $id,
 			'name' => $request->input('nombre'),
 		];
 		return response()->json(['error' => $error, 'user' => $user]);
-		
+
 	}
 
 	public function registerGoogle(Request $request){
@@ -227,8 +228,9 @@ class userController extends Controller
 			'domicilio' => $request->input('domicilio'),
 			'telefono' => $request->input('telefono'),
 			'password' => '',
+            'grow'=>$request->input('grow'),
 		];
-		
+
 
 		$user = TurnoPaciente::where('dni',$data['dni'])->first();
 		if($user){
@@ -254,13 +256,13 @@ class userController extends Controller
 			'code' => 0,
 			'message' => ''
 		];
-		
+
 		$user = [
 			'id' => $id,
 			'name' => $request->input('nombre'),
 		];
 		return response()->json(['error' => $error, 'user' => $user]);
-		
+
 	}
 
 }

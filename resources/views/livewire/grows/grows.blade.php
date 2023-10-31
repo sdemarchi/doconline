@@ -146,14 +146,14 @@
                   confirmButtonText: 'Eliminar!'
               }).then((result) => {
                   if (result.value) {
-              
+
                       @this.call('eliminar',itemId)
-              
+
                   }
               });
           });
       })
-      
+
 </script>
 
 @endpush

@@ -50,16 +50,16 @@ class User extends Authenticatable
         } else {
             return false;
         }
-    } 
-    
+    }
+
     public function esEditor(){
         if($this->role_id == 1){
             return true;
         } else {
             return false;
         }
-    } 
-    
+    }
+
     public function role(){
         return $this->belongsTo(Role::class, 'role_id');
     }

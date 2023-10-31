@@ -49,8 +49,12 @@
                 <a class="dropdown-item" href="{{ route('grows') }}" >
                   Grows
                 </a>
+                <a class="dropdown-item" href="{{ route('grows.estadisticas') }}" >
+                  Estadisticas
+                </a>
               </div>
             </li>
+
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
                 <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
@@ -99,7 +103,7 @@
                   Turnero
                 </span>
               </a>
-              
+
               <div class="dropdown-menu">
                 <a class="dropdown-item" href="{{ route('turnos') }}" >
                   Lista
@@ -155,8 +159,8 @@
                 </a>
               </div>
             </li>
-            
-          
+
+
         </div>
       </div>
     </div>

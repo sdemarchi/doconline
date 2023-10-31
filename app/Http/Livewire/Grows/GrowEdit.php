@@ -14,11 +14,11 @@ class GrowEdit extends Component
 {
     use WithFileUploads;
 
-    public $nombre, $cbu, $alias, $titular, $mail, $instagram, $celular, $idprovincia, 
+    public $nombre, $cbu, $alias, $titular, $mail, $instagram, $celular, $idprovincia,
     $localidad, $direccion, $cp, $cod_desc, $fe_ingreso, $observ, $activo, $imagen1, $imagen2;
-    public $imagen1_path, $imagen2_path;
+    public $imagen1_path, $imagen2_path,$url;
     public $growId;
-    
+
     protected $rules = [
         'nombre' => 'required|max:100',
         'cbu' => 'max:22',
@@ -34,6 +34,7 @@ class GrowEdit extends Component
         'cod_desc' => 'max:30',
         'fe_ingreso' => '',
         'observ' => 'max:1000',
+        'url'=>'max:25',
         'activo' => '',
         'imagen1_path' => '',
         'imagen2_path' => '',
@@ -59,6 +60,9 @@ class GrowEdit extends Component
             $this->activo = $grow->activo;
             $this->imagen1_path = $grow->imagen1;
             $this->imagen2_path = $grow->imagen2;
+            if($grow->url!==null){
+                $this->url = $grow->url;
+            }
         } else {
             $this->fe_ingreso = date('Y-m-d');
         }
@@ -89,7 +93,8 @@ class GrowEdit extends Component
             'observ' => $this->observ,
             'activo' => $this->activo,
             'imagen1' => $this->imagen1_path,
-            'imagen2' => $this->imagen2_path
+            'imagen2' => $this->imagen2_path,
+            'url'=> $this->url
         ];
         if($this->growId){
             Grow::find($this->growId)->update($dataGrow);
@@ -97,13 +102,13 @@ class GrowEdit extends Component
             $this->growId = Grow::create($dataGrow)->idgrow;
         }
         $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "El Grow se guardó con éxito"]);
-        
+
     }
 
     public function eliminar(){
         Grow::find($this->growId)->delete();
-        $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Se eliminó el Grow"]); 
-        return redirect(route('grows'));   
+        $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Se eliminó el Grow"]);
+        return redirect(route('grows'));
     }
 
     public function updatedImagen1(){
@@ -119,7 +124,7 @@ class GrowEdit extends Component
 
         $this->imagen1->storeAs('assets/img/uploads', $fileName);
         rename($storagePath . $fileName, $path . $fileName);
-                  
+
         $this->imagen1_path = $fileName;
         if($this->growId){ //Si está editando, actualiza el registro directamente
             Grow::find($this->growId)->update(['imagen1' => $this->imagen1_path]);
@@ -149,7 +154,7 @@ class GrowEdit extends Component
 
         $this->imagen2->storeAs('assets/img/uploads', $fileName);
         rename($storagePath . $fileName, $path . $fileName);
-                  
+
         $this->imagen2_path = $fileName;
         if($this->growId){ //Si está editando, actualiza el registro directamente
             Grow::find($this->growId)->update(['imagen2' => $this->imagen2_path]);

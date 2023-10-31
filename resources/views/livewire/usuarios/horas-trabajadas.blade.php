@@ -1,4 +1,4 @@
-<div>  
+<div>
   <div class="row row-cards">
     <div class="col-12">
       <div class="card">
@@ -22,7 +22,7 @@
               </select>
             </div>
           </div>
-          
+
 
           <div class="table-responsive">
             <table class="table table-vcenter card-table">
@@ -50,7 +50,7 @@
                         <button class="dropdown-item" wire:click="liquidarMes('{{ $usuario['id'] }}')">
                           Liquidar Mes
                         </button>
-                        
+
                       </div>
                   </td>
                 </tr>
@@ -68,7 +68,7 @@
     <div class="col-12">
       <div class="card">
         <div class="card-body border-bottom pt-3 pb-4">
-          
+
           <div class="row">
             <div class="col">
               <h3>Registros de ingreso y egreso</h3>
@@ -82,7 +82,7 @@
               </select>
             </div>
           </div>
-          
+
         </div>
         <div class="table-responsive">
           <table class="table table-vcenter card-table">
