@@ -21,7 +21,7 @@ class PacientesExport implements FromCollection, ShouldAutoSize, WithHeadings, W
 
     public function headings(): array
     {
-    return ['id','Cod. Descto.','E-Mail','Nombre y Apellido','DNI','Fecha Nac.','Domicilio','Localidad',
+    return ['id','Cod. Descto.','E-Mail','Celular','Nombre y Apellido','DNI','Fecha Nac.','Domicilio','Localidad',
             'Fecha de Carga','Cod. Vinc.','Contacto','Contacto Otro','Pagado','Pagado 2023','Estado'];
     }   
 
@@ -31,6 +31,7 @@ class PacientesExport implements FromCollection, ShouldAutoSize, WithHeadings, W
             $paciente->idpaciente,
             $paciente->cod_descto,
             $paciente->email,
+            $paciente->celular,
             $paciente->nom_ape,
             $paciente->dni,
             date_format(date_create($paciente->fe_nacim),"d-m-Y"),
