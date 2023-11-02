@@ -180,11 +180,11 @@ class TurnosController extends Controller
 
         $rango = $conf->duracion_turno;
         if($ordenTurnos == 'ASC'){
-            $hora = Carbon::createFromFormat('H:i:s', $conf->hora_desde);
-            $horaHasta = Carbon::createFromFormat('H:i:s', $conf->hora_hasta);
+            $hora = Carbon::createFromFormat('H:i:s', $conf->hora_desde_1);
+            $horaHasta = Carbon::createFromFormat('H:i:s', $conf->hora_hasta_1);
         } else {
-            $hora = Carbon::createFromFormat('H:i:s', $conf->hora_hasta);
-            $horaDesde = Carbon::createFromFormat('H:i:s', $conf->hora_desde);
+            $hora = Carbon::createFromFormat('H:i:s', $conf->hora_hasta_1);
+            $horaDesde = Carbon::createFromFormat('H:i:s', $conf->hora_desde_1);
             $hora->subMinutes($rango);
         }
 

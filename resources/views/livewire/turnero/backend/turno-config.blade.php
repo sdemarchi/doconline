@@ -38,8 +38,12 @@
                     <thead>
                         <tr>
                             <th>Día</th>
-                            <th>Desde</th>
-                            <th>Hasta</th>
+                            <th>Desde 1</th>
+                            <th>Hasta 1</th>
+                            <th>Desde 2</th>
+                            <th>Hasta 2</th>
+                            <th>Desde 3</th>
+                            <th>Hasta 3</th>
                             <th>Durac. Turno (min)</th>
                             <th width="30"></th>
 
@@ -63,14 +67,38 @@
                                 @enderror
                             </td>
                             <td>
-                                <input type="time" class="form-control" wire:model.defer="desdeAgregar">
-                                @error('desdeAgregar')
+                                <input type="time" class="form-control" wire:model.defer="desdeAgregar1">
+                                @error('desdeAgregar1')
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </td>
                             <td>
-                                <input type="time" class="form-control" wire:model.defer="hastaAgregar">
-                                @error('hastaAgregar')
+                                <input type="time" class="form-control" wire:model.defer="hastaAgregar1">
+                                @error('hastaAgregar1')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </td>
+                            <td>
+                                <input type="time" class="form-control" wire:model.defer="desdeAgregar2">
+                                @error('desdeAgregar2')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </td>
+                            <td>
+                                <input type="time" class="form-control" wire:model.defer="hastaAgregar2">
+                                @error('hastaAgregar2')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </td>
+                            <td>
+                                <input type="time" class="form-control" wire:model.defer="desdeAgregar3">
+                                @error('desdeAgregar3')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </td>
+                            <td>
+                                <input type="time" class="form-control" wire:model.defer="hastaAgregar3">
+                                @error('hastaAgregar3')
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </td>
@@ -89,8 +117,12 @@
                         @foreach($dias as $dia)
                         <tr>
                             <td>{{ $dia->dia() }}</td>
-                            <td>{{ $dia->hora_desde }}</td>
-                            <td>{{ $dia->hora_hasta }}</td>
+                            <td>{{ $dia->hora_desde_1 }}</td>
+                            <td>{{ $dia->hora_hasta_1 }}</td>
+                            <td>{{ $dia->hora_desde_2 }}</td>
+                            <td>{{ $dia->hora_hasta_2 }}</td>
+                            <td>{{ $dia->hora_desde_3 }}</td>
+                            <td>{{ $dia->hora_hasta_3 }}</td>
                             <td>{{ $dia->duracion_turno }} minutos</td>
                             <td class="ps-2 p-0">
                                 <button class="btn btn-ghost-light btn-icon"
