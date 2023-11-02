@@ -38,6 +38,7 @@ Route::get('paciente.turno/{id}', [UserController::class, 'getTurnoPaciente']);
 
 Route::get('turnero.prestadores', [TurnosController::class, 'getPrestadores']);
 Route::get('turnero.turno/{fecha}/{prestadorId}', [TurnosController::class, 'getTurno']);
+Route::get('turnero.turnos/{fecha}/{prestadorId}', [TurnosController::class, 'getTurnos']);
 Route::get('turnero.precios', [TurnosController::class, 'getPrecios']);
 Route::get('turnero.cupon/{cupon}', [TurnosController::class, 'aplicarCupon']);
 Route::get('turnero.datosTransf/', [TurnosController::class, 'getDatosTransf']);

@@ -51,6 +51,67 @@ class TurnosController extends Controller
 
     }
 
+    public function getTurnos($fecha, $prestadorId){
+        $turno1 = [
+            'fecha' => '',
+            'hora' => '',
+            'detalle' => ''
+        ];
+        $turno2 = [
+            'fecha' => '',
+            'hora' => '',
+            'detalle' => ''
+        ];
+        $turno3 = [
+            'fecha' => '',
+            'hora' => '',
+            'detalle' => ''
+        ];
+
+        $date = Carbon::createFromFormat('Y-n-d',$fecha);
+
+        $proxTurno1 = $this->_getProxTurno($date, $prestadorId);
+        $proxTurno2 = $this->_getProxTurno2($date, $prestadorId);
+        $proxTurno3 = $this->_getProxTurno3($date, $prestadorId);
+        
+        if($proxTurno1){
+            $prestador = Prestador::find($prestadorId)->nombre;
+
+            $date = date_create($fecha . ' ' . $proxTurno1);
+            $fechaFormateada = $this->_formatearFecha($fecha);
+            $turno1 = [
+                'fecha' => $fecha,
+                'hora' => $proxTurno1,
+                'detalle' => date_format($date,"H:i") . ' - ' . $fechaFormateada .  ' - ' . $prestador
+            ];
+        }
+        if($proxTurno2){
+            $prestador = Prestador::find($prestadorId)->nombre;
+
+            $date = date_create($fecha . ' ' . $proxTurno2);
+            $fechaFormateada = $this->_formatearFecha($fecha);
+            $turno2 = [
+                'fecha' => $fecha,
+                'hora' => $proxTurno2,
+                'detalle' => date_format($date,"H:i") . ' - ' . $fechaFormateada .  ' - ' . $prestador
+            ];
+        }
+        if($proxTurno3){
+            $prestador = Prestador::find($prestadorId)->nombre;
+
+            $date = date_create($fecha . ' ' . $proxTurno3);
+            $fechaFormateada = $this->_formatearFecha($fecha);
+            $turno3 = [
+                'fecha' => $fecha,
+                'hora' => $proxTurno3,
+                'detalle' => date_format($date,"H:i") . ' - ' . $fechaFormateada .  ' - ' . $prestador
+            ];
+        }
+
+        return response()->json([$turno1,$turno2,$turno3]);
+
+    }
+
     private function _formatearFecha($fecha){
         $fechaPhp = date_create($fecha);
         $mes = $this->meses[intval(date_format($fechaPhp,"m"))-1];
@@ -211,6 +272,85 @@ class TurnosController extends Controller
 
     }
 
+    private function _getProxTurno2($fecha,$prestador){
+        $setting = new Setting;
+        $ordenTurnos = $setting->getSetting('OrdenTurnos');
+
+        $conf = $this->_getConfDia($fecha,$prestador);
+        if(!$conf) return null;
+
+        $rango = $conf->duracion_turno;
+        if($ordenTurnos == 'ASC'){
+            $hora = Carbon::createFromFormat('H:i:s', $conf->hora_desde_2);
+            $horaHasta = Carbon::createFromFormat('H:i:s', $conf->hora_hasta_2);
+        } else {
+            $hora = Carbon::createFromFormat('H:i:s', $conf->hora_hasta_2);
+            $horaDesde = Carbon::createFromFormat('H:i:s', $conf->hora_desde_2);
+            $hora->subMinutes($rango);
+        }
+
+        $end = false;
+        while(!$end){
+            $turno = Turno::where('fecha',date_format($fecha,'Y-m-d'))
+                ->where('hora',date_format($hora,'H:i:s'))
+                ->where('prestador_id',$prestador)
+                ->first();
+            if($turno){
+                if($ordenTurnos == 'ASC'){
+                    $hora->addMinutes($rango);
+                    if($hora > $horaHasta) $end = true;
+                } else {
+                    $hora->subMinutes($rango);
+                    if($hora < $horaDesde) $end = true;
+                }
+            } else {
+                return $hora->format('H:i');
+            }
+        }
+
+        return null;
+
+    }
+
+    private function _getProxTurno3($fecha,$prestador){
+        $setting = new Setting;
+        $ordenTurnos = $setting->getSetting('OrdenTurnos');
+
+        $conf = $this->_getConfDia($fecha,$prestador);
+        if(!$conf) return null;
+
+        $rango = $conf->duracion_turno;
+        if($ordenTurnos == 'ASC'){
+            $hora = Carbon::createFromFormat('H:i:s', $conf->hora_desde_3);
+            $horaHasta = Carbon::createFromFormat('H:i:s', $conf->hora_hasta_3);
+        } else {
+            $hora = Carbon::createFromFormat('H:i:s', $conf->hora_hasta_3);
+            $horaDesde = Carbon::createFromFormat('H:i:s', $conf->hora_desde_3);
+            $hora->subMinutes($rango);
+        }
+
+        $end = false;
+        while(!$end){
+            $turno = Turno::where('fecha',date_format($fecha,'Y-m-d'))
+                ->where('hora',date_format($hora,'H:i:s'))
+                ->where('prestador_id',$prestador)
+                ->first();
+            if($turno){
+                if($ordenTurnos == 'ASC'){
+                    $hora->addMinutes($rango);
+                    if($hora > $horaHasta) $end = true;
+                } else {
+                    $hora->subMinutes($rango);
+                    if($hora < $horaDesde) $end = true;
+                }
+            } else {
+                return $hora->format('H:i');
+            }
+        }
+
+        return null;
+
+    }
     private function _getConfDia($fecha,$prestador){
         $dia = $fecha->format('N');
         $conf = TurnoConf::where('dia_semana',$dia)->where('prestador_id',$prestador)->first();
