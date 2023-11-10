@@ -132,6 +132,15 @@ class CalendarioController extends Controller
 
     }
 
+    public function excedeMargen($prestador){ //Devuelve 1 cuando el margen de días excede el mes
+        $ultimoViernes = Carbon::now()->endOfMonth()->next('friday');
+        $diaLimite = Carbon::now()->addDays(Prestador::find($prestador)->dias_anticipacion);
+        $excede = 0;
+        if($diaLimite > $ultimoViernes){
+            $excede = 1;
+        }
+        return response()->json(['excede' => $excede]);
+    }
 
 }
 
