@@ -297,8 +297,13 @@ class FormPacienteEdit extends Component
         $desdeText = '';
         $vinculadoText = 'factores personales';
         $factoresLaborales  = false;
+        $patologiasCount = 0;
 
-        if(count($this->patologias) > 1){
+        if($this->patologias !== null){
+            $patologiasCount = count($this->patologias);
+        }
+
+        if($patologiasCount > 1){
             $desdeText = 'Desde los años ';
 
             foreach($this->patologias as $key => $patologia){
@@ -323,7 +328,7 @@ class FormPacienteEdit extends Component
 
             $desdeText = $desdeText . ' respectivamente.';
 
-        }else if(count($this->patologias) == 1){
+        }else if($patologiasCount == 1){
             $desdeText = 'desde el año ';
 
             foreach($this->patologias as $patologia){
