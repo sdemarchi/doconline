@@ -316,7 +316,7 @@ class FormPacienteEdit extends Component
                     $desdeText =  $desdeText . $patologia->anio_aprox;
 
                 }else if($key + 2 < count($this->patologias)){
-                    $patologiasText = $patologiasText . $patologia->patologia->dolencia . ',';
+                    $patologiasText = $patologiasText . $patologia->patologia->dolencia . ', ';
                     $desdeText =  $desdeText . $patologia->anio_aprox  . ', ';
                 }
             }

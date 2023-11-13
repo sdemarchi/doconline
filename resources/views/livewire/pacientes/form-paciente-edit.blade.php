@@ -1059,9 +1059,8 @@
 
     </div>
 
-  </div>
 </div>
-
+</div>
 @push('scripts')
 @if(!$pacienteId)
 <script type="text/javascript">
@@ -1070,7 +1069,6 @@
           $("#aclaracion").jSignature({syncFormat: 'PNG', height:200})
           $("#firma").jSignature("importData","<?php echo $firma ?>");
           $("#aclaracion").jSignature("importData","<?php echo $aclaracion ?>");
-
       });
       document.addEventListener('refresh', function () {
         $("#firma").jSignature({syncFormat: 'PNG', height:200})
@@ -1078,7 +1076,6 @@
         $("#firma").jSignature("importData","<?php echo $firma ?>");
         $("#aclaracion").jSignature("importData","<?php echo $aclaracion ?>");
       });
-
       document.addEventListener('DOMContentLoaded', function () {
             @this.on('guardar', ()  => {
               //e.preventDefault();
@@ -1087,7 +1084,6 @@
               @this.call('setFirma',firmaData);
               @this.call('setAclaracion',aclaracData);
               @this.call('update');
-
             });
         });
       document.addEventListener('DOMContentLoaded', function () {
@@ -1107,7 +1103,6 @@
           //e.preventDefault();
           let firmaData =  $('#firma').jSignature('getData', 'default');
           @this.call('guardarFirma',firmaData);
-
         });
       });
       document.addEventListener('DOMContentLoaded', function () {
@@ -1123,12 +1118,10 @@
   document.addEventListener('DOMContentLoaded', function () {
     @this.on('guardar', ()  => {
       @this.call('update');
-
     });
   });
   </script>
 @endif
-
 <script type="text/javascript">
   document.addEventListener('DOMContentLoaded', function () {
           @this.on('triggerDelete', itemId => {
@@ -1144,13 +1137,12 @@
               }).then((result) => {
           //if user clicks on delete
                   if (result.value) {
-
                       @this.call('quitarPatologia',itemId)
-
                   }
               });
+            });
           });
-      })
+
 </script>
 
 <script type="text/javascript">
