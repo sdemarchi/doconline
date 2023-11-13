@@ -49,6 +49,7 @@ Route::get('turnero.cancelar/{pacienteId}', [TurnosController::class, 'cancelarT
 Route::get('paciente.turno/{id}', [TurnosController::class, 'getTurnoPaciente']);
 Route::post('turnero.comprobante', [TurnosController::class, 'uploadComprobante']);
 
+Route::get('turnero.excedeMargen/{prestador}', [CalendarioController::class, 'excedeMargen']);
 Route::get('turnero.calendario/{mes}/{anio}/{prestador}', [CalendarioController::class, 'getCalendario']);
 
 Route::get('provincias', [pacienteController::class, 'getProvincias']);
