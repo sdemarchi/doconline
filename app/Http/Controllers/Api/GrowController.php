@@ -14,4 +14,9 @@ class GrowController extends Controller
         $grow = Grow::where('cod_desc','like', $url)->first();
         return response()->json($grow);
     }
+
+    public function getGrowById($id){
+        $grow = Grow::where('idgrow','like', $id)->first();
+        return response()->json($grow);
+    }
 }

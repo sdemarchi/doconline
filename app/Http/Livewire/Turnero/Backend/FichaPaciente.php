@@ -9,14 +9,14 @@ use App\Models\TurnoPaciente;
 class FichaPaciente extends Component
 {
     public $pacienteId, $paciente;
-    
+
     protected $rules = [
         'paciente.nombre' => '',
         'paciente.dni' => '',
         'paciente.fecha_nac' => '',
         'paciente.nombre' => '',
         'paciente.telefono' => '',
-        'paciente.direccion' => '',    
+        'paciente.direccion' => '',
         'paciente.email' => '',
     ];
     public function render()

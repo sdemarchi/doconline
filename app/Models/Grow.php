@@ -12,7 +12,7 @@ class Grow extends Model
     protected $primaryKey = 'idgrow';
 
     protected $fillable = ['nombre','cbu','alias','titular','mail','instagram','celular','idprovincia',
-                            'localidad','direccion','cp','cod_desc','fe_ingreso','observ','activo',
+                            'localidad','direccion','cp','cod_desc','fe_ingreso','observ','activo','descuento',
                             'imagen1','imagen2','url'];
 
     public function provincia(){

@@ -28,6 +28,13 @@ class FormPacienteEdit extends Component
     public $pacienteId, $patologias, $patologiaAgregar;
     public $_turno = ['hola'];
     public $cupon = 'No uso cupon';
+    public $paginaSeleccionada = 1;
+    public $pestPacClass = 'ficha-pestaña-select';
+    public $pestMedClass = 'ficha-pestaña-button';
+    public $pestPatClass  = 'ficha-pestaña-button';
+    public $pestTutorClass = 'ficha-pestaña-button';
+    public $pestDefClass = 'ficha-pestaña-button';
+
     public $pagado, $estado, $fe_carga, $fe_aprobacion, $email, $nom_ape, $dni, $fe_nacim, $cod_vincu,
             $edad, $domicilio, $localidad, $idprovincia, $cp, $ocupacion, $celular, $osocial,
             $comentario, $foto_firma, $foto_firma_img, $firma, $aclaracion, $arritmia, $salud_mental,
@@ -104,6 +111,32 @@ class FormPacienteEdit extends Component
 
     ];
 
+    public function cambiarPestana($pest){
+        $this->paginaSeleccionada = $pest;
+        $this->pestPacClass = 'ficha-pestaña-button';
+        $this->pestMedClass = 'ficha-pestaña-button';
+        $this->pestPatClass  = 'ficha-pestaña-button';
+        $this->pestTutorClass = 'ficha-pestaña-button';
+        $this->pestDefClass = 'ficha-pestaña-button';
+
+        if($pest  === 1 ){
+            $this->pestPacClass = 'ficha-pestaña-select';
+        }
+        if($pest  == 2 ){
+            $this->pestTutorClass = 'ficha-pestaña-select';
+        }
+        if($pest  == 3 ){
+            $this->pestPatClass = 'ficha-pestaña-select';
+        }
+        if($pest  == 4 ){
+            $this->pestMedClass= 'ficha-pestaña-select';
+        }
+        if($pest  == 5 ){
+            $this->pestDefClass= 'ficha-pestaña-select';
+        }
+
+    }
+
     public function getTurno(){
         $_turno = Turno::where('paciente_id', $this->pacienteId)->first();
     }
@@ -178,7 +211,6 @@ class FormPacienteEdit extends Component
             $this->tut_mail = $paciente->tut_mail;
             $this->tut_osocial = $paciente->tut_osocial;
             $this->tut_reg_fam = $paciente->tut_reg_fam;
-
             $this->res_historia = $paciente->res_historia;
             $this->beneficios = $paciente->beneficios;
             $this->justificacion = $paciente->justificacion;
@@ -198,11 +230,7 @@ class FormPacienteEdit extends Component
             //Autocompletado de campos incompletos en la edición
             if($this->diagnostico == '') $this->diagnostico = $this->_generarDoloresNombres();
             if(!$this->res_historia){
-                    $this->res_historia = "Paciente de $this->edad años. Que trabaja como $this->ocupacion. Con antecedentes de $this->diagnostico "
-                . "desde el año __. Dicho problema de salud "
-                . "está vinculado a ___. No medicado. Consulta por ___. Solicita tratamiento alternativo como lo es el "
-                . "cannabis medicinal. "
-                . "Al día de la fecha no se considera necesario la interconsulta con un especialista.";
+                    $this->res_historia = $this->generarHistoria();
             }
             if(!$this->beneficios){
                 $this->beneficios = "Mejorar los síntomas citados y disminuir o evitar el uso de fármacos con sus respectivos efectos adversos";
@@ -244,10 +272,11 @@ class FormPacienteEdit extends Component
             $this->alergia = 0;
             $this->embarazada = 0;
             $this->maneja_maq = 0;
-            $this->res_historia = "Paciente de __ años. Que trabaja como ocupacion. Con antecedentes de __ desde el año __. Dicho problema de salud "
+            $this->res_historia = "Paciente de ___ años. Que trabaja como ___. Con antecedentes de __ desde el año __. Dicho problema de salud "
                                     . "está vinculado a ___. No medicado. Consulta por ___. Solicita tratamiento alternativo como lo es el "
                                     . "cannabis medicinal. "
                                     . "Al día de la fecha no se considera necesario la interconsulta con un especialista.";
+
             $this->beneficios = "Mejorar los síntomas citados y disminuir o evitar el uso de fármacos con sus respectivos efectos adversos";
             $this->justificacion = "Mejorar los síntomas citados y disminuir o evitar el uso de fármacos con sus respectivos efectos adversos";
             $this->producto_indicado = "Hasta 30 mg de CBD al día según requerimiento. Vía oral o inhalada. THC misma dosis vía tópica. Durante tres años.";
@@ -263,6 +292,61 @@ class FormPacienteEdit extends Component
 
     }
 
+    public function generarHistoria(){
+        $patologiasText = '';
+        $desdeText = '';
+        $vinculadoText = 'factores personales';
+        $factoresLaborales  = false;
+
+        if(count($this->patologias) > 1){
+            $desdeText = 'Desde los años ';
+
+            foreach($this->patologias as $key => $patologia){
+
+                if($factoresLaborales === false){
+                    $factoresLaborales = $patologia->prob_trabajo == 1;
+                }
+
+                if($key + 2 == count($this->patologias)){
+                    $patologiasText = $patologiasText . $patologia->patologia->dolencia . ' y';
+                    $desdeText =  $desdeText . $patologia->anio_aprox. ' y ';
+
+                }else if($key + 2 > count($this->patologias)){
+                    $patologiasText = $patologiasText . $patologia->patologia->dolencia . '. ';
+                    $desdeText =  $desdeText . $patologia->anio_aprox;
+
+                }else if($key + 2 < count($this->patologias)){
+                    $patologiasText = $patologiasText . $patologia->patologia->dolencia . ',';
+                    $desdeText =  $desdeText . $patologia->anio_aprox  . ', ';
+                }
+            }
+
+            $desdeText = $desdeText . ' respectivamente.';
+
+        }else if(count($this->patologias) == 1){
+            $desdeText = 'desde el año ';
+
+            foreach($this->patologias as $patologia){
+                $patologiasText = $patologiasText . $patologia->patologia->dolencia;
+                $desdeText = $desdeText . $patologia->anio_aprox;
+                $desdeText = $desdeText . '. ';
+            }
+        }else {
+            $patologiasText = ' ____.';
+            $desdeText = 'Desde el año ____.';
+        }
+
+
+        if($factoresLaborales){
+            $vinculadoText = $vinculadoText . ' y/o laborales.';
+        }
+
+        $this->res_historia = "Paciente de $this->edad años. Que trabaja como $this->ocupacion. Con antecedentes de$patologiasText $desdeText Dicho problema de salud "
+        . "está vinculado a $vinculadoText. No medicado. Consulta por ___. Solicita tratamiento alternativo como lo es el "
+        . "cannabis medicinal. "
+        . "Al día de la fecha no se considera necesario la interconsulta con un especialista.";
+    }
+
     private function _generarDoloresNombres(){
         foreach($this->dolores as $dol){
             if($dol){
@@ -270,6 +354,7 @@ class FormPacienteEdit extends Component
                 $this->doloresNombres[] = $dolencia->dolencia;
             }
         }
+
         return implode(',',$this->doloresNombres);
     }
 
@@ -284,6 +369,7 @@ class FormPacienteEdit extends Component
         $tratamientos = Tratamiento::get();
         $productos = Producto::get();
         $this->dispatchBrowserEvent('refresh');
+
         if($this->pacienteId) $this->patologias = PacientePatologia::where('idpaciente',$this->pacienteId)->get();
         return view('livewire.pacientes.form-paciente-edit', compact('provincias', 'dolencias', 'modos_contacto','beneficiosList','justificaciones','diagnosticos','tratamientos','productos'));
     }
@@ -548,8 +634,7 @@ class FormPacienteEdit extends Component
         $this->edad = $this->_getEdad($this->fe_nacim);
     }
 
-    private function _getEdad($nacimiento)
-    {
+    private function _getEdad($nacimiento){
         $fecha_nac = Carbon::createFromFormat('Y-m-d',"$nacimiento");
         $ahora =  Carbon::now();
         $diferencia = $ahora->diff($nacimiento);

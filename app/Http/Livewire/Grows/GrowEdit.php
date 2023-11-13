@@ -18,6 +18,8 @@ class GrowEdit extends Component
     $localidad, $direccion, $cp, $cod_desc, $fe_ingreso, $observ, $activo, $imagen1, $imagen2;
     public $imagen1_path, $imagen2_path,$url;
     public $growId;
+    public $linkDeRastreo = '';
+    public $descuento;
 
     protected $rules = [
         'nombre' => 'required|max:100',
@@ -42,7 +44,7 @@ class GrowEdit extends Component
 
     public function mount(){
         if($this->growId){
-            $grow =  Grow::find($this->growId);
+            $grow = Grow::find($this->growId);
             $this->nombre = $grow->nombre;
             $this->cbu = $grow->cbu;
             $this->alias = $grow->alias;
@@ -60,8 +62,13 @@ class GrowEdit extends Component
             $this->activo = $grow->activo;
             $this->imagen1_path = $grow->imagen1;
             $this->imagen2_path = $grow->imagen2;
+            $this->descuento = $grow->descuento;
+
             if($grow->url!==null){
                 $this->url = $grow->url;
+            }
+            if($grow->cod_desc){
+                $this->linkDeRastreo = 'https://doconlineargentina.com/turnero/login/'.$grow->cod_desc;
             }
         } else {
             $this->fe_ingreso = date('Y-m-d');
@@ -76,7 +83,7 @@ class GrowEdit extends Component
 
     public function update(){
         $this->validate();
-        $dataGrow=[
+        $dataGrow = [
             'nombre' => $this->nombre,
             'cbu' => $this->cbu,
             'alias' => $this->alias,
@@ -94,8 +101,10 @@ class GrowEdit extends Component
             'activo' => $this->activo,
             'imagen1' => $this->imagen1_path,
             'imagen2' => $this->imagen2_path,
-            'url'=> $this->url
+            'url'=> $this->url,
+            'descuento' => $this->descuento
         ];
+
         if($this->growId){
             Grow::find($this->growId)->update($dataGrow);
         } else {

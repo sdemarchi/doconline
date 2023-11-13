@@ -143,7 +143,13 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/pacientes.turnero/{id}/ficha',function($id){
         return view('backend.turnero.ficha-paciente', compact('id'));
     })->name('pacientes.turnero.edit');
+
     Route::view('/turnos/create', 'backend.turnero.turno-create')->name('turnos.create');
+
+    Route::get('/turnos/{pacienteId}/create',function($pacienteId){
+        return view('backend.turnero.turno-create', compact('pacienteId'));
+    })->name('turnos.create.pacienteId');
+
     Route::get('/turnos/{id}/edit',function($id){
         return view('backend.turnero.turno-edit', compact('id'));
     })->name('turnos.edit');

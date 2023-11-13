@@ -36,6 +36,8 @@ Route::post('turnero.registerGoogle', [UserController::class, 'registerGoogle'])
 Route::get('profile/{id}', [UserController::class, 'profile']);
 Route::get('paciente.turno/{id}', [UserController::class, 'getTurnoPaciente']);
 
+Route::put('paciente/{pacienteid}/setGrow/{growid}', [UserController::class, 'setPacienteGrow']);
+
 Route::get('turnero.prestadores', [TurnosController::class, 'getPrestadores']);
 Route::get('turnero.turno/{fecha}/{prestadorId}', [TurnosController::class, 'getTurno']);
 Route::get('turnero.turnos/{fecha}/{prestadorId}', [TurnosController::class, 'getTurnos']);
@@ -51,6 +53,7 @@ Route::get('turnero.calendario/{mes}/{anio}/{prestador}', [CalendarioController:
 
 Route::get('provincias', [pacienteController::class, 'getProvincias']);
 Route::get('grow/{route}', [GrowController::class, 'getGrowByRoute']);
+Route::get('grow.id/{id}', [GrowController::class, 'getGrowById']);
 
 Route::get('contactos', [pacienteController::class, 'getContactos']);
 Route::get('ocupaciones', [pacienteController::class, 'getOcupaciones']);

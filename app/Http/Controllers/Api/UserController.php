@@ -265,4 +265,18 @@ class userController extends Controller
 
 	}
 
+    public function setPacienteGrow(Request $request, $pacienteid, $grow){
+        $request = request();
+
+        $turnoPaciente = TurnoPaciente::where('id', $pacienteid)->first();
+
+        if (!$turnoPaciente) {
+            return response()->json(['error' => 'TurnoPaciente no encontrado'], 404);
+        }
+
+        $turnoPaciente->grow = $grow;
+        $turnoPaciente->save();
+
+        return response()->json(['message' => 'Propiedad "grow" actualizada con éxito']);
+    }
 }

@@ -46,7 +46,6 @@ class Calendario extends Component
             $this->fechaSeleccionada = '';
             $this->fechaSelFormateada = '';
         }
-
     }
 
     public function render()

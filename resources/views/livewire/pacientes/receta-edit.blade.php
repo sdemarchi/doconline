@@ -21,7 +21,7 @@
         </div>
     </div>
     <div class="card-body">
-        
+
         <div class="row">
             <div class="col-md-6 mt-3">
                 <div class="col-md-6">
@@ -31,6 +31,7 @@
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-md-6 mt-3">
                 <div class="col-md-8">
@@ -43,6 +44,7 @@
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-md-6 mt-3">
                 <div class="col-md-8">
@@ -88,12 +90,12 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
 </div>
 
 @push('scripts')
-    
+
     <script type="text/javascript">
         $(document).ready(function() {
             $('.select-paciente').select2({
@@ -116,6 +118,6 @@
                 }
             });
         }
-        
+
     </script>
 @endpush

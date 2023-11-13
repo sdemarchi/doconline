@@ -73,7 +73,7 @@ class TurnosController extends Controller
         $proxTurno1 = $this->_getProxTurno($date, $prestadorId);
         $proxTurno2 = $this->_getProxTurno2($date, $prestadorId);
         $proxTurno3 = $this->_getProxTurno3($date, $prestadorId);
-        
+
         if($proxTurno1){
             $prestador = Prestador::find($prestadorId)->nombre;
 
@@ -213,6 +213,8 @@ class TurnosController extends Controller
 
         return response()->json($data);
     }
+
+
 
     public function uploadComprobante(Request $request){
         $file = $request->file('file');

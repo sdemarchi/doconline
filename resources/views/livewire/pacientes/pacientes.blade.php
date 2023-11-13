@@ -20,6 +20,7 @@
                                 </svg>
                             </button>
                         </div>
+
                         <div>
                             <input id="search-input" style="height:30px;font-size:15px;" type="text" class="form-control form-control-sm" placeholder="búsqueda"
                                 wire:model.defer="searchString" wire:keydown.enter="buscarPorDatos">

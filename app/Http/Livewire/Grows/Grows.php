@@ -12,7 +12,7 @@ class Grows extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
 
-    public $idgrowSort, $nombreSort, $cbuSort, $aliasSort, $titularSort, $mailSort, $instagramSort, $celularSort, $idprovinciaSort, 
+    public $idgrowSort, $nombreSort, $cbuSort, $aliasSort, $titularSort, $mailSort, $instagramSort, $celularSort, $idprovinciaSort,
             $localidadSort, $direccionSort, $cpSort, $cod_descSort, $fe_ingresoSort, $observSort, $activoSort;
     public $searchString;
 
@@ -39,10 +39,10 @@ class Grows extends Component
                 ->orWhere('celular','like', '%' . $this->searchString . '%')
                 ->orWhere('titular','like', '%' . $this->searchString . '%');
         }
-        
+
         }
         $this->_setSortClasses();
-        return $grows->orderBy($this->sortField,$this->sortDir)->paginate(10);
+        return $grows->orderBy($this->sortField,$this->sortDir)->paginate(20);
     }
 
 
@@ -52,7 +52,7 @@ class Grows extends Component
             $this->sortDir = $this->sortDir == 'ASC' ? 'DESC' : 'ASC';
         }
     }
-    
+
     private function _setSortClasses(){
         $this->idgrowSort = '';
         $this->nombreSort = '';
@@ -121,14 +121,14 @@ class Grows extends Component
                 $this->activoSort = $this->sortDir;
                 break;
         }
-    }            
+    }
 
 public function eliminar($idPaciente){
     Grow::find($idPaciente)->delete();
     $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Se eliminó el registro del Grow"]);
 }
 
-public function resetPagination(){ 
+public function resetPagination(){
     $this->resetPage();
 }
 

@@ -104,12 +104,13 @@
         -->
         </div>
     </div>
+
     <div class="card mb-3">
         <div class="card-body border-bottom pt-3 pb-4">
             <div class="row mb-3">
                 <div class="col-lg-6">
                     <label class="form-label">Provincia *</label>
-                    <select class="form-select" wire:model.defer="idprovincia">
+                    <select class="form-select" wire:model.defer="idprovincia" style="width:300px">
                         <option value="">Seleccione Provincia</option>
                         @foreach($provincias as $pcia)
                         <option value="{{ $pcia->Id }}">{{ $pcia->Provincia }}</option>
@@ -125,6 +126,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="row mb-3">
                 <div class="col-lg-6">
                     <div class="col-sm-6">
@@ -141,6 +143,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="row mb-3">
                 <div class="col-lg-6">
                     <div class="col-sm-4">
@@ -157,7 +160,21 @@
                     </div>
                 </div>
             </div>
+
             <div class="row mb-3">
+                <div class="col-lg-6">
+                    <div class="col-sm-8">
+                        <label class="form-label">Link de rastreo</label>
+                        <div style="display:flex;flex-direction:row;">
+                            <input value={{$linkDeRastreo}} class="form-control" type="text" style="width:200px" onlyread>
+                            <button id="copiarBoton" onClick='copiarAlPortapapeles("{{$linkDeRastreo}}")' class='btn btn-primary' style="margin-left:10px;max-height:50px">Copiar</button>
+                        </div>
+                    </div>
+                    <div class="col-sm-8 mt-3">
+                        <label class="form-label">Porcentaje de descuento {{'(%)'}}</label>
+                        <input  class="form-control" type="number" wire:model.defer='descuento' style="width:300px">
+                    </div>
+                </div>
                 <div class="col-lg-6">
                     <div class="col-sm-8">
                         <label class="form-label">Observaciones</label>
@@ -169,6 +186,7 @@
             </div>
         </div>
     </div>
+
     <div class="card">
         <div class="card-body border-bottom pt-3 pb-4">
             <div class="row mb-3">
@@ -179,7 +197,7 @@
                     </div>
                     @if($imagen1_path)
                     <img class="mt-2" src="{{asset('img/uploads/' . $imagen1_path)}}" width="250" /><br />
-                    <button class="btn btn-ghost-danger mt-3" wire:click="eliminarImagen1">Eliminar Foto</button>
+                    <button class="btn btn-ghost-danger mt-3" id="edit-copiar" wire:click="eliminarImagen1">Eliminar Foto</button>
                     @endif
                 </div>
                 <div class="col-md-6 mt-3">
@@ -221,6 +239,23 @@
           });
       })
 
+      function copiarAlPortapapeles(texto) {
+        navigator.clipboard.writeText(texto)
+            .then(() => {
+                // Copiado exitoso
+                var boton = document.getElementById("copiarBoton");
+                boton.style.backgroundColor = "#58D035";
+                boton.innerHTML = "Copiado!";
+                setTimeout(function() {
+                    boton.style.backgroundColor = "";
+                    boton.innerHTML = "Copiar";
+                }, 3000); // Volver a la configuración original después de 2 segundos
+            })
+            .catch((error) => {
+                // Manejar errores, por ejemplo, si no se permite el acceso al portapapeles
+                console.error('Error al copiar al portapapeles: ', error);
+            });
+    }
 </script>
 
 
