@@ -500,6 +500,7 @@ class FormPacienteEdit extends Component
         //$this->foto_firma->storeAs('public/firmas/', $fileName);
 
         $this->foto_firma_img = $fileName;
+
         if($this->pacienteId){ //Si está editando, actualiza el registro directamente
             Paciente::find($this->pacienteId)->update(['foto_firma' => $this->foto_firma_img]);
         }

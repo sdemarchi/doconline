@@ -24,11 +24,14 @@
                 </span>
               </a>
               <div class="dropdown-menu">
-                <a class="dropdown-item" href="{{ route('pacientes') }}" >
-                  Pacientes
+                <a class="dropdown-item" href="{{ route('pacientes') }}">
+                   Pacientes
                 </a>
-                <a class="dropdown-item" href="{{ route('recetas') }}" >
-                  Recetas
+                <a class="dropdown-item" href="{{ route('recetas') }}">
+                   Recetas
+                </a>
+                <a class="dropdown-item" href="{{ route('pacientes.estadisticas') }}">
+                    Estadisticas
                 </a>
               </div>
             </li>

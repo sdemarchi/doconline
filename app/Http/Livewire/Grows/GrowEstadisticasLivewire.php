@@ -80,24 +80,30 @@ class GrowEstadisticasLivewire extends Component{
 
     public function getGrows(){
         $grows = [];
+
         foreach ($this->pacientes as $paciente) {
-            $pagaron = 0;
             $growid = $paciente['grow'];
-            if($paciente['pago']=='Si'){
-                $pagaron++;
+
+            if (!array_key_exists($growid, $grows)) {
+                $detalleGrow = Grow::select('nombre')->find($growid);
+                $grows[$growid] = [
+                    'growid' => $growid,
+                    'nombre' => $detalleGrow->nombre,
+                    'pacientes' => 0,
+                    'pagaron' => 0
+                ];
             }
 
-            if (array_key_exists($growid, $grows)) {
-                $grows[$growid]['pacientes']++;
+            $grows[$growid]['pacientes']++;
 
-            } else {
-                $detalleGrow = Grow::select('nombre')->find($growid);
-                $grows[$growid] = ['growid' => $growid,'nombre'=>$detalleGrow->nombre,'pacientes' => 1,'pagaron'=>$pagaron];
+            if ($paciente['pago'] == 'Si') {
+                $grows[$growid]['pagaron']++;
             }
         }
 
-        return $grows;
+        return array_values($grows);
     }
+
 
     public function seleccionarGrow($idGrow,$nombreGrow){
         $this->pacientesGrow = $this->filtrarPacientes($idGrow);

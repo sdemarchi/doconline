@@ -55,6 +55,9 @@
                             <th class="sorting" wire:click="sort('idpaciente')">N°
                                 <x-sort-icon :sortField="$idpacienteSort" />
                             </th>
+                            <th width=200 class="sorting" wire:click="sort('nom_ape')">Nombre y Apellido
+                                <x-sort-icon :sortField="$nom_apeSort" />
+                            </th>
                             <th class="sorting" wire:click="sort('pagado2023')">Pagado 23
                                 <x-sort-icon :sortField="$pagado2023Sort" />
                             </th>
@@ -64,109 +67,55 @@
                             <th class="sorting" wire:click="sort('fe_aprobacion')">F. Aprobac.
                                 <x-sort-icon :sortField="$fe_aprobacionSort" />
                             </th>
-                            <th class="sorting" wire:click="sort('idcontacto')">Modo Contacto
-                                <x-sort-icon :sortField="$idcontactoSort" />
-                            </th>
-                            <th width=200 class="sorting" wire:click="sort('contacto_otro')">Contacto Otro
-                                <x-sort-icon :sortField="$contacto_otroSort" />
-                            </th>
-                            <th>Decl.</th>
-                            <th>Cons.</th>
-                            <th>Wsp</th>
-                            <th>Foto Firma</th>
-                            <th>Firma</th>
-                            <th>Aclaración</th>
-                            <th width=200 class="sorting" wire:click="sort('nom_ape')">Nombre y Apellido
-                                <x-sort-icon :sortField="$nom_apeSort" />
-                            </th>
-                            <th class="sorting" wire:click="sort('dni')">DNI
-                                <x-sort-icon :sortField="$dniSort" />
-                            </th>
-                            <th class="sorting" wire:click="sort('cod_vincu')">Código Vinculación
-                                <x-sort-icon :sortField="$cod_vincuSort" />
-                            </th>
-                            <th class="sorting" wire:click="sort('edad')">Edad
-                                <x-sort-icon :sortField="$edadSort" />
-                            </th>
-                            <th class="sorting" wire:click="sort('ocupacion')">Ocupación o Trabajo
-                                <x-sort-icon :sortField="$ocupacionSort" />
-                            </th>
-                            <th width=200 class="sorting" wire:click="sort('patologia')">Patología
-                                <x-sort-icon :sortField="$patologiaSort" />
-                            </th>
-                            <th width=350 class="sorting" wire:click="sort('res_historia')">Resumen historia clínica
-                                <x-sort-icon :sortField="$res_historiaSort" />
-                            </th>
-                            <th width=200 class="sorting" wire:click="sort('diagnostico')">Diagnóstico
-                                <x-sort-icon :sortField="$diagnosticoSort" />
-                            </th>
-                            <th width=200 class="sorting" wire:click="sort('tratamiento')">Tratamiento
-                                <x-sort-icon :sortField="$tratamientoSort" />
-                            </th>
-                            <th width=200 class="sorting" wire:click="sort('justificacion')">Justificación
-                                <x-sort-icon :sortField="$justificacionSort" />
-                            </th>
-                            <th width=200 class="sorting" wire:click="sort('beneficios')">Beneficios
-                                <x-sort-icon :sortField="$beneficiosSort" />
-                            </th>
-                            <th width=350 class="sorting" wire:click="sort('comentario')">Comentario
-                                <x-sort-icon :sortField="$comentarioSort" />
-                            </th>
-                            <th width=200 class="sorting" wire:click="sort('dolores')">Dolencias
-                                <x-sort-icon :sortField="$doloresSort" />
-                            </th>
-                            <th class="sorting" wire:click="sort('conc_thc')">Conc THC
-                                <x-sort-icon :sortField="$conc_thcSort" />
-                            </th>
-                            <th class="sorting" wire:click="sort('conc_cbd')">Conc CBD
-                                <x-sort-icon :sortField="$conc_cbdSort" />
-                            </th>
-                            <th class="sorting" wire:click="sort('cant_plantas')">Cant Plantas
-                                <x-sort-icon :sortField="$cant_plantasSort" />
-                            </th>
-                            <th width=200 class="sorting" wire:click="sort('dosis')">Dosis
-                                <x-sort-icon :sortField="$dosisSort" />
-                            </th>
-                            <th class="sorting" wire:click="sort('frecuencia')">Frecuencia
-                                <x-sort-icon :sortField="$frecuenciaSort" />
-                            </th>
-                            <th width=200 class="sorting" wire:click="sort('domicilio')">Domicilio
-                                <x-sort-icon :sortField="$domicilioSort" />
-                            </th>
-                            <th width=200 class="sorting" wire:click="sort('localidad')">Localidad
-                                <x-sort-icon :sortField="$localidadSort" />
-                            </th>
-                            <th width=150 class="sorting" wire:click="sort('idprovincia')">Provincia
-                                <x-sort-icon :sortField="$idprovinciaSort" />
-                            </th>
-                            <th class="sorting" wire:click="sort('cp')">CP
-                                <x-sort-icon :sortField="$cpSort" />
-                            </th>
-                            <th class="sorting" wire:click="sort('fe_nacim')">F. Nacimiento
-                                <x-sort-icon :sortField="$fe_nacimSort" />
-                            </th>
-                            <th class="sorting" wire:click="sort('osocial')">O. Social
-                                <x-sort-icon :sortField="$osocialSort" />
-                            </th>
                             <th class="sorting" wire:click="sort('email')">E-mail
                                 <x-sort-icon :sortField="$emailSort" />
                             </th>
                             <th class="sorting" wire:click="sort('celular')">Celular
                                 <x-sort-icon :sortField="$celularSort" />
                             </th>
-                            <th class="sorting" wire:click="sort('es_menor')">Es Menor
-                                <x-sort-icon :sortField="$es_menorSort" />
-                            </th>
-                            <th class="sorting" wire:click="sort('tut_apeynom')">Tut Apeynom
-                                <x-sort-icon :sortField="$tut_apeynomSort" />
-                            </th>
-                            <th class="sorting" wire:click="sort('tut_tipo_nro_doc')">Tut Tipo Nro Doc
-                                <x-sort-icon :sortField="$tut_tipo_nro_docSort" />
-                            </th>
-                            <th class="sorting" wire:click="sort('tut_vinculo')">Tut Vinculo
-                                <x-sort-icon :sortField="$tut_vinculoSort" />
+
+                            <th>Foto Firma</th>
+                            <th>Firma</th>
+                            <th>Aclaración</th>
+
+                            <th class="sorting" wire:click="sort('dni')">DNI
+                                <x-sort-icon :sortField="$dniSort" />
                             </th>
 
+                            <th width=150 class="sorting" wire:click="sort('idprovincia')">Provincia
+                                <x-sort-icon :sortField="$idprovinciaSort" />
+                            </th>
+
+                            <!--
+                            <th width=350 class="sorting" wire:click="sort('res_historia')">Resumen historia clínica
+                                <x-sort-icon :sortField="$res_historiaSort" />
+                            </th>
+
+
+
+                            <th width=200 class="sorting" wire:click="sort('patologia')">Patología
+                                <x-sort-icon :sortField="$patologiaSort" />
+                            </th>
+
+                            <th width=200 class="sorting" wire:click="sort('dolores')">Dolencias
+                                <x-sort-icon :sortField="$doloresSort" />
+                            </th>
+
+                            -->
+                            <th class="sorting" wire:click="sort('cant_plantas')">Cant Plantas
+                                <x-sort-icon :sortField="$cant_plantasSort" />
+                            </th>
+
+
+                            <th class="sorting" wire:click="sort('idcontacto')">Modo Contacto
+                                <x-sort-icon :sortField="$idcontactoSort" />
+                            </th>
+                            <th width=200 class="sorting" wire:click="sort('contacto_otro')">Contacto Otro
+                                <x-sort-icon :sortField="$contacto_otroSort" />
+                            </th>
+                            <th width=350 class="sorting" wire:click="sort('comentario')">Comentario
+                                <x-sort-icon :sortField="$comentarioSort" />
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -206,25 +155,21 @@
                             </td>
                             <td>{{ date_format(date_create($paciente->fe_carga),"d/m/Y") }}</td>
                             <td>{{ $paciente->idpaciente }}</td>
+                            <td>{{ $paciente->nom_ape }}</td>
                             <td>{{ $paciente->pagado2023 ? 'Sí' : 'No'}}</td>
                             <td>{{ $paciente->getEstado() }}</td>
                             <td>@if($paciente->fe_aprobacion){{
                                 date_format(date_create($paciente->fe_aprobacion),"d/m/Y") }}@endif</td>
-                            <td>@if($paciente->modo_contacto){{ $paciente->modo_contacto->modo_contacto }}@endif</td>
-                            <td>{{ $paciente->contacto_otro }}</td>
-                            <td><a href="{{ route('paciente.declaracion',$paciente->idpaciente) }}" target="_blank"><img
-                                        src="{{ asset('img/icon-decl.png')}}" width="25" /></a></td>
-                            <td><a href="{{ route('paciente.consentimiento',$paciente->idpaciente) }}"
-                                    target="_blank"><img src="{{ asset('img/icon-cons.png')}}" width="25" /></a></td>
-                            <td><a href="https://wa.me/{{ $paciente->celular }}" target="_blank">
-                                    <img src="{{ asset('img/logo-whatsapp.png')}}" width="25" /></a></td>
+                            <td>{{ $paciente->email }}</td>
+                            <td>{{ $paciente->celular }}</td>
+
                             <td>
                                 @if($paciente->foto_firma)
                                 <img src="{{ asset("img/uploads/$paciente->foto_firma")}}" width="100"/>
                                 @endif
                             </td>
-                            <td>
 
+                            <td>
                                 <button class="btn btn-ghost-light btn-icon"
                                     wire:click="convertirFirmaAclaracion({{ $paciente->idpaciente }})"
                                     data-toggle="tooltip" data-placement="right" title="Importar Firma y Aclaración">
@@ -258,36 +203,17 @@
                                 <img src="{{ $paciente->firma_v2 }}" width="100" />
                             </td>
                             <td><img src="{{ $paciente->aclaracion_v2 }}" width="100" /></td>
-                            <td>{{ $paciente->nom_ape }}</td>
                             <td>{{ $paciente->dni }}</td>
-                            <td>{{ $paciente->cod_vincu }}</td>
-                            <td>{{ $paciente->edad }}</td>
-                            <td>{{ $paciente->ocupacion }}</td>
-                            <td>{{ $paciente->patologia }}</td>
-                            <td>{{ $paciente->res_historia }}</td>
-                            <td>{{ $paciente->diagnostico }}</td>
-                            <td>{{ $paciente->tratamiento }}</td>
-                            <td>{{ $paciente->justificacion }}</td>
-                            <td>{{ $paciente->beneficios }}</td>
-                            <td>{{ $paciente->comentario }}</td>
-                            <td>{!! $paciente->getDolencias() !!}</td>
-                            <td>{{ number_format($paciente->conc_thc, 2, ',', '.') }}</td>
-                            <td>{{ number_format($paciente->conc_cbd, 2, ',', '.') }}</td>
-                            <td>{{ $paciente->cant_plantas }}</td>
-                            <td>{{ $paciente->dosis }}</td>
-                            <td>{{ $paciente->frecuencia }}</td>
-                            <td>{{ $paciente->domicilio }}</td>
-                            <td>{{ $paciente->localidad }}</td>
                             <td>@if($paciente->provincia){{ $paciente->provincia->Provincia }}@endif</td>
-                            <td>{{ $paciente->cp }}</td>
-                            <td>{{ date_format(date_create($paciente->fe_nacim),"d/m/Y") }}</td>
-                            <td>{{ $paciente->osocial }}</td>
-                            <td>{{ $paciente->email }}</td>
-                            <td>{{ $paciente->celular }}</td>
-                            <td>{{ $paciente->es_menor ? 'Sí' : 'No' }}</td>
-                            <td>{{ $paciente->tut_apeynom }}</td>
-                            <td>{{ $paciente->tut_tipo_nro_doc }}</td>
-                            <td>{{ $paciente->tut_vinculo }}</td>
+                        <!--
+                            <td>{{ $paciente->res_historia }}</td>
+                            <td>{{ $paciente->patologia }}</td>
+                            <td>{!! $paciente->getDolencias() !!}</td>
+                        -->
+                            <td>{{ $paciente->cant_plantas }}</td>
+                            <td>@if($paciente->modo_contacto){{ $paciente->modo_contacto->modo_contacto }}@endif</td>
+                            <td>{{ $paciente->contacto_otro }}</td>
+                            <td>{{ $paciente->comentario }}</td>
                         </tr>
                         @endforeach
 

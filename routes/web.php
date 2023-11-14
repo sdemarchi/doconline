@@ -101,6 +101,7 @@ Route::group(['middleware' => ['auth']], function () {
         return view('backend.usuarios.usuario-egreso-edit', compact('id'));
     })->name('usuarios.egreso.edit');
 
+    Route::view('/pacientes/estadisticas', 'backend.pacientes.pacientes-estadisticas')->name('pacientes.estadisticas');
     Route::view('/pacientes', 'backend.pacientes.pacientes')->name('pacientes');
     Route::view('/pacientes/create', 'backend.pacientes.form-paciente')->name('pacientes.create');
     Route::get('/pacientes/{id}/edit',function($id){
