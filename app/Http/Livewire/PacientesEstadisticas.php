@@ -27,10 +27,10 @@ class PacientesEstadisticas extends Component
     }
 
     public function refresh(){
-        $this->pacientesContacto = [];
         $this->seleccionarContacto(0,null);
         $this->pacientes = $this->getPacientes();
         $this->contactoPacientes = $this->getContactos();
+        $this->pacientesContacto = [];
     }
 
     public $contactoSeleccionado;
@@ -95,13 +95,15 @@ class PacientesEstadisticas extends Component
                 $contactos[$contactoId]['no-pagaron'] += $noPagaron;
             } else {
                 $detalleContacto = ModoContacto::select('modo_contacto')->find($contactoId);
-                $contactos[$contactoId] = [
-                    'idcontacto' => $contactoId,
-                    'nombre' => $detalleContacto->modo_contacto,
-                    'pacientes' => 1,
-                    'pagaron' => $pagaron,
-                    'no-pagaron' => $noPagaron
-                ];
+                if($detalleContacto !== null){
+                    $contactos[$contactoId] = [
+                        'idcontacto' => $contactoId,
+                        'nombre' => $detalleContacto->modo_contacto,
+                        'pacientes' => 1,
+                        'pagaron' => $pagaron,
+                        'no-pagaron' => $noPagaron
+                    ];
+                }
             }
         }
 

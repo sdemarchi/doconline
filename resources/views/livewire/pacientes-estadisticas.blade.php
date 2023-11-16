@@ -114,11 +114,11 @@
             <div class="row">
                 <div>
                     @if(!$contactoSeleccionadoNombre)
-                        <h3 style="display:inline">Pacientes {{'(No pagaron)'}}</h3>
+                        <h3 style="display:inline">Pacientes{{'(No pagaron)'}}</h3>
                     @endif
 
                     @if($contactoSeleccionadoNombre)
-                        <h3 style="display:inline">{{$contactoSeleccionadoNombre}}  {{'(No pagaron)'}}</h3>
+                        <h3 style="display:inline">{{$contactoSeleccionadoNombre}}{{'(No pagaron)'}}</h3>
                     @endif
                 </div>
             </div>
