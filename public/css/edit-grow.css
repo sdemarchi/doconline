@@ -1,0 +1,45 @@
+.edit-grow-row{
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.edit-grow-col{
+    display:flex;
+    flex-direction: column;
+    width: 35%;
+    justify-content: flex-start;
+    margin-right: 180px;
+}
+
+.edit-grow-element{
+    margin-bottom:25px;
+}
+
+.edit-grow-input-container{
+    width: calc(24% - 8px);
+    min-width: auto;
+    margin: 15px 4px;
+}
+
+.edit-grow-inputs-row{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+@media screen and (max-width: 950px) {
+    .edit-grow-row{
+        flex-direction: column;
+    }
+
+    .edit-grow-col{
+        width: 90%;
+        margin-right:0px;
+    }
+    .edit-grow-row{
+        padding: 0 ;
+    }
+}

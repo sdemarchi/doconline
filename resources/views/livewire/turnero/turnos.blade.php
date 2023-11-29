@@ -37,24 +37,24 @@
                         <button class="encabez-calendario">jue.</button>
                         <button class="encabez-calendario">vie.</button>
                         <button class="encabez-calendario">sáb.</button>
-                        
+
                        </div>
                         <?php $i = 0; ?>
                         @foreach($calendario as $dia)
                           <?php $i++; ?>
-                          
-                            <button class="item-calendario {{$dia['inactivo']}} {{$dia['enmes']}} {{$dia['turnos']}}" 
+
+                            <button class="item-calendario {{$dia['inactivo']}} {{$dia['enmes']}} {{$dia['turnos']}}"
                             wire:click="fechaSelect('{{ $dia['fecha']}}', '{{$dia['inactivo']}}')">
                               {{ $dia['dia'] }}</button>
-                          
-                          <?php 
+
+                          <?php
                             if($i == 7){
                               echo '<br/>';
                               $i = 0;
                             }
                           ?>
                         @endforeach
-                        
+
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -64,17 +64,17 @@
                     <button class="turno" wire:click="turnoSelect({{ $turno['id']}})">
                       {{ $turno['detalle'] }}</button><br/>
                     @endforeach
-                  </div> 
-                   
-                  
+                  </div>
+
+
                 </div>
             </div>
             <div class="form-footer">
               <a class="btn btn-secondary" href="{{ route('turnero.panel') }}">Atrás</a>
-            </div>  
+            </div>
           </div>
         </div>
       </div>
-      
+
     </div>
   </div>

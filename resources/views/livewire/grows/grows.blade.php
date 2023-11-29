@@ -1,6 +1,7 @@
 <div class="row row-cards">
     <div class="col-12">
         <div class="card">
+
             <div class="card-body border-bottom py-3">
                 <div class="d-flex">
                     <div class="me-auto text-muted">
@@ -11,6 +12,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="table-responsive">
                 <table class="table table-vcenter card-table">
                     <thead>
@@ -68,6 +70,7 @@
 
                         </tr>
                     </thead>
+
                     <tbody>
                         @foreach($grows as $grow)
                         <tr>
@@ -146,9 +149,7 @@
                   confirmButtonText: 'Eliminar!'
               }).then((result) => {
                   if (result.value) {
-
                       @this.call('eliminar',itemId)
-
                   }
               });
           });

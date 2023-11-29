@@ -1,6 +1,10 @@
 <?php
-
 namespace App\Http\Livewire\Grows;
+
+use Imagine\Image\Box;
+use Imagine\Image\Point;
+use Imagine\Gd\Imagine;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -20,6 +24,14 @@ class GrowEdit extends Component
     public $growId;
     public $linkDeRastreo = '';
     public $descuento;
+    public $qrImage;
+
+    protected $listeners = ['imagenCopiada' => 'notificarImagenCopiada'];
+
+    public function notificarImagenCopiada()
+    {
+        $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "QR copiado al portapapeles"]);
+    }
 
     protected $rules = [
         'nombre' => 'required|max:100',
@@ -43,6 +55,7 @@ class GrowEdit extends Component
     ];
 
     public function mount(){
+
         if($this->growId){
             $grow = Grow::find($this->growId);
             $this->nombre = $grow->nombre;
@@ -73,6 +86,8 @@ class GrowEdit extends Component
         } else {
             $this->fe_ingreso = date('Y-m-d');
         }
+
+        $this->generarQR();
     }
 
     public function render()
@@ -178,5 +193,37 @@ class GrowEdit extends Component
             Grow::find($this->growId)->update(['imagen2' => '']);
         }
         $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Se eliminó la Imagen 1"]);
+    }
+
+    public function descargarQR(){
+        $image = base64_decode($this->qrImage);
+        file_put_contents('qr-descuento.png', $image);
+    }
+
+    public function generarQR(){
+        $url = 'https://api.qr-code-generator.com/v1/create?access-token=QA5z8dG2yQmj_oU-gl6e8AetkRDjxIVPQaHSbrTU2ibmV_BGxm0xPvaDgYHVS_vk';
+
+        $data = array(
+            "frame_name" => "no-frame",
+            "qr_code_text" => $this->linkDeRastreo,
+            "image_width"=>'300',
+            "image_format" => "PNG"
+        );
+
+        $json_data = json_encode($data);
+
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        if ($response) {
+            $base64Image = base64_encode($response);
+            $this->qrImage = 'data:image/png;base64,'. $base64Image;
+        }
     }
 }

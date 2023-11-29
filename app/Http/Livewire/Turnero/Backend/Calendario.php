@@ -24,13 +24,13 @@ class Calendario extends Component
     use WithFileUploads;
 
     public $fileTurnos;
-
     public $pacienteId, $prestadorId, $calendario = [], $mesActual, $anioActual, $mesTexto, $turnos = [],
     $fechaSeleccionada, $turnoSeleccionado, $fechaSelFormateada;
     public $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
     public $dias = array("Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado");
 
     public function mount(){
+
         $this->prestadorId = 1;
         if(session('mesActual')){
             $this->mesActual = session('mesActual');
@@ -48,8 +48,22 @@ class Calendario extends Component
         }
     }
 
-    public function render()
-    {
+    public function render(){
+        $this->prestadorId = 1;
+        if(session('mesActual')){
+            $this->mesActual = session('mesActual');
+            $this->anioActual = session('anioActual');
+        } else {
+            $this->mesActual = Carbon::now()->addDays(3)->format('n');
+            $this->anioActual = Carbon::now()->addDays(3)->format('Y');
+        }
+        if(session('fechaActual')){
+            $this->fechaSeleccionada = session('fechaActual');
+            if($this->fechaSeleccionada <> '') $this->fechaSelect($this->fechaSeleccionada);
+        } else {
+            $this->fechaSeleccionada = '';
+            $this->fechaSelFormateada = '';
+        }
         $this->mesTexto = $this->meses[$this->mesActual-1];
         $this->_armarCalendario();
         $this->emit('calendario-loaded');
@@ -102,6 +116,68 @@ class Calendario extends Component
         $this->_armarCalendario();
     }
 
+    public function booleanToText($value){
+        if($value==0){
+            return 'No';
+        }else if($value==1){
+            return 'Si';
+        };
+    }
+
+    public function copiarTurnos(){
+        // Generar HTML con formato
+        $html = '<table border="1">
+                    <thead>
+                    <th style="background-color:white;color:black;">'.$this->fechaSelFormateada.'</th>
+                        <tr>
+                        <th style="background-color:#a4c2f4;color:black;">Patologias</th>
+                        <th style="background-color:#a4c2f4;color:black;">Pago</th>
+                            <th style="background-color:#a4c2f4;color:black;">Hora</th>
+                            <th style="background-color:#a4c2f4;color:black;">Paciente</th>
+                            <th style="background-color:#a4c2f4;color:black;">Telefono</th>
+                            <th style="background-color:#a4c2f4;color:black;">DNI</th>
+                            <th style="background-color:#a4c2f4;color:black;">Email</th>
+                        </tr>
+                    </thead>
+                <tbody>';
+
+
+
+
+        foreach ($this->turnos as $turno) {
+
+            $html .= '<tr>';
+            $patologias = '';
+            if($turno['patologias'] !== 0){
+                if(isset($turno['patologias'][0])){
+                    foreach ($turno['patologias'][0] as $patologia){
+                        if(isset($patologia["dolencia"])){
+                            $patologias .= (string) $patologia["dolencia"] . "  ";
+                        }
+                    }
+                }
+
+            }
+
+            $html .='<td style="background-color:#e9effc;color:black;text-align:left;">'.htmlspecialchars($patologias).'</td>';
+            $html .='<td style="background-color:#e9effc;color:black;text-align:left;"> </td>';
+            $html .='<td style="background-color:#e9effc;color:black;text-align:left;">'.htmlspecialchars((string)$turno['hora']) .'</td>';
+            $html .='<td style="background-color:#e9effc;color:black;text-align:left;">'.htmlspecialchars((string)$turno['paciente']).'</td>';
+            $html .='<td style="background-color:#e9effc;color:black;text-align:left;">'.htmlspecialchars((string)$turno['telefono']).'</td>';
+            $html .='<td style="background-color:#e9effc;color:black;text-align:left;">'.htmlspecialchars((string)$turno['dni']).'</td>';
+            $html .='<td style="background-color:#e9effc;color:black;text-align:left;">'.htmlspecialchars((string)$turno['email']).'</td>';
+
+            $html .= '</tr>';
+        }
+
+        $html .= '</tbody></table>';
+
+        //dd($html);
+
+        $this->emit('copiarTurnos', ['html' => $html]);
+        $this->dispatchBrowserEvent('alert', ['type' => 'success', 'message' => "Turnos copiados en el portapapeles."]);
+    }
+
     public function mesSiguiente(){
         if($this->mesActual == 12){
             $this->mesActual = 1;
@@ -148,6 +224,7 @@ class Calendario extends Component
         $turnosFecha = Turno::where('fecha',$fecha)
                     ->where('prestador_id',$this->prestadorId)
                     ->orderBy('hora','ASC')->get();
+
         foreach($turnosFecha as $turno){
             $date = date_create($fecha . ' ' . $turno->hora);
             if($turno->paciente){
@@ -182,7 +259,9 @@ class Calendario extends Component
                 'atendido' => $turno->atendido,
                 'pedi_captura' => $turno->pedi_captura,
                 'mando_captura' => $turno->mando_captura,
-                'comentarios' => $turno->comentarios
+                'comentarios' => $turno->comentarios,
+                'dni'=>$turno->paciente->dni,
+                'email'=>$turno->paciente->email
             ];
         }
     }
@@ -211,8 +290,8 @@ class Calendario extends Component
         $this->validate([
             'fileTurnos' => 'required',
         ]);
-        $fileName = Str::random(30).'.csv';
 
+        $fileName = Str::random(30).'.csv';
         $this->fileTurnos->storeAs('imports', $fileName);
         $this->_processTurnos($fileName);
         $this->fileProducts = '';
@@ -220,7 +299,6 @@ class Calendario extends Component
     }
 
     private function _processTurnos($file){
-
         $archivo = storage_path('app/imports/') . $file;
         //dd($archivo);
         $handle = fopen($archivo,"r");

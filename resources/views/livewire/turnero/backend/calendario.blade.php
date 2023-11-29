@@ -76,7 +76,7 @@
 
       <div class="row mt-2 turnos-container">
         <div @if(!$fechaSeleccionada) style="display:none" @endif class="mt-2">
-          <h4 class="mt-4 mb-3 turnos-titulo">Turnos para el {{ $fechaSelFormateada }} </h4>
+          <h4 class="mt-4 mb-3 turnos-titulo">Turnos para el {{ $fechaSelFormateada }} <button wire:click='copiarTurnos' style='margin-left:5px;border:none;border-radius:4px;'>Copiar</button></h4>
             <style>
                 .turnos-table::-webkit-scrollbar-track {
                     background-color: rgba(128, 128, 128, 0);
@@ -135,7 +135,7 @@
                                 @if($turno['paciente'] && $turno['patologias'])
                                     @foreach($turno['patologias'] as $index => $item)
 
-                                    @if(isset($item->patologia))<p style="margin-bottom:5px">{{ $item->patologia->dolencia }}</p>@endif
+                                    @if(isset($item->patologia))<p style="margin-bottom:5px">{{$item->patologia->dolencia}}</p>@endif
 
                                     @endforeach
                                 @endif
@@ -305,8 +305,24 @@
 
 @push('scripts')
 
-
 <script type="text/javascript">
+
+    document.addEventListener('DOMContentLoaded', function () {
+        @this.on('copiarTurnos', (data) => {
+            var elemento = document.createElement('div');
+            elemento.innerHTML = data.html;
+            document.body.appendChild(elemento);
+
+            var seleccion = window.getSelection();
+            var rango = document.createRange();
+            rango.selectNodeContents(elemento);
+            seleccion.removeAllRanges();
+            seleccion.addRange(rango);
+
+            document.execCommand("copy");
+            document.body.removeChild(elemento);
+        });
+    })
 
     function copyTextToClipboard(valor) {
         const textArea = document.createElement("textarea");

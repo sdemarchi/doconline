@@ -1064,7 +1064,7 @@
 @push('scripts')
 @if(!$pacienteId)
 <script type="text/javascript">
-      $(document).ready(function() {
+        $(document).ready(function() {
           $("#firma").jSignature({syncFormat: 'PNG', height:200})
           $("#aclaracion").jSignature({syncFormat: 'PNG', height:200})
           $("#firma").jSignature("importData","<?php echo $firma ?>");
