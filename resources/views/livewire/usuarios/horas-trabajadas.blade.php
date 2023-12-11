@@ -30,7 +30,8 @@
                 <tr>
                   <th>Usuario</th>
                   <th>Horas Trabajadas</th>
-
+                  <th>Total mes</th>
+                  <th>Acciones</th>
                 </tr>
               </thead>
               <tbody>
@@ -40,6 +41,7 @@
 
                   <td>{{ $usuario['nombre'] }}</td>
                   <td>{{ $usuario['horas'] }}</td>
+                  <td>${{ $usuario['paga'] }}</td>
                   <td>
                     <div class="dropdown">
                       <button class="btn btn-sm btn-dark dropdown-toggle align-text-top" data-bs-boundary="viewport"

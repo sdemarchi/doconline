@@ -10,7 +10,7 @@ class ControlHorario extends Model
     public $timestamps = false;
     protected $table = 'control_horario';
 
-    protected $fillable = ['user_id','inicio','fin','liquidado','comentarios'];
+    protected $fillable = ['user_id','inicio','fin','liquidado','comentarios','feriado'];
 
     public function usuario(){
         return $this->belongsTo(User::class, 'user_id');
@@ -24,5 +24,5 @@ class ControlHorario extends Model
         $minutos = str_pad($total - $horas * 60, 2, 0, STR_PAD_LEFT);
         return $horas . ':' . $minutos;
     }
-    
+
 }

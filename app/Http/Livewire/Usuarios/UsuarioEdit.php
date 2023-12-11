@@ -12,7 +12,7 @@ use App\Models\Role;
 
 class UsuarioEdit extends Component
 {
-    public $usuario, $usuarioId, $name, $username, $email, $role_id, $password, $repassword;
+    public $usuario, $usuarioId, $name, $username, $email, $role_id, $password, $repassword, $pago_hora;
 
     protected $rules = [
         'name' => 'required|max:255',
@@ -20,21 +20,23 @@ class UsuarioEdit extends Component
         'email' => 'required|email|max:255',
         'password' => '',
         'repassword' => '',
+        'pago_hora'=> '',
         'role_id' => 'required',
     ];
-    
+
     public function mount(){
         if($this->usuarioId){
             $this->usuario = User::find($this->usuarioId);
             $this->name = $this->usuario->name;
-            $this->username = $this->usuario->username; 
+            $this->username = $this->usuario->username;
             $this->email = $this->usuario->email;
+            $this->pago_hora = $this->usuario->pago_hora;
             $this->role_id = $this->usuario->role_id;
         } else {
             $this->role_id = 1;
         }
     }
-    
+
     public function render()
     {
         $roles = Role::get();
@@ -58,15 +60,16 @@ class UsuarioEdit extends Component
             return;
         }
         if($this->usuarioId){ //Está actualizando
-            if($this->password){
+           /* if($this->password){
                 if($this->password != $this->repassword){
                     $this->dispatchBrowserEvent('alert', ['type' => 'error',  'message' => "Las contraseñas no coinciden"]);
                     return;
                 }
-            }
-            $this->usuario->name = $this->name; 
+            }*/
+            $this->usuario->name = $this->name;
             $this->usuario->username = $this->username;
             $this->usuario->email = $this->email;
+            $this->usuario->pago_hora = $this->pago_hora;
             $this->usuario->role_id = $this->role_id;
             if($this->password){
                 $this->usuario->password = Hash::make($this->password);
@@ -74,26 +77,27 @@ class UsuarioEdit extends Component
             $this->usuario->updated_at = Carbon::now();
             $this->usuario->save();
             $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "El Usuario se actualizó con éxito"]);
-            
+
         } else { //se está creando un nuevo usuario
             if(!$this->password){
                 $this->dispatchBrowserEvent('alert', ['type' => 'error',  'message' => "Debe proporcionar una contraseña"]);
                 return;
-            } else {
+            }/* else {
                 if($this->password != $this->repassword){
                     $this->dispatchBrowserEvent('alert', ['type' => 'error',  'message' => "Las contraseñas no coinciden"]);
                     return;
                 }
-            }
+            }*/
             User::create([
                 'name' => $this->name,
                 'username' => $this->username,
                 'email' => $this->email,
                 'password' => Hash::make($this->password),
                 'role_id' => $this->role_id,
+                'pago_hora' => $this->pago_hora,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
-                
+
             ]);
             $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "El Usuario se creó con éxito"]);
         }

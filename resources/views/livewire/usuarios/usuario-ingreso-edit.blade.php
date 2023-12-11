@@ -49,6 +49,17 @@
         </div>
         <div class="row">
             <div class="col-md-6 mt-3">
+                <div class="col-md-4">
+                    <label class="form-label">Es feriado</label>
+                    <select type="time" class="form-control" wire:model.defer="feriado">
+                        <option value="0">No</option>
+                        <option value="1">Si</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mt-3">
                 <div class="col">
                     <label class="form-label">Comentarios</label>
                     <textarea class="form-control" wire:model.defer="comentarios" rows="4"></textarea>
@@ -56,6 +67,6 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
 </div>
