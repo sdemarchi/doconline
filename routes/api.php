@@ -56,6 +56,8 @@ Route::get('turnero.calendario/{mes}/{anio}/{prestador}', [CalendarioController:
 Route::get('provincias', [pacienteController::class, 'getProvincias']);
 Route::get('grow/{route}', [GrowController::class, 'getGrowByRoute']);
 Route::get('grow.id/{id}', [GrowController::class, 'getGrowById']);
+Route::get('grow.email/{email}', [GrowController::class, 'getGrowByEmail']);
+Route::get('grow.pacientes/{id}', [GrowController::class, 'getGrowPacientes']);
 
 Route::get('contactos', [pacienteController::class, 'getContactos']);
 Route::get('ocupaciones', [pacienteController::class, 'getOcupaciones']);

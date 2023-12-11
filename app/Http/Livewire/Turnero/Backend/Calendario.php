@@ -282,7 +282,6 @@ class Calendario extends Component
         } else {
             return ['idPaciente' => 0, 'patologias' => 0];
         }
-
     }
 
     public function guardarArchivoTurnos()

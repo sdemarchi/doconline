@@ -289,6 +289,50 @@
         Livewire.emit('imagenCopiada');
     }
 
+    document.addEventListener('DOMContentLoaded', function() {
+            // Obtener referencias a las imágenes
+            var imagenFondo = document.getElementById('imagenFondo');
+            var imagenQR = document.getElementById('imagenQR');
+
+            // Crear una imagen resultante al superponer el código QR en la imagen de fondo
+            var imagenResultante = combinarImagenes(imagenFondo, imagenQR);
+
+            // Obtener referencia al botón de descarga
+            var botonDescargar = document.getElementById('descargarBoton');
+
+            // Agregar un evento de clic al botón de descarga
+            botonDescargar.addEventListener('click', function() {
+                // Crear un enlace temporal y hacer clic en él para iniciar la descarga
+                var enlaceTemporal = document.createElement('a');
+                enlaceTemporal.href = imagenResultante.src;
+                enlaceTemporal.download = 'imagen_resultante.png';
+                enlaceTemporal.click();
+            });
+        });
+
+        // Función para combinar dos imágenes
+        function combinarImagenes(imagenFondo, imagenQR) {
+            // Crear un lienzo (canvas)
+            var lienzo = document.createElement('canvas');
+            var contexto = lienzo.getContext('2d');
+
+            // Establecer las dimensiones del lienzo igual al tamaño de la imagen de fondo
+            lienzo.width = imagenFondo.width;
+            lienzo.height = imagenFondo.height;
+
+            // Dibujar la imagen de fondo en el lienzo
+            contexto.drawImage(imagenFondo, 0, 0);
+
+            // Dibujar la imagen del código QR en el lienzo
+            contexto.drawImage(imagenQR, 50, 50, 200, 200); // Ajustar según sea necesario
+
+            // Crear una nueva imagen resultante
+            var imagenResultante = new Image();
+            imagenResultante.src = lienzo.toDataURL('image/png');
+
+            return imagenResultante;
+        }
+
 </script>
 
 

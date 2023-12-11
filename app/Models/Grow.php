@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Models\Dolencia;
+use App\Models\TurnoPaciente;
 
 class Grow extends Model
 {
@@ -17,5 +18,9 @@ class Grow extends Model
 
     public function provincia(){
         return $this->belongsTo(Provincia::class, 'idprovincia');
+    }
+
+    public function pacientes(){
+        return $this->hasMany(TurnoPaciente::class, 'grow');
     }
 }

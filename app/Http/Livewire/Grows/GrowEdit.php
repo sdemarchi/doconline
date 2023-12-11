@@ -5,6 +5,7 @@ use Imagine\Image\Box;
 use Imagine\Image\Point;
 use Imagine\Gd\Imagine;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Intervention\Image\Facades\Image;
 
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -25,6 +26,7 @@ class GrowEdit extends Component
     public $linkDeRastreo = '';
     public $descuento;
     public $qrImage;
+    public $qrFrame;
 
     protected $listeners = ['imagenCopiada' => 'notificarImagenCopiada'];
 
@@ -224,6 +226,39 @@ class GrowEdit extends Component
         if ($response) {
             $base64Image = base64_encode($response);
             $this->qrImage = 'data:image/png;base64,'. $base64Image;
+        }
+    }
+
+    public function generarQRFondo(){
+        $url = 'https://api.qr-code-generator.com/v1/create?access-token=QA5z8dG2yQmj_oU-gl6e8AetkRDjxIVPQaHSbrTU2ibmV_BGxm0xPvaDgYHVS_vk';
+
+        $data = array(
+            "frame_name" => "no-frame",
+            "qr_code_text" => $this->linkDeRastreo,
+            "image_width"=>'300',
+            "image_format" => "PNG"
+        );
+
+        $json_data = json_encode($data);
+
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        if ($response) {
+            $base64Image = base64_encode($response);
+            $this->qrImage = 'data:image/png;base64,'. $base64Image;
+            $imagePath = asset('img/qr-base.png');
+            $backgroundImage = Image::make($imagePath);
+            $qrImage = Image::make('data:image/png;base64,' . $base64Image);
+            $backgroundImage->insert($qrImage, 'top-left', 50, 50);
+            $backgroundImage = $backgroundImage->encode('data-url');
+            $this->qrFrame = 'data:image/png;base64,'.  $backgroundImage;
         }
     }
 }

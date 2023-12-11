@@ -8,7 +8,7 @@
 
     <div class="pb-12" style="width:auto !important; max-width:none !important;margin:none !important;">
         <div class="overflow-hidden shadow-sm sm:rounded-lg">
-            <livewire:grows.grow-estadisticas-livewire />
+            <livewire:grows.grow-estadisticas-livewire/>
         </div>
     </div>
 
