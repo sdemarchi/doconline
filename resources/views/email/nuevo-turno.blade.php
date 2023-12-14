@@ -24,13 +24,13 @@
             <td>
         <![endif]-->
         <table align="center" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse; width: 100%; max-width: 600px;" class="content">
-            
+
             <tr>
                 <td style="padding: 15px 10px 15px 10px;">
                     <table border="0" cellpadding="0" cellspacing="0" width="100%">
                         <tr>
                             <td align="center" style="color: #aaaaaa; font-family: Arial, sans-serif; font-size: 12px;">
-                                
+
                             </td>
                         </tr>
                     </table>
@@ -49,8 +49,8 @@
                     Saludos cordiales,
                 </td>
             </tr>
-            
-            
+
+
             <tr>
                 <td align="center" bgcolor="#dddddd" style="padding: 15px 10px 15px 10px; color: #555555; font-family: Arial, sans-serif; font-size: 12px; line-height: 18px;">
                     <b>Doc Online</b>

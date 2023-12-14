@@ -13,7 +13,7 @@ use App\Models\PacientePatologia;
 class FormularioCompleto extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
-    
+
     protected $paciente;
 
     /**
@@ -38,7 +38,7 @@ class FormularioCompleto extends Mailable implements ShouldQueue
                     ->view('email.formulario-completo')
                     ->with([
                         'paciente' => $this->paciente,
-                        'patologias' => $patologias    
+                        'patologias' => $patologias
                     ]);
     }
 }

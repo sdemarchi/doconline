@@ -39,7 +39,7 @@ class TurnoConfirmado extends Mailable implements ShouldQueue
                     ->with([
                         'turno' => $this->turno,
                         'fecha' => $this->_formatearFecha($this->turno->fecha)
-                            
+
                 ]);
     }
 

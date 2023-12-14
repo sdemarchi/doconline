@@ -24,13 +24,13 @@
             <td>
         <![endif]-->
         <table align="center" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse; width: 100%; max-width: 600px;" class="content">
-            
+
             <tr>
                 <td style="padding: 15px 10px 15px 10px;">
                     <table border="0" cellpadding="0" cellspacing="0" width="100%">
                         <tr>
                             <td align="center" style="color: #aaaaaa; font-family: Arial, sans-serif; font-size: 12px;">
-                                
+
                             </td>
                         </tr>
                     </table>
@@ -51,153 +51,153 @@
                                 <td style="padding:3px 10px; text-align:right"><strong>Correo Electrónico:</strong></td>
                                 <td style="padding:3px 10px">{{ $paciente->email }}</td>
                             </tr>
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>Apellido y Nombre:</strong></td>
                                 <td style="padding:3px 10px">{{ $paciente->nom_ape }}</td>
                             </tr>
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>DNI:</strong></td>
                                 <td style="padding:3px 10px">{{ $paciente->dni }}</td>
                             </tr>
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>Fecha de Nacimiento:</strong></td>
                                 <td style="padding:3px 10px">{{ date_format(date_create($paciente->fe_nacim),"d/m/Y") }}</td>
                             </tr>
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>Cod. Vinculación:</strong></td>
                                 <td style="padding:3px 10px">{{ $paciente->cod_vincu }}</td>
                             </tr>
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>Edad:</strong></td>
                                 <td style="padding:3px 10px">{{ $paciente->edad }}</td>
                             </tr>
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>Domicilio:</strong></td>
                                 <td style="padding:3px 10px">{{ $paciente->domicilio }}</td>
                             </tr>
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>Localidad:</strong></td>
                                 <td style="padding:3px 10px">{{ $paciente->localidad }}</td>
                             </tr>
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>Provincia:</strong></td>
                                 <td style="padding:3px 10px">{{ $paciente->provincia->Provincia }}</td>
                             </tr>
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>Código Postal:</strong></td>
                                 <td style="padding:3px 10px">{{ $paciente->cp }}</td>
                             </tr>
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>Ocupación o Trabajo:</strong></td>
                                 <td style="padding:3px 10px">{{ $paciente->ocupacion }}</td>
                             </tr>
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>Celular:</strong></td>
                                 <td style="padding:3px 10px">{{ $paciente->celular }}</td>
                             </tr>
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>Obra Social:</strong></td>
                                 <td style="padding:3px 10px">{{ $paciente->osocial }}</td>
                             </tr>
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>Comentarios:</strong></td>
                                 <td style="padding:3px 10px">{{ $paciente->comentario }}</td>
                             </tr>
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>Arritmias:</strong></td>
                                 <td style="padding:3px 10px">@if($paciente->arritmia) Sí @else No @endif</td>
                             </tr>
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>Padecimiento mental:</strong></td>
                                 <td style="padding:3px 10px">@if($paciente->salud_mental) Sí. {{ $paciente->salud_ment_esp}}@else No @endif</td>
                             </tr>
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>Alergias:</strong></td>
                                 <td style="padding:3px 10px">@if($paciente->alergia) Sí @else No @endif</td>
                             </tr>
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>Embarazo o Lactancia:</strong></td>
                                 <td style="padding:3px 10px">@if($paciente->embarazada) Sí @else No @endif</td>
                             </tr>
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>Maneja Maquinaria de Precisión:</strong></td>
                                 <td style="padding:3px 10px">@if($paciente->maneja_maq) Sí @else No @endif</td>
                             </tr>
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>Dolencias:</strong></td>
                                 <td style="padding:3px 10px">{{ $paciente->patologia }}</td>
                             </tr>
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>Cómo nos contactó:</strong></td>
                                 <td style="padding:3px 10px">@if($paciente->modo_contacto){{ $paciente->modo_contacto->modo_contacto }}@endif</td>
                             </tr>
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>Contacto Otro:</strong></td>
                                 <td style="padding:3px 10px">{{ $paciente->contacto_otro }}</td>
                             </tr>
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>Embarazo o Lactancia:</strong></td>
                                 <td style="padding:3px 10px">@if($paciente->embarazada) Sí @else No @endif</td>
                             </tr>
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>Cultivará para otra persona:</strong></td>
                                 <td style="padding:3px 10px">@if($paciente->es_menor) Sí @else No @endif</td>
                             </tr>
                         </tbody>
                     </table>
                     @if($paciente->es_menor)
-                    <h4>Datos del Padre/Madre/Tutor o Encargado</h4>        
+                    <h4>Datos del Padre/Madre/Tutor o Encargado</h4>
                     <table>
                         <tbody>
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>Apellido y Nombre:</strong></td>
                                 <td style="padding:3px 10px">{{ $paciente->tut_apeynom }}</td>
                             </tr>
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>Tipo y N° Documento:</strong></td>
                                 <td style="padding:3px 10px">{{ $paciente->tut_tipo_nro_doc }}</td>
                             </tr>
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>Fecha de Nacimiento:</strong></td>
                                 <td style="padding:3px 10px">{{ date_format(date_create($paciente->tut_fe_nacim),"d/m/Y") }}</td>
                             </tr>
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>Domicilio:</strong></td>
                                 <td style="padding:3px 10px">{{ $paciente->tut_domicilio }}</td>
                             </tr>
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>Localidad:</strong></td>
                                 <td style="padding:3px 10px">{{ $paciente->tut_localidad }}</td>
                             </tr>
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>Localidad:</strong></td>
                                 <td style="padding:3px 10px">{{ $paciente->tut_provincia->Provincia }}</td>
                             </tr>
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>Código Postal:</strong></td>
                                 <td style="padding:3px 10px">{{ $paciente->tut_cp }}</td>
                             </tr>
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>Código Postal:</strong></td>
                                 <td style="padding:3px 10px">{{ $paciente->tut_cp }}</td>
                             </tr>
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>Teléfono Particular:</strong></td>
                                 <td style="padding:3px 10px">{{ $paciente->tut_tel_part }}</td>
                             </tr>
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>Celular:</strong></td>
                                 <td style="padding:3px 10px">{{ $paciente->tut_tel_cel }}</td>
                             </tr>
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>Correo Electrónico:</strong></td>
                                 <td style="padding:3px 10px">{{ $paciente->tut_mail }}</td>
                             </tr>
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>Obra Social:</strong></td>
                                 <td style="padding:3px 10px">{{ $paciente->tut_osocial }}</td>
                             </tr>
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>Registro de Familiares:</strong></td>
                                 <td style="padding:3px 10px">@if($paciente->tut_reg_fam) Sí @else No @endif</td>
                             </tr>
@@ -208,31 +208,31 @@
                     <table>
                         <tbody>
                             @foreach($patologias as $pat)
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>Patología:</strong></td>
                                 <td style="padding:3px 10px">{{ $pat->patologia->dolencia }}</td>
                             </tr>
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>Año Aparición:</strong></td>
                                 <td style="padding:3px 10px">{{ $pat->anio_aprox }}</td>
                             </tr>
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>Medicación:</strong></td>
                                 <td style="padding:3px 10px">{{ $pat->medicacion }}</td>
                             </tr>
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>Vinculado al Trabajo:</strong></td>
                                 <td style="padding:3px 10px">@if($pat->prob_trabajo) Sí @else No @endif</td>
                             </tr>
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>Dolor 1 a 10:</strong></td>
                                 <td style="padding:3px 10px">{{ $pat->dolor_intensidad }}</td>
                             </tr>
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>Partes del cuerpo donde duele:</strong></td>
                                 <td style="padding:3px 10px">{{ $pat->partes_cuerpo }}</td>
                             </tr>
-                            <tr>    
+                            <tr>
                                 <td style="padding:3px 10px; text-align:right"><strong>Atenúa dolor:</strong></td>
                                 <td style="padding:3px 10px">@if($pat->tut_reg_fam) Sí @else No @endif</td>
                             </tr>
@@ -241,8 +241,8 @@
                     </table>
                 </td>
             </tr>
-            
-            
+
+
             <tr>
                 <td align="center" bgcolor="#dddddd" style="padding: 15px 10px 15px 10px; color: #555555; font-family: Arial, sans-serif; font-size: 12px; line-height: 18px;">
                     <b>Doc Online</b>
