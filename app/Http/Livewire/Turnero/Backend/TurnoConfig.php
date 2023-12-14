@@ -9,7 +9,7 @@ use App\Models\Prestador;
 
 class TurnoConfig extends Component
 {
-    public $diaAgregar, $desdeAgregar1, $hastaAgregar1, $desdeAgregar2, $hastaAgregar2, 
+    public $diaAgregar, $desdeAgregar1, $hastaAgregar1, $desdeAgregar2, $hastaAgregar2,
         $desdeAgregar3, $hastaAgregar3, $duracionTurno, $prestadorDiasDeAnticipacion;
     public $prestadorId = 0;
 

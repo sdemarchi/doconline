@@ -1,4 +1,11 @@
 <div class="navbar-expand-md">
+    <style>
+        .ingreso-button:hover{
+            text-decoration:none;
+        }
+
+    </style>
+
     <div class="collapse navbar-collapse" id="navbar-menu">
       <div class="navbar navbar-light">
         <div class="container-fluid">
@@ -162,7 +169,7 @@
                 </a>
               </div>
             </li>
-
+         </ul>
 
         </div>
       </div>

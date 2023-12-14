@@ -9,7 +9,7 @@ use App\Models\ControlHorario;
 
 class UsuarioIngreso extends Component
 {
-    public $fecha, $hora, $comentarios, $feriado;
+    public $fecha, $hora, $comentarios, $feriado = 0;
 
     protected $rules = [
         'fecha' => 'required',

@@ -1,14 +1,13 @@
 <?php
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\PacienteController;
 use App\Http\Controllers\Api\TurnosController;
 use App\Http\Controllers\Api\CalendarioController;
 use App\Http\Controllers\Api\FormController;
 use App\Http\Controllers\Api\GrowController;
+use App\Http\Controllers\Api\ResetPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +32,8 @@ Route::post('turnero.loginUser', [UserController::class, 'loginUsername']);
 Route::post('turnero.loginEmail', [UserController::class, 'loginEmail']);
 Route::post('turnero.loginGoogle', [UserController::class, 'loginGoogle']);
 Route::post('turnero.register', [UserController::class, 'register']);
+Route::post('turnero.restablecer', [ResetPasswordController::class, 'restablecer']);
+Route::post('turnero.restablecerSendMail', [ResetPasswordController::class, 'enviarMail']);
 Route::post('turnero.registerGoogle', [UserController::class, 'registerGoogle']);
 Route::get('profile/{id}', [UserController::class, 'profile']);
 Route::get('paciente.turno/{id}', [UserController::class, 'getTurnoPaciente']);

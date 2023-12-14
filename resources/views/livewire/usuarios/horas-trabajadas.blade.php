@@ -30,6 +30,7 @@
                 <tr>
                   <th>Usuario</th>
                   <th>Horas Trabajadas</th>
+                  <th>Horas / Feriado</th>
                   <th>Total mes</th>
                   <th>Acciones</th>
                 </tr>
@@ -41,6 +42,7 @@
 
                   <td>{{ $usuario['nombre'] }}</td>
                   <td>{{ $usuario['horas'] }}</td>
+                  <td>{{ $usuario['horas_feriado'] }}</td>
                   <td>${{ $usuario['paga'] }}</td>
                   <td>
                     <div class="dropdown">

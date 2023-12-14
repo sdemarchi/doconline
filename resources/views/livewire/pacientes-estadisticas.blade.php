@@ -45,6 +45,26 @@
             text-decoration: none;
             color:rgb(201, 201, 201);
         }
+        #loader-contacto{
+            display:flex;
+            z-index:200 !important;
+            display:none;
+            width:fit-content;
+            margin: 0 auto;
+            transform: translate(50px,-50px)
+        }
+
+        #loader-pacientes{
+            display:block;
+            z-index:200 !important;
+            min-width:100%;
+            display:none;
+            align-items:center;
+            justify-content:center;
+            height:120px;
+            width:100%;
+        }
+
 
     </style>
 
@@ -57,7 +77,7 @@
                 <h3>Pacientes durante el mes</h3>
               </div>
               <div class="col-md-2 col-sm-3 mt-1">
-                <select class="form-select" wire:model="mesActual" wire:change="refresh" wire:click="refresh">
+                <select class="form-select" wire:model="mesActual" wire:change="refresh" wire:click="refresh" onChange="contactoLoading()">
 
                   @for($i=0;$i<12;$i++)
                     <option wire:change="refresh" value="{{ $i+1 }}">{{ $meses[$i] }}</option>
@@ -77,7 +97,7 @@
             </div>
 
             <div class="table-responsive">
-              <table class="table table-vcenter card-table">
+              <table  id="table-contacto" class="table table-vcenter card-table">
                 <thead>
                   <tr>
                     <th>Modo de contacto</th>
@@ -99,8 +119,11 @@
 
                 </tbody>
               </table>
-
+              <div id="loader-contacto">
+                @include('components.loader')
+               </div>
             </div>
+
           </div>
         </div>
       </div>
@@ -114,17 +137,17 @@
             <div class="row">
                 <div>
                     @if(!$contactoSeleccionadoNombre)
-                        <h3 style="display:inline">Pacientes{{'(No pagaron)'}}</h3>
+                        <h3 style="display:inline">Pacientes</h3>
                     @endif
 
                     @if($contactoSeleccionadoNombre)
-                        <h3 style="display:inline">{{$contactoSeleccionadoNombre}}{{'(No pagaron)'}}</h3>
+                        <h3 style="display:inline">{{$contactoSeleccionadoNombre}}</h3>
                     @endif
                 </div>
             </div>
 
           </div>
-          <div class="table-responsive">
+          <div id="table-pacientes" class="table-responsive">
             <table class="table table-vcenter card-table">
               <thead>
                 <tr>
@@ -153,7 +176,34 @@
             @endif
 
           </div>
+
+          <div id="loader-pacientes">
+            Cargando...
+        </div>
+
         </div>
       </div>
     </div>
   </div>
+  <script>
+
+    function contactoLoading(){
+            let loader = document.querySelector("#loader-contacto");
+            let contactoTable = document.querySelector("#table-contacto");
+
+            loader.style.display='flex';
+            contactoTable.style.visibility='hidden';
+        };
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        let loader = document.querySelector("#loader-contacto");
+        let contactoTable = document.querySelector("#table-contacto");
+
+        Livewire.on('pacientes-contacto-loaded', () => {
+          loader.style.display='none';
+          calendarioTable.style.visibility='visible';
+        });
+
+     })
+</script>

@@ -31,6 +31,7 @@ class PacientesEstadisticas extends Component
         $this->pacientes = $this->getPacientes();
         $this->contactoPacientes = $this->getContactos();
         $this->pacientesContacto = [];
+        $this->emit('pacientes-contacto-loaded');
     }
 
     public $contactoSeleccionado;

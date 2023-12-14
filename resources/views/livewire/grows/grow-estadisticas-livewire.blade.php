@@ -46,6 +46,16 @@
             color:rgb(201, 201, 201);
         }
 
+        #loader-grows{
+            display:flex;
+            z-index:200 !important;
+            display:none;
+            width:fit-content;
+            margin: 0 auto;
+            transform: translate(50px,-50px)
+        }
+
+
     </style>
 
     <div class="row row-cards grow-card" >
@@ -57,7 +67,7 @@
                 <h3>Pacientes durante el mes</h3>
               </div>
               <div class="col-md-2 col-sm-3 mt-1">
-                <select class="form-select" wire:model="mesActual"  wire:change="refresh" wire:click="refresh">
+                <select class="form-select" wire:model="mesActual"  wire:change="refresh" wire:click="refresh" onChange="growsLoading()">
 
                   @for($i=0;$i<12;$i++)
                     <option wire:change="refresh" value="{{ $i+1 }}">{{ $meses[$i] }}</option>
@@ -78,7 +88,7 @@
 
 
             <div class="table-responsive">
-              <table class="table table-vcenter card-table">
+              <table id="table-grows" class="table table-vcenter card-table">
                 <thead>
                   <tr>
                     <th>Grow</th>
@@ -98,6 +108,9 @@
 
                 </tbody>
               </table>
+              <div id="loader-grows">
+                @include('components.loader')
+               </div>
 
             </div>
           </div>
@@ -158,3 +171,27 @@
       </div>
     </div>
   </div>
+  <script>
+
+    function growsLoading(){
+            let loader = document.querySelector("#loader-grows");
+            let contactoTable = document.querySelector("#table-grows");
+
+            loader.style.display='flex';
+            contactoTable.style.visibility='hidden';
+        };
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        let loader = document.querySelector("#loader-grows");
+        let contactoTable = document.querySelector("#table-grows");
+
+        Livewire.on('grows-loaded', () => {
+          loader.style.display='none';
+          calendarioTable.style.visibility='visible';
+        });
+
+     })
+
+</script>
+

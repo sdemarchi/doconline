@@ -86,11 +86,12 @@
                     margin-bottom:25px !important;
                 }
                 #calendario-loader{
-                    display:block;z-index:200;
+                    display:block;
+                    z-index:200;
                     !important;
                     min-width:100%;
-                    display:none
-                    ;align-items:center;
+                    display:none;
+                    align-items:center;
                     justify-content:center;
                     height:120px;
                 }
@@ -99,7 +100,6 @@
                     text-align: center;
                     color:rgba(255, 255, 255, 0.634);
                 }
-
             </style>
 
             <div id="calendario-loader">

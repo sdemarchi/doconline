@@ -6,7 +6,7 @@
 
                     <div style="display:flex;align-items:center;" class="me-auto text-muted">
                         <div>
-                            <button class="btn btn-danger btn-icon" style="height:30px !important;margin-right:5px;" wire:click="limpiarBusqueda">
+                            <button class="btn btn-danger btn-icon" style="height:30px !important;margin-right:8px;" wire:click="limpiarBusqueda">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash"
                                     width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
                                     stroke="currentColor" fill="none" stroke-linecap="round"
@@ -26,13 +26,13 @@
                                 wire:model.defer="searchString" wire:keydown.enter="buscarPorDatos">
                         </div>
                         <div>
-                            <button class="btn btn-primary" style="height:30px !important;margin-left:5px;" wire:click="buscarPorDatos">Buscar</button>
+                            <button class="btn btn-primary" style="height:30px !important;margin-left:8px;" wire:click="buscarPorDatos">Buscar</button>
                         </div>
                         <div>
-                            <button class="btn btn-primary" style="height:30px !important;margin-left:5px;" wire:click="buscarPorDNI">Buscar por DNI</button>
+                            <button class="btn btn-primary" style="height:30px !important;margin-left:8px;" wire:click="buscarPorDNI">Buscar por DNI</button>
                         </div>
                         <div>
-                            <button class="btn btn-success" style="height:30px !important;margin-left:25px;" wire:click="generarCsv">Generar CSV</button>
+                            <button class="btn btn-success" style="height:30px !important;margin-left:8px;" wire:click="generarCsv">Generar CSV</button>
                         </div>
                     </div>
 
