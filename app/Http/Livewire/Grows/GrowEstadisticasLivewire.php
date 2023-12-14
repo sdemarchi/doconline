@@ -17,8 +17,8 @@ class GrowEstadisticasLivewire extends Component{
         $this->anioActual = date('Y');
         $this->pacientes = $this->getPacientes();
         $this->growsPacientes = $this->getGrows();
-
     }
+
     public function render(){
         return view('livewire.grows.grow-estadisticas-livewire');
     }
@@ -29,6 +29,8 @@ class GrowEstadisticasLivewire extends Component{
 
         $this->pacientes = $this->getPacientes();
         $this->growsPacientes = $this->getGrows();
+
+        $this->emit('grows-loaded');
     }
 
     public $growSeleccionado;

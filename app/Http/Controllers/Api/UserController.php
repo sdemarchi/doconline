@@ -134,8 +134,6 @@ class userController extends Controller
             ])->id;
 
         }
-		//$nombre = $nombre ?? 'No name';
-
         $error = [
 			'code' => $code,
 			'message' => $message
@@ -161,6 +159,8 @@ class userController extends Controller
 		];
 		return response()->json($data);
 	}
+
+
 
 	public function register(Request $request){
 		$data = [

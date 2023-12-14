@@ -271,7 +271,6 @@ class TurnosController extends Controller
         }
 
         return null;
-
     }
 
     private function _getProxTurno2($fecha,$prestador){
@@ -322,7 +321,7 @@ class TurnosController extends Controller
         if(!$conf) return null;
 
         $rango = $conf->duracion_turno;
-        if($ordenTurnos == 'ASC'){
+        if($ordenTurnos !== 'ASC'){
             $hora = Carbon::createFromFormat('H:i:s', $conf->hora_desde_3);
             $horaHasta = Carbon::createFromFormat('H:i:s', $conf->hora_hasta_3);
         } else {
@@ -338,7 +337,7 @@ class TurnosController extends Controller
                 ->where('prestador_id',$prestador)
                 ->first();
             if($turno){
-                if($ordenTurnos == 'ASC'){
+                if($ordenTurnos !== 'ASC'){
                     $hora->addMinutes($rango);
                     if($hora > $horaHasta) $end = true;
                 } else {
