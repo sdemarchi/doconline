@@ -1,4 +1,20 @@
 <header class="navbar navbar-expand-md navbar-light d-print-none">
+    <style>
+        .header-log-button{
+            border:none;
+            border-radius:6px;
+            font-size:14px;
+            height:25px;
+            display:flex;
+            align-items:center;
+            text-decoration:none;
+            padding: 0 8px;
+        }
+        .header-log-button:focus , .header-log-button:active{
+            text-decoration: none;
+        }
+
+    </style>
     <div class="container-fluid">
         <div style="display: flex;align-items:center;">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
@@ -10,11 +26,11 @@
                 </a>
             </h1>
             @if(Auth::user()->ingresoActivo())
-            <a class="btn-primary ingreso-button" style="border:none;border-radius:8px;padding:4px 10px;" href="{{ route('usuarios.egreso') }}" >
+            <a class="btn-primary header-log-button" href="{{ route('usuarios.egreso') }}" >
                 Registrar Egreso
             </a>
             @else
-            <a class="btn-primary ingreso-button" style="border:none;border-radius:8px;padding:4px 10px;" href="{{ route('usuarios.ingreso') }}" >
+            <a class="btn-primary header-log-button"  href="{{ route('usuarios.ingreso') }}" >
                 Registrar Ingreso
             </a>
             @endif

@@ -129,7 +129,7 @@
                             <button id="copiarBoton" onClick='copiarAlPortapapeles("{{$linkDeRastreo}}")' class='btn btn-primary' style="margin-left:10px;max-height:50px">Copiar</button>
                         </div>
                     </div>
-
+                    <!--
                     <div class="edit-grow-element">
                         <img id="qrImagen" style='margin:15px;width:150px;border-radius:10px' src="{{$qrImage}}" alt="Imagen Generada" id="imagenGenerada">
                         <button class='btn btn-primary center' onclick="copiarQR()" style="padding-right: 4px">
@@ -143,7 +143,7 @@
                             </svg>
                         </button>
                     </div>
-
+                    -->
 
                     <div class="edit-grow-element">
                         <label class="form-label">Porcentaje de descuento {{'(%)'}}</label>

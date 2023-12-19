@@ -29,4 +29,18 @@ class TurnoPaciente extends Model
         return $this->hasOne(Paciente::class, 'dni', 'dni');
     }
 
+    public function grow()
+    {
+        return $this->belongsTo(Grow::class, 'grow', 'idgrow');
+    }
+
+    public function getPacienteConGrow()
+    {
+        // Cargar la relación grow
+        $this->load('grow');
+
+        // Devolver el paciente con la información del grow incluida
+        return $this->toArray();
+    }
+
 }

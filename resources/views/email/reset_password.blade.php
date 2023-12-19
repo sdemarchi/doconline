@@ -38,6 +38,7 @@
         text-decoration: none;
         background-color: #007bff;
         border-radius: 5px;
+        text-decoration: none;
       }
 
       .button:hover {

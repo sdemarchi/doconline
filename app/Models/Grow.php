@@ -23,4 +23,5 @@ class Grow extends Model
     public function pacientes(){
         return $this->hasMany(TurnoPaciente::class, 'grow');
     }
+
 }

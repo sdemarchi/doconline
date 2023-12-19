@@ -19,7 +19,7 @@ class ResetPasswordController extends Controller
         $email = $request->input('email');
         $paciente = TurnoPaciente::where('email', $email)->first();
         $token = Str::random(40);
-        $url = 'http://localhost:5173/turnero/restablecer-password/'.$token;
+        $url = 'https://doconlineargentina.com/turnero/restablecer-password/'.$token;
         if ($paciente) {
             $data = [
                 'username' => $paciente->username,

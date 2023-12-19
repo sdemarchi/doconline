@@ -78,22 +78,30 @@ class PacientesEstadisticas extends Component
 
     public function getContactos(){
         $contactos = [];
+        $numPacientes = 0;
+        $pagaronMes = 0;
+        $noPagaronMes = 0;
 
         foreach ($this->pacientes as $paciente) {
+            $numPacientes++;
             $pagaron = 0;
             $noPagaron = 0;
             $contactoId = $paciente['idcontacto'];
 
             if ($paciente['pago'] == 'Si') {
                 $pagaron++;
+                $pagaronMes++;
+
             } else if ($paciente['pago'] == 'No') {
                 $noPagaron++;
+                $noPagaronMes++;
             }
 
             if (array_key_exists($contactoId, $contactos)) {
                 $contactos[$contactoId]['pacientes']++;
                 $contactos[$contactoId]['pagaron'] += $pagaron;
                 $contactos[$contactoId]['no-pagaron'] += $noPagaron;
+
             } else {
                 $detalleContacto = ModoContacto::select('modo_contacto')->find($contactoId);
                 if($detalleContacto !== null){
@@ -108,7 +116,7 @@ class PacientesEstadisticas extends Component
             }
         }
 
-        return $contactos;
+        return ['contactos'=>$contactos,'pagaronMes'=>$pagaronMes,'noPagaronMes'=>$noPagaronMes,'numPacientes'=>$numPacientes];
     }
 
 
