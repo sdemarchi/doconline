@@ -48,7 +48,6 @@ class TurnosController extends Controller
         }
 
         return response()->json($turno);
-
     }
 
     public function getTurnos($fecha, $prestadorId){
@@ -162,6 +161,7 @@ class TurnosController extends Controller
         return response()->json($data);
     }
 
+
     public function confirmarTurno(Request $request){
         $data = [
             'prestador_id' => $request->input('prestador'),
@@ -234,6 +234,8 @@ class TurnosController extends Controller
         return response()->json($data);
     }
 
+
+
     private function _getProxTurno($fecha,$prestador){
         $setting = new Setting;
         $ordenTurnos = $setting->getSetting('OrdenTurnos');
@@ -273,6 +275,8 @@ class TurnosController extends Controller
         return null;
     }
 
+
+
     private function _getProxTurno2($fecha,$prestador){
         $setting = new Setting;
         $ordenTurnos = $setting->getSetting('OrdenTurnos');
@@ -308,10 +312,9 @@ class TurnosController extends Controller
                 return $hora->format('H:i');
             }
         }
-
         return null;
-
     }
+
 
     private function _getProxTurno3($fecha,$prestador){
         $setting = new Setting;
@@ -350,13 +353,11 @@ class TurnosController extends Controller
         }
 
         return null;
-
     }
+
     private function _getConfDia($fecha,$prestador){
         $dia = $fecha->format('N');
         $conf = TurnoConf::where('dia_semana',$dia)->where('prestador_id',$prestador)->first();
         return $conf;
-
     }
-
 }

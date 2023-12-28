@@ -100,6 +100,7 @@ class FormPacienteEdit extends Component
         'producto_indicado' => 'max:255',
         'sintomas' => 'max:255',
         'pagado2023' => '',
+        'pagado2024' => '',
         'instagram' => 'max:150',
         //'patologias.*.item' => '',
         'patologias.*.anio_aprox' => 'numeric|nullable|max:9999|min:1900',
@@ -226,6 +227,7 @@ class FormPacienteEdit extends Component
             $this->producto_indicado = $paciente->producto_indicado;
             $this->sintomas = $paciente->sintomas;
             $this->pagado2023 = $paciente->pagado2023;
+            $this->pagado2024 = $paciente->pagado2024;
             $this->instagram = $paciente->instagram;
             //Autocompletado de campos incompletos en la edición
             if($this->diagnostico == '') $this->diagnostico = $this->_generarDoloresNombres();
@@ -465,6 +467,7 @@ class FormPacienteEdit extends Component
             'producto_indicado' => $this->producto_indicado,
             'sintomas' => $this->sintomas,
             'pagado2023' => $this->pagado2023,
+            'pagado2024' => $this->pagado2024,
             'instagram' => $this->instagram,
         ];
         if($this->pacienteId){
@@ -491,13 +494,6 @@ class FormPacienteEdit extends Component
 
         $this->foto_firma->storeAs('assets/img/uploads', $fileName);
         rename($storagePath . $fileName, $path . $fileName);
-
-        //$this->datos->firma = $fileName;
-        //$this->datos->save();
-
-        //$fileName = Str::random(30).'.png';
-
-        //$this->foto_firma->storeAs('public/firmas/', $fileName);
 
         $this->foto_firma_img = $fileName;
 

@@ -37,7 +37,6 @@ Route::post('turnero.restablecerSendMail', [ResetPasswordController::class, 'env
 Route::post('turnero.registerGoogle', [UserController::class, 'registerGoogle']);
 Route::get('profile/{id}', [UserController::class, 'profile']);
 Route::get('paciente.turno/{id}', [UserController::class, 'getTurnoPaciente']);
-
 Route::put('paciente/{pacienteid}/setGrow/{growid}', [UserController::class, 'setPacienteGrow']);
 
 Route::get('turnero.prestadores', [TurnosController::class, 'getPrestadores']);

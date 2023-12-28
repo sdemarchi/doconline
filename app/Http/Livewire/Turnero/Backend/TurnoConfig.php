@@ -6,12 +6,15 @@ use Livewire\Component;
 
 use App\Models\TurnoConf;
 use App\Models\Prestador;
+use App\Models\DiasExentos;
 
 class TurnoConfig extends Component
 {
-    public $diaAgregar, $desdeAgregar1, $hastaAgregar1, $desdeAgregar2, $hastaAgregar2,
-        $desdeAgregar3, $hastaAgregar3, $duracionTurno, $prestadorDiasDeAnticipacion;
+    public $diaAgregar, $desdeAgregar1, $hastaAgregar1, $desdeAgregar2, $hastaAgregar2,$desdeAgregar3, $hastaAgregar3, $duracionTurno, $prestadorDiasDeAnticipacion;
     public $prestadorId = 0;
+    public $diasExentos = [];
+    public $fechaAgregarDia;
+    public $motivoAgregarDia;
 
     protected $rules = [
         'diaAgregar' => 'required',
@@ -21,35 +24,50 @@ class TurnoConfig extends Component
         'hastaAgregar2' => 'required',
         'desdeAgregar3' => 'required',
         'hastaAgregar3' => 'required',
-        'duracionTurno' => 'required|numeric|max:120|min:1'
+        'duracionTurno' => 'required|numeric|max:120|min:1',
+        'diasExentos.*.fecha' => 'required',
+        'diasExentos.*.motivo' => ''
     ];
 
     public function render()
     {
+        $this->diasExentos = DiasExentos::get();
         $prestadores = Prestador::get();
         $dias = TurnoConf::where('prestador_id',$this->prestadorId)->orderBy('dia_semana','ASC')->get();
         $this->initDiasDeAnticipacion();
         return view('livewire.turnero.backend.turno-config', compact('dias','prestadores'));
     }
 
+    public function guardarItem($id){
+        $this->diasExentos[$id]->save();
+        $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Los cambios se guardaron con éxito"]);
+    }
+
+    public function eliminarDia($id){
+            $item = DiasExentos::find($id)->delete();
+            $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Se eliminó el Item seleccionado"]);
+    }
+
+    public function agregarItem(){
+        DiasExentos::create([
+            'fecha' => $this->fechaAgregarDia,
+            'motivo' => $this->motivoAgregarDia
+        ]);
+
+        $this->fechaAgregarDia= '';
+        $this->motivoAgregarDia = '';
+        $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "El Beneficio se agregó con éxito"]);
+    }
+
     public function initDiasDeAnticipacion(){
-        if($this->prestadorId !== 0){
-            $prestador = Prestador::find($this -> prestadorId);
-            $this->prestadorDiasDeAnticipacion = $prestador->dias_anticipacion;
-        }else{
-            $this->prestadorDiasDeAnticipacion = 0;
-        }
+        $prestador = Prestador::find(1);
+        $this->prestadorDiasDeAnticipacion = $prestador->dias_anticipacion;
     }
 
     public function setDiasAnticipacion($dias){
-        if($this->prestadorId !== null){
-            $prestador = Prestador::find($this -> prestadorId);
-            $prestador->cambiarDiasAnticipacion($dias);
-            $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Cambiaste los dias de anticipacion."]);
-        }else{
-            $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Seleccione un prestador."]);
-        }
-
+        $prestador = Prestador::find(1);
+        $prestador->cambiarDiasAnticipacion($dias);
+        $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Cambiaste los dias de anticipacion."]);
     }
 
     public function configurarDia(){
@@ -86,11 +104,11 @@ class TurnoConfig extends Component
 
             $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Se agregó la configuración"]);
         }
-
     }
 
     public function eliminarItem($id){
         TurnoConf::find($id)->delete();
         $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Se eliminó la configuración seleccionada"]);
     }
+
 }

@@ -4,8 +4,10 @@ namespace App\Http\Livewire\Grows;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-
+use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Grow;
+
+use App\Exports\GrowsExport;
 
 class Grows extends Component
 {
@@ -126,6 +128,10 @@ class Grows extends Component
 public function eliminar($idPaciente){
     Grow::find($idPaciente)->delete();
     $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Se eliminó el registro del Grow"]);
+}
+
+public function generarCSV(){
+    return Excel::download(new GrowsExport, 'grows.csv');
 }
 
 public function resetPagination(){

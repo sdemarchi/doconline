@@ -45,13 +45,13 @@ class PacientesEstadisticas extends Component
     public function getPacientes(){
         $pacientesData = Paciente::whereYear('fe_carga', $this->anioActual)
         ->whereMonth('fe_carga', $this->mesActual)
-        ->select('idpaciente', 'dni', 'email', 'nom_ape','pagado2023','celular','idcontacto')
+        ->select('idpaciente', 'dni', 'email', 'nom_ape','pagado2023','pagado2024','celular','idcontacto')
         ->get();
 
         $pacientes = $pacientesData->map(function ($paciente) {
             $paciente['pago'] = 'No';
 
-            if ($paciente->pagado2023 == 1) {
+            if ($paciente->pagado2023 == 1 || $paciente->pagado2024 == 1) {
                 $paciente['pago'] = 'Si';
             } else {
                 $paciente['pago'] = 'No';

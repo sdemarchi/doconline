@@ -21,7 +21,7 @@
               <th>Fecha Emisión</th>
               <th>Asignado a</th>
               <th>Atendido</th>
-              <th>Pagado</th>
+             <!-- <th>Pagado</th> -->
               <th></th>
             </tr>
           </thead>
@@ -59,7 +59,7 @@
                     <span class="badge bg-danger me-1"></span>No
                   @endif
                 @endif
-              </td>
+              </td> <!--
               <td>
                 @if($turno->comprobante_pago)
                   <span class="badge bg-success me-1"></span>Sí
@@ -68,9 +68,9 @@
                   @else
                     <a href="{{ url('img/uploads/' . $turno->comprobante_pago) }}" target="_blank"><img src="{{ asset('img/icon-decl.png')}}" width="25"/></a>
                   @endif
-                
+
                   @endif
-              </td>
+              </td> -->
               <td>
                 <div class="dropdown">
                   <button class="btn btn-sm btn-dark dropdown-toggle align-text-top" data-bs-boundary="viewport"
@@ -94,11 +94,11 @@
                       <button class="dropdown-item" wire:click="mailConfirmacionTurno('{{ $turno->id }}')">
                         Enviar mail de confirmación
                       </button>
-                    @else  
+                    @else
                       <button class="dropdown-item" wire:click="$emit('triggerDelete',{{ $turno->id }})">
                         Eliminar
                       </button>
-                    
+
                     @endif
                     <a class="dropdown-item" href="{{route('turnos.edit',$turno->id)}}">Editar</a>
                   </div>
@@ -130,9 +130,9 @@
                   confirmButtonText: 'Eliminar!'
               }).then((result) => {
                   if (result.value) {
-              
+
                       @this.call('eliminar',itemId)
-              
+
                   }
               });
           });
@@ -151,9 +151,9 @@
               }).then((result) => {
           //if user clicks on delete
                   if (result.value) {
-              
+
                       @this.call('cancelar',itemId)
-              
+
                   }
               });
           });

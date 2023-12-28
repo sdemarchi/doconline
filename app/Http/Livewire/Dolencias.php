@@ -10,16 +10,16 @@ use App\Models\Paciente;
 class Dolencias extends Component
 {
     public $dolencias, $dolenciaAgregar, $descripAgregar;
-    
+
     protected $rules = [
         'dolenciaAgregar' => 'required',
         'descripAgregar' => 'required',
         'dolencias.*.iddolencia' => 'required',
         'dolencias.*.dolencia' => 'required|max:100',
         'dolencias.*.decrip_profesional' => 'required|max:100',
-        
+
     ];
-    
+
     public function render()
     {
         $this->dolencias = Dolencia::orderBy('dolencia','ASC')->get();
@@ -29,7 +29,7 @@ class Dolencias extends Component
     public function guardarItem($id){
         $this->validateOnly('dolencias.*.dolencia');
         $this->validateOnly('dolencias.*.decrip_profesional');
-        
+
         $this->dolencias[$id]->save();
         $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Los cambios se guardaron con éxito"]);
     }

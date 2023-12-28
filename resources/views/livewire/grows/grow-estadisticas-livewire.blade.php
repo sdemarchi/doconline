@@ -55,7 +55,12 @@
             transform: translate(50px,-50px)
         }
 
-
+        .table-total{
+            font-weight: 600;
+            background-color:rgba(224, 224, 224, 0.041);
+            border-radius: 8px;
+            overflow: hidden;
+        }
     </style>
 
     <div class="row row-cards grow-card" >
@@ -98,13 +103,20 @@
                 </thead>
                 <tbody>
 
-                    @foreach($growsPacientes as $grow)
+                    @foreach($growsPacientes['grows'] as $grow)
                         <tr class='grow-button' wire:click="seleccionarGrow({{ $grow['growid'] }},'{{ $grow['nombre']}}')">
                             <td>{{ $grow['nombre'] }}</td>
                             <td>{{ $grow['pacientes'] }}</td>
                             <td>{{ $grow['pagaron'] }}</td>
                         </tr>
                     @endforeach
+
+
+                    <tr class='grow-button table-total'>
+                        <td>Total:</td>
+                        <td>{{ $growsPacientes['numPacientes'] }}</td>
+                        <td>{{ $growsPacientes['pagaronMes'] }}</td>
+                    </tr>
 
                 </tbody>
               </table>

@@ -50,9 +50,9 @@
                             <td><textarea class="form-control" rows="1" wire:model.defer="dolencias.{{ $index }}.decrip_profesional"></textarea></td>
                         </tr>
                     @endforeach
-                        
+
                     </tbody>
-                    
+
                 </table>
             </div>
         </div>
@@ -75,13 +75,11 @@
                 }).then((result) => {
             //if user clicks on delete
                     if (result.value) {
-                
                         @this.call('eliminarItem',itemId)
-                
                     }
                 });
             });
         })
 </script>
-    
+
 @endpush

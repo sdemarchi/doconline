@@ -29,7 +29,7 @@ class TurnoPaciente extends Model
         return $this->hasOne(Paciente::class, 'dni', 'dni');
     }
 
-    public function grow()
+    public function grow_()
     {
         return $this->belongsTo(Grow::class, 'grow', 'idgrow');
     }

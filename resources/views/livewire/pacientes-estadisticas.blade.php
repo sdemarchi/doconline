@@ -40,11 +40,13 @@
             text-decoration: none;
             padding: 2px 4px;
         }
+
         .grow-estadisticas-detalles:hover{
             background-color:rgb(93, 93, 93);
             text-decoration: none;
             color:rgb(201, 201, 201);
         }
+
         #loader-contacto{
             display:flex;
             z-index:200 !important;
@@ -63,6 +65,13 @@
             justify-content:center;
             height:120px;
             width:100%;
+        }
+
+        .table-total{
+            font-weight: 600;
+            background-color:rgba(224, 224, 224, 0.041);
+            border-radius: 8px;
+            overflow: hidden;
         }
 
 
@@ -108,7 +117,7 @@
                 </thead>
                 <tbody>
 
-                    @foreach($contactoPacientes as $contacto_)
+                    @foreach($contactoPacientes['contactos'] as $contacto_)
                         <tr class='grow-button' wire:click="seleccionarContacto({{ $contacto_['idcontacto'] }},'{{ $contacto_['nombre']}}')">
                             <td>{{ $contacto_['nombre'] }}</td>
                             <td>{{ $contacto_['pacientes'] }}</td>
@@ -116,6 +125,14 @@
                             <td>{{ $contacto_['no-pagaron'] }}</td>
                         </tr>
                     @endforeach
+
+                    <tr class='grow-button table-total'>
+                        <td>Total:</td>
+                        <td>{{ $contactoPacientes['numPacientes']}}</td>
+                        <td>{{ $contactoPacientes['pagaronMes'] }}</td>
+                        <td>{{ $contactoPacientes['noPagaronMes']}}</td>
+                    </tr>
+
 
                 </tbody>
               </table>
@@ -162,9 +179,9 @@
                 @foreach($pacientesContacto as &$paciente)
                     <tr class='grow-button' wire:click='abrirFicha({{$paciente['dni']}})'>
                         <td>{{ $paciente['nom_ape']}}</td>
-                        <td>{{ $paciente['email'] }}</td>
-                        <td>{{ $paciente['celular'] }}</td>
-                        <td>{{ $paciente['pago'] }}</td>
+                        <td>{{ $paciente['email']}}</td>
+                        <td>{{ $paciente['celular']}}</td>
+                        <td>{{ $paciente['pago']}}</td>
                     </tr>
                 @endforeach
 

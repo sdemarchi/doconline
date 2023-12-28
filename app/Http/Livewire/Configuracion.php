@@ -9,13 +9,13 @@ use App\Models\Setting;
 class Configuracion extends Component
 {
     public $precioTransf, $precioMP, $CBU, $Alias, $OrdenTurnos;
-    
+
     protected $rules = [
         'precioTransf' => 'required|numeric|max:999999',
-        'precioMP' => 'required|numeric|max:999999', 
+        'precioMP' => 'required|numeric|max:999999',
         'CBU' => 'required|max:50',
-        'Alias' => 'required|max:100', 
-        'OrdenTurnos' => '',  
+        'Alias' => 'required|max:100',
+        'OrdenTurnos' => '',
     ];
 
     public function render()
@@ -32,7 +32,7 @@ class Configuracion extends Component
     public function update(){
 
         $this->validate();
-        
+
         $setting = new Setting;
         $setting->setSetting('precioTransf', $this->precioTransf);
         $setting->setSetting('precioMP', $this->precioMP);
@@ -41,6 +41,6 @@ class Configuracion extends Component
         $setting->setSetting('OrdenTurnos', $this->OrdenTurnos);
 
         $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Se guardaron las configuraciones"]);
-        
+
     }
 }

@@ -12,10 +12,69 @@ use App\Models\Setting;
 use App\Models\Turno;
 use App\Models\Prestador;
 use App\Models\TurnoConf;
+use App\Models\DiasExentos;
 
 class CalendarioController extends Controller
 {
-    public function getCalendario($mes,$anio,$prestador){
+    public function getCalendario($mes, $anio, $prestador)
+    {
+        $start = Carbon::createFromFormat('Y-n-d', "$anio-$mes-01")->startOfMonth()->previous('sunday');
+        $end = Carbon::createFromFormat('Y-n-d', "$anio-$mes-01")->endOfMonth()->next('saturday');
+        $period = CarbonPeriod::create($start, $end);
+        $prestador_model = Prestador::find($prestador);
+        $diaLimite = Carbon::now()->addDays($prestador_model->dias_anticipacion);
+
+        $key = 1;
+        $lineaKey = 1;
+        $posicion = 1;
+
+        // Obtén las fechas exentas
+        $fechasExentas = DiasExentos::pluck('fecha')->toArray();
+
+        foreach ($period as $date) {
+            // Formatea la fecha actual al formato Y-m-d para comparación
+            $fechaActual = $date->format('Y-m-d');
+
+            // Verifica si la fecha está en la lista de fechas exentas
+            $fechaExenta = in_array($fechaActual, $fechasExentas);
+
+            if ($date < $diaLimite || $fechaExenta) {
+                $activo = false;
+                $tieneTurnos = false;
+            } else {
+                $activo = true;
+                $tieneTurnos = $this->_tieneTurnos($date, $prestador);
+            }
+
+            $linea[] = [
+                "fecha" => $date->toDateString(),
+                "dia" => $date->format('d'),
+                "enmes" => $date->format('m') == $mes ? true : false,
+                "activo" => $activo,
+                "turnos" => $tieneTurnos,
+                "key" => $key
+            ];
+
+            if ($posicion == 7) {
+                $calend[] = [
+                    "linea" => $linea,
+                    "key" => $lineaKey
+                ];
+
+                $linea = [];
+                $posicion = 1;
+                $lineaKey++;
+            } else {
+                $posicion++;
+            }
+            $key++;
+        }
+
+        return response()->json($calend);
+    }
+
+
+   /* public function getCalendario($mes,$anio,$prestador){
         $start = Carbon::createFromFormat('Y-n-d',"$anio-$mes-01")->startOfMonth()->previous('sunday');
         $end = Carbon::createFromFormat('Y-n-d',"$anio-$mes-01")->endOfMonth()->next('saturday');
         $period = CarbonPeriod::create($start,$end);
@@ -60,7 +119,7 @@ class CalendarioController extends Controller
         }
 
         return response()->json($calend);
-    }
+    }*/
 
     /*private function _tieneTurnos($fecha,$prestador){
         if($prestador==0) return false;

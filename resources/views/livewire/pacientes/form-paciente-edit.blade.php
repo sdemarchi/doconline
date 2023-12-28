@@ -155,6 +155,11 @@
                             <input class="form-check-input" type="checkbox" wire:model.defer="pagado2023" checked>
                             <span class="form-check-label">Pagado2023</span>
                         </label>
+
+                        <label class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" wire:model.defer="pagado2024" checked>
+                            <span class="form-check-label">Pagado2024</span>
+                        </label>
                     </div>
 
                     <div class="ficha-input-container">
@@ -213,7 +218,7 @@
                         @error('fe_aprobacion')<div class="text-danger">{{ $message }}</div>@enderror
                       </div>
                       <div class="ficha-input-container">
-                        <label class="form-label">Código de vinculación del Reprocann</label>
+                        <label class="form-label">Código de vinculación</label>
                         <input type="text" class="form-control" wire:model.defer="cod_vincu">
                         @error('cod_vinco')<div class="text-danger">{{ $message }}</div>@enderror
                       </div>

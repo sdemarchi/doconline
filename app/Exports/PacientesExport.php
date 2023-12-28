@@ -23,7 +23,7 @@ class PacientesExport implements FromCollection, ShouldAutoSize, WithHeadings, W
     {
     return ['id','Cod. Descto.','E-Mail','Celular','Nombre y Apellido','DNI','Fecha Nac.','Domicilio','Localidad',
             'Fecha de Carga','Cod. Vinc.','Contacto','Contacto Otro','Pagado','Pagado 2023','Estado'];
-    }   
+    }
 
     public function map($paciente): array
     {

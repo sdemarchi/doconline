@@ -20,7 +20,7 @@ class TurnosList extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $searchString;
-    
+
     public function render()
     {
         $turnos = $this->_query();
@@ -57,7 +57,7 @@ class TurnosList extends Component
             $turno->delete();
             $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Se canceló el Turno"]);
         }
-        
+
     }
 
     public function atendido($id){
@@ -91,7 +91,7 @@ class TurnosList extends Component
         $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Se  envió mail de prueba"]);
     }
 
-    public function resetPagination(){ 
+    public function resetPagination(){
         $this->resetPage();
     }
 

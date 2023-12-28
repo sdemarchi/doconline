@@ -54,7 +54,7 @@ class GrowEstadisticasLivewire extends Component{
 
             $pac = Paciente::where('dni', $paciente['dni'])->first();
             if ($pac !== null) {
-                if ($pac->pagado2023 == 1) {
+                if ($pac->pagado2023 == 1 || $pac->pagado2024 == 1) {
                     $paciente['pago'] = 'Si';
                 } else {
                     $paciente['pago'] = 'No';

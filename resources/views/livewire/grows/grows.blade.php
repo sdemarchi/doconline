@@ -4,9 +4,10 @@
 
             <div class="card-body border-bottom py-3">
                 <div class="d-flex">
+                    <button wire:click='generarCSV' class="btn btn-primary" style="border-radius:6px;height:26px;font-size:14px">Descargar CSV</button>
                     <div class="me-auto text-muted">
                         <div class="ms-2 d-inline-block mx-auto">
-                            <input type="text" class="form-control form-control-sm" placeholder="Buscar Grow"
+                            <input style="border-radius:6px;height:26px; type="text" class="form-control form-control-sm" placeholder="Buscar Grow"
                                 wire:model.defer="searchString" wire:keydown.enter="resetPagination">
                         </div>
                     </div>
