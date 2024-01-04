@@ -32,6 +32,7 @@
                   <th>Horas Trabajadas</th>
                   <th>Horas / Feriado</th>
                   <th>Total mes</th>
+                  <th>Falta pagar</th>
                   <th>Acciones</th>
                 </tr>
               </thead>
@@ -39,11 +40,22 @@
 
                 @foreach($usuariosHoras as $usuario)
                 <tr>
-
                   <td>{{ $usuario['nombre'] }}</td>
                   <td>{{ $usuario['horas'] }}</td>
                   <td>{{ $usuario['horas_feriado'] }}</td>
-                  <td>${{ $usuario['paga'] }}</td>
+
+                  @if($usuario['paga'] > 0)
+                    <td>${{ $usuario['paga'] }}</td>
+                  @elseif($usuario['paga'] == 0)
+                    <td>-</td>
+                  @endif
+
+                  @if($usuario['paga'] > 0)
+                    <td>${{ $usuario['falta_pagar'] }}</td>
+                  @elseif($usuario['falta_pagar'] == 0)
+                    <td>-</td>
+                  @endif
+
                   <td>
                     <div class="dropdown">
                       <button class="btn btn-sm btn-dark dropdown-toggle align-text-top" data-bs-boundary="viewport"
@@ -52,7 +64,7 @@
                       </button>
                       <div class="dropdown-menu dropdown-menu-end">
                         <button class="dropdown-item" wire:click="liquidarMes('{{ $usuario['id'] }}')">
-                          Liquidar Mes
+                          Liquidar hasta hoy
                         </button>
 
                       </div>

@@ -9,7 +9,7 @@
             <div class="col-sm-6">
                 <a href="{{ route('usuarios.create') }}" class="btn btn-primary float-sm-end">Nuevo Usuario</a>
             </div>
-        </div>        
+        </div>
     </x-slot>
 
     <div class="py-12" style="width:auto !important; max-width:none !important;">
@@ -21,7 +21,4 @@
             </div>
         </div>
     </div>
-
-   
-    
 </x-backend-layout>

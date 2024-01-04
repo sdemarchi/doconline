@@ -1,9 +1,15 @@
 <div class="row row-cards">
+    <style>
+        .p-fila-paciente:hover{
+            background-color:#222e40;
+            cursor:pointer !important;
+        }
+
+    </style>
     <div class="col-12">
         <div class="card" style="min-width: 96vw;min-height:500px">
             <div class="card-body border-bottom py-3" style="max-height:60px">
                 <div class="d-flex">
-
                     <div style="display:flex;align-items:center;" class="me-auto text-muted">
                         <div>
                             <button class="btn btn-danger btn-icon" style="height:30px !important;margin-right:8px;" wire:click="limpiarBusqueda">
@@ -75,7 +81,7 @@
                             </th>
 
                             <th>Foto Firma</th>
-                            <th>Firma</th>
+                            <th style='text-align:center'>Firma</th>
                             <th>Aclaración</th>
 
                             <th class="sorting" wire:click="sort('dni')">DNI
@@ -86,26 +92,9 @@
                                 <x-sort-icon :sortField="$idprovinciaSort" />
                             </th>
 
-                            <!--
-                            <th width=350 class="sorting" wire:click="sort('res_historia')">Resumen historia clínica
-                                <x-sort-icon :sortField="$res_historiaSort" />
-                            </th>
-
-
-
-                            <th width=200 class="sorting" wire:click="sort('patologia')">Patología
-                                <x-sort-icon :sortField="$patologiaSort" />
-                            </th>
-
-                            <th width=200 class="sorting" wire:click="sort('dolores')">Dolencias
-                                <x-sort-icon :sortField="$doloresSort" />
-                            </th>
-
-                            -->
                             <th class="sorting" wire:click="sort('cant_plantas')">Cant Plantas
                                 <x-sort-icon :sortField="$cant_plantasSort" />
                             </th>
-
 
                             <th class="sorting" wire:click="sort('idcontacto')">Modo Contacto
                                 <x-sort-icon :sortField="$idcontactoSort" />
@@ -120,9 +109,9 @@
                     </thead>
                     <tbody>
                         @foreach($pacientes as $paciente)
-                        <tr>
+                        <tr class="p-fila-paciente">
                             <td>
-                                <a class="btn btn-ghost-light btn-icon"
+                                <a class="btn btn-ghost-light btn-icon" style="margin:0 !important;padding:0;"
                                     href="{{route('pacientes.edit', $paciente->idpaciente)}}" data-toggle="tooltip"
                                     data-placement="right" title="Editar">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit"
@@ -137,7 +126,7 @@
                                         <path d="M16 5l3 3"></path>
                                     </svg>
                                 </a>
-                                <button class="btn btn-ghost-light btn-icon"
+                                <button class="btn btn-ghost-light btn-icon" style="margin:0 !important;padding:0;"
                                     wire:click="$emit('triggerDelete', {{ $paciente->idpaciente }})"
                                     data-toggle="tooltip" data-placement="right" title="Eliminar Registro">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash"
@@ -153,24 +142,24 @@
                                     </svg>
                                 </button>
                             </td>
-                            <td>{{ date_format(date_create($paciente->fe_carga),"d/m/Y") }}</td>
-                            <td>{{ $paciente->idpaciente }}</td>
-                            <td>{{ $paciente->nom_ape }}</td>
-                            <td>{{ $paciente->pagado2023 ? 'Sí' : 'No'}}</td>
-                            <td>{{ $paciente->getEstado() }}</td>
-                            <td>@if($paciente->fe_aprobacion){{
+                            <td wire:click='abrirFicha({{$paciente->idpaciente}})'>{{ date_format(date_create($paciente->fe_carga),"d/m/Y") }}</td>
+                            <td wire:click='abrirFicha({{$paciente->idpaciente}})'>{{ $paciente->idpaciente }}</td>
+                            <td wire:click='abrirFicha({{$paciente->idpaciente}})'>{{ $paciente->nom_ape }}</td>
+                            <td wire:click='abrirFicha({{$paciente->idpaciente}})'>{{ $paciente->pagado2023 ? 'Sí' : 'No'}}</td>
+                            <td wire:click='abrirFicha({{$paciente->idpaciente}})'>{{ $paciente->getEstado() }}</td>
+                            <td wire:click='abrirFicha({{$paciente->idpaciente}})'>@if($paciente->fe_aprobacion){{
                                 date_format(date_create($paciente->fe_aprobacion),"d/m/Y") }}@endif</td>
-                            <td>{{ $paciente->email }}</td>
-                            <td>{{ $paciente->celular }}</td>
+                            <td wire:click='abrirFicha({{$paciente->idpaciente}})'>{{ $paciente->email }}</td>
+                            <td wire:click='abrirFicha({{$paciente->idpaciente}})'>{{ $paciente->celular }}</td>
 
-                            <td>
+                            <td wire:click='abrirFicha({{$paciente->idpaciente}})'>
                                 @if($paciente->foto_firma)
-                                <img src="{{ asset("img/uploads/$paciente->foto_firma")}}" width="100"/>
+                                <img src="{{ asset("img/uploads/$paciente->foto_firma")}}" style='max-width:70px;max-height:20px;margin:0 10px;'/>
                                 @endif
                             </td>
 
-                            <td>
-                                <button class="btn btn-ghost-light btn-icon"
+                            <td wire:click='abrirFicha({{$paciente->idpaciente}})'>
+                                <button class="btn btn-ghost-light btn-icon" style="margin:0 !important;padding:0;"
                                     wire:click="convertirFirmaAclaracion({{ $paciente->idpaciente }})"
                                     data-toggle="tooltip" data-placement="right" title="Importar Firma y Aclaración">
                                     <!-- Download SVG icon from http://tabler-icons.io/i/user-off -->
@@ -184,7 +173,7 @@
                                     </svg>
                                 </button>
 
-                                <a class="btn btn-ghost-light btn-icon"
+                                <a class="btn btn-ghost-light btn-icon" style="margin:0 !important;padding:0;"
                                     href="{{route('pacientes.editFirma',$paciente->idpaciente)}}" data-toggle="tooltip"
                                     data-placement="right" title="Editar Firma y Aclaración">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit"
@@ -200,20 +189,15 @@
                                     </svg>
                                 </a>
 
-                                <img src="{{ $paciente->firma_v2 }}" width="100" />
+                                <img src="{{ $paciente->firma_v2 }}" style='max-width:70px;max-height:20px;margin:0 10px;'/>
                             </td>
-                            <td><img src="{{ $paciente->aclaracion_v2 }}" width="100" /></td>
-                            <td>{{ $paciente->dni }}</td>
-                            <td>@if($paciente->provincia){{ $paciente->provincia->Provincia }}@endif</td>
-                        <!--
-                            <td>{{ $paciente->res_historia }}</td>
-                            <td>{{ $paciente->patologia }}</td>
-                            <td>{!! $paciente->getDolencias() !!}</td>
-                        -->
-                            <td>{{ $paciente->cant_plantas }}</td>
-                            <td>@if($paciente->modo_contacto){{ $paciente->modo_contacto->modo_contacto }}@endif</td>
-                            <td>{{ $paciente->contacto_otro }}</td>
-                            <td>{{ $paciente->comentario }}</td>
+                            <td wire:click='abrirFicha({{$paciente->idpaciente}})'><img src="{{ $paciente->aclaracion_v2 }}"  style='max-width:70px;max-height:20px;margin:0 10px;'/></td>
+                            <td wire:click='abrirFicha({{$paciente->idpaciente}})'>{{ $paciente->dni }}</td>
+                            <td wire:click='abrirFicha({{$paciente->idpaciente}})'>@if($paciente->provincia){{ $paciente->provincia->Provincia }}@endif</td>
+                            <td wire:click='abrirFicha({{$paciente->idpaciente}})'>{{ $paciente->cant_plantas }}</td>
+                            <td wire:click='abrirFicha({{$paciente->idpaciente}})'>@if($paciente->modo_contacto){{ $paciente->modo_contacto->modo_contacto }}@endif</td>
+                            <td wire:click='abrirFicha({{$paciente->idpaciente}})'>{{ $paciente->contacto_otro }}</td>
+                            <td wire:click='abrirFicha({{$paciente->idpaciente}})'>{{ $paciente->comentario }}</td>
                         </tr>
                         @endforeach
 
@@ -257,7 +241,6 @@
     });
 
     document.addEventListener('DOMContentLoaded', function () {
-
           @this.on('triggerDelete', itemId => {
               Swal.fire({
                   title: 'Está Seguro?',
@@ -270,9 +253,7 @@
                   confirmButtonText: 'Eliminar!'
               }).then((result) => {
                   if (result.value) {
-
                       @this.call('eliminar',itemId)
-
                   }
               });
           });

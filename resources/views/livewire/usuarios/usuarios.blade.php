@@ -1,11 +1,17 @@
 <div class="row row-cards">
+    <style>
+        .u-fila-usuario:hover{
+            background-color:#222e40;
+            cursor:pointer !important;
+        }
+    </style>
     <div class="col-12">
       <div class="card">
         <div class="card-body border-bottom py-3">
           <div class="d-flex">
             <div class="ms-auto text-muted">
               <div class="ms-2 d-inline-block">
-                
+
               </div>
             </div>
           </div>
@@ -23,15 +29,15 @@
               </tr>
             </thead>
             <tbody>
-  
+
               @foreach($usuarios as $usuario)
-              <tr>
-  
-                <td>{{ $usuario->id }}</td>
-                <td>{{ $usuario->name }}</td>
-                <td>{{ $usuario->username }}</td>
-                <td>{{ $usuario->email }}</td>
-                <td>{{ $usuario->role->name }}</td>
+              <tr class="u-fila-usuario">
+
+                <td wire:click='editar({{$usuario->id}})'>{{ $usuario->id }}</td>
+                <td wire:click='editar({{$usuario->id}})'{{ $usuario->name }}</td>
+                <td wire:click='editar({{$usuario->id}})'>{{ $usuario->username }}</td>
+                <td wire:click='editar({{$usuario->id}})'>{{ $usuario->email }}</td>
+                <td wire:click='editar({{$usuario->id}})'>{{ $usuario->role->name }}</td>
                 <td>
                   <div class="dropdown">
                     <button class="btn btn-sm btn-dark dropdown-toggle align-text-top" data-bs-boundary="viewport"
@@ -47,15 +53,15 @@
                 </td>
               </tr>
               @endforeach
-  
+
             </tbody>
-  
+
           </table>
         </div>
       </div>
     </div>
   </div>
-  
+
   @push('scripts')
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
@@ -71,13 +77,11 @@
                     confirmButtonText: 'Eliminar!'
                 }).then((result) => {
                     if (result.value) {
-                
                         @this.call('eliminar',itemId)
-                
                     }
                 });
             });
         })
     </script>
-  
+
   @endpush

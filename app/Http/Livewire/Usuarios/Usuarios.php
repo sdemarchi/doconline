@@ -8,7 +8,7 @@ use App\Models\User;
 
 class Usuarios extends Component
 {
-    
+
     public function render()
     {
         $usuarios = User::orderBy('username','ASC')->get();
@@ -18,5 +18,9 @@ class Usuarios extends Component
     public function eliminar($id){
         User::find($id)->delete();
         $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Se eliminó el usuario"]);
+    }
+
+    public function editar($usuarioId){
+        return redirect()->route('usuarios.edit', $usuarioId);
     }
 }

@@ -16,7 +16,7 @@ class formController extends Controller
 {
     public function guardarFormulario(Request $request){
         $part1 = $request->input('part1');
-        
+
         $resp = $this->_checkEmail($part1['email']);
         $resp = $this->_checkDni($part1['dni']);
         if($resp != ""){
@@ -34,7 +34,7 @@ class formController extends Controller
         foreach($patologias as $pat){
             PacientePatologia::create($pat);
         }
-        
+
         $error = [
 			'code' => 0,
 			'message' => ''
@@ -46,7 +46,7 @@ class formController extends Controller
     public function actualizarFormulario($id, Request $request){
         $part1 = $request->input('part1');
         $paciente = Paciente::find($id);
-        
+
         $resp = "";
         if($part1['email'] <> $paciente->email){
             $resp = $this->_checkEmail($part1['email']);
@@ -61,16 +61,16 @@ class formController extends Controller
             ];
             return response()->json($error);
         }
-        
+
         $data = $this->_get_data($request);
         Paciente::find($id)->update($data);
-        
+
         $patologias = $this->_get_patologias_data($id, $request);
         PacientePatologia::where('idpaciente',$id)->delete();
         foreach($patologias as $pat){
             PacientePatologia::create($pat);
         }
-        
+
         $error = [
 			'code' => 0,
 			'message' => ''
@@ -89,7 +89,7 @@ class formController extends Controller
         $tut2 = $request->input('tut2');
         $firma = array_key_exists('firma',$request->input()) ? $request->input('firma') : '';
         $aclaracion = array_key_exists('aclarac',$request->input()) ? $request->input('aclarac') : '';
-        
+
         $ocupacion = Ocupacion::find($part2['ocupacion_id'])->ocupacion;
 
         $esMenor = $part3b['es_menor'];
@@ -112,19 +112,18 @@ class formController extends Controller
             'comentario' => $part2['comentario'],
             'firma_v2' => $firma,
             'aclaracion_v2' => $aclaracion,
-            'arritmia' => $part3['arritmia'], 
-            'salud_mental' => $part3['salud_mental'], 
-            'salud_ment_esp' => $part3['salud_ment_esp'], 
-            'alergia' => $part3['alergia'], 
-            'embarazada' => $part3['embarazada'], 
-            'maneja_maq' => $part3['maneja_maq'], 
-            
+            'arritmia' => $part3['arritmia'],
+            'salud_mental' => $part3['salud_mental'],
+            'salud_ment_esp' => $part3['salud_ment_esp'],
+            'alergia' => $part3['alergia'],
+            'embarazada' => $part3['embarazada'],
+            'maneja_maq' => $part3['maneja_maq'],
             'patologia' => $part3b['patologia'],
             'idcontacto' => $part3b['idcontacto'],
             'contacto_otro' => array_key_exists('contacto_otro',$part3b) ? $part3b['contacto_otro'] : '',
             'es_menor' => $esMenor,
             'version' => 2, //Versión 2 es el formulario generado desde la app React
-            
+
         ];
 
         if($esMenor){
@@ -154,7 +153,7 @@ class formController extends Controller
     private function _get_patologias_data($id, Request $request){
         $part1 = $request->input('part1');
         $patologList = $request->input('patologias');
-        
+
         $patologias = [];
         foreach($patologList as $pat){
             $patologias[] = [
@@ -172,7 +171,7 @@ class formController extends Controller
 
         return $patologias;
     }
-    
+
     private function _checkEmail($email){
         $result = Paciente::where('email',$email)->first();
         if($result) return "El E-Mail ingresado ya existe";
@@ -196,7 +195,7 @@ class formController extends Controller
             $error = ['code' => 1];
             $data = '';
             $patologias = '';
-        }    
+        }
         return response()->json(['error' => $error, 'data' => $data, 'patologias' => $patologias]);
     }
 }

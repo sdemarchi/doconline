@@ -51,6 +51,18 @@ class HorasTrabajadas extends Component
         $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "El período seleccionado se marcó como no liquidado"]);
     }
 
+    public function faltaPagar($userId){
+        $inicioMes = Carbon::createFromFormat('Y-n-d',"$this->anioActual-$this->mesActual-01");
+        $finMes = Carbon::createFromFormat('Y-n-d',"$this->anioActual-$this->mesActual-01")->endOfMonth();
+        $noLiquidado = ControlHorario::where('user_id',$userId)
+        ->whereNotNull('fin')
+        ->where('liquidado', '=', 0)
+        ->where('inicio', '>=', $inicioMes)
+        ->where('inicio', '>=', $inicioMes)
+        ->where('inicio', '<=', $finMes)
+        ->get();
+    }
+
     public function resetPagination(){
         $this->resetPage();
     }
@@ -71,14 +83,13 @@ class HorasTrabajadas extends Component
             $fecha->liquidado = 1;
             $fecha->save();
         }
+
         $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Se liquidó el mes para el Usuario seleccionado"]);
     }
 
     function stringToFloat($horaString) {
-        // Divide la cadena en horas y minutos
         list($horas, $minutos) = explode(':', $horaString);
 
-        // Convierte las horas y minutos a un valor flotante
         $horas = intval($horas);
         $minutos = intval($minutos);
 
@@ -100,11 +111,17 @@ class HorasTrabajadas extends Component
     private function _getHorasTrabajadas(){
         $usuarios = User::get();
         foreach($usuarios as $usuario){
+            $faltaPagarDias = $this->faltaPagar($usuario->id);
             $horasUsuario = $this->_getHorasEnMes($usuario->id);
+
             $horasTotales = $this->stringToFloat($horasUsuario['horas']);
-            $horasFeriado =$this->stringToFloat($horasUsuario['feriado']);
+            $horasFeriado = $this->stringToFloat($horasUsuario['feriado']);
+            $faltanPagarHoras = $horasUsuario['faltanPagarHoras'];
 
             $horasFeriado_ =  $this->floatToHoursMinutes($horasFeriado);
+
+            $aPagar = number_format(($horasTotales + $horasFeriado)  * $usuario->pago_hora, 0, ',', '.');
+            $faltaPagar =  number_format($faltanPagarHoras * $usuario->pago_hora, 0, ',', '.');
 
             if($horasFeriado_ === '00:00'){
                 $horasFeriado_ = '-';
@@ -115,7 +132,8 @@ class HorasTrabajadas extends Component
                 'nombre' => $usuario->name,
                 'horas' => $horasUsuario['horas'],
                 'horas_feriado'=>$horasFeriado_,
-                'paga'=>number_format(round(($horasTotales + $horasFeriado ) * $usuario->pago_hora), 0, ',', '.') ,
+                'paga'=>$aPagar,
+                'falta_pagar'=>$faltaPagar,
             ];
         }
         return $horas;
@@ -125,6 +143,7 @@ class HorasTrabajadas extends Component
     {
         $total = 0;
         $totalFeriado = 0;
+        $faltanPagar = 0;
 
         $inicioMes = Carbon::createFromFormat('Y-n-d',"$this->anioActual-$this->mesActual-01")->startOfDay();
         $finMes = Carbon::createFromFormat('Y-n-d',"$this->anioActual-$this->mesActual-01")->endOfMonth()->endOfDay();
@@ -138,6 +157,12 @@ class HorasTrabajadas extends Component
             $inicio = Carbon::createFromFormat('Y-m-d H:i:s', $fecha->inicio);
             $fin = Carbon::createFromFormat('Y-m-d H:i:s', $fecha->fin);
             $diferencia = $inicio->diffInMinutes($fin);
+
+            if($fecha->liquidado == 0 && $fecha->feriado == 1){
+                $faltanPagar += (2 * $diferencia);
+            }else if($fecha->liquidado == 0){
+                $faltanPagar += $diferencia;
+            }
 
             // Verifica si la fecha es feriado y suma las horas durante los feriados
             if ($fecha->feriado == 1) {
@@ -156,6 +181,7 @@ class HorasTrabajadas extends Component
         return [
             "horas" => $horas . ':' . $minutos,
             "feriado" => $horasFeriado . ':' . $minutosFeriado,
+            "faltanPagarHoras"=> $faltanPagar / 60,
         ];
     }
 

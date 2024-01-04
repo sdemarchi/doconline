@@ -435,9 +435,9 @@
                     <div class="ficha-row">
 
                     <div class="form-input-container" style="max-width: 300px;;margin-top:15px;">
-                        <label class="form-label">Cómo nos contactó? *</label>
+                        <label style="font-size:14px" class="form-label">Cómo nos contactó? *</label>
                         @foreach($modos_contacto as $mod)
-                        <label class="form-check form-check-inline">
+                        <label  style="font-size:14px" class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" wire:model.defer="idcontacto"
                             value="{{$mod->idcontacto}}" wire:click="refresh()">
                             <span class="form-check-label">{{ $mod->modo_contacto }}</span>
@@ -446,13 +446,13 @@
                     </div>
 
                     <div class="form-input-container" style=" margin-left:25px;margin-top:15px;">
-                        <label class="form-label">¿Maneja maquinarias de alta precisión? *</label>
+                        <label style="font-size:14px" class="form-label">¿Maneja maquinarias de alta precisión? *</label>
                         <label class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" wire:model.defer="maneja_maq" value="1"
                             wire:click="refresh()"><span class="form-check-label">Sí</span>
                         </label>
 
-                        <label class="form-check form-check-inline">
+                        <label style="font-size:14px"class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" wire:model.defer="maneja_maq" value="0"
                             wire:click="refresh()"><span class="form-check-label">No</span>
                         </label>
@@ -745,7 +745,7 @@
                         <div class="col">
 
                             <div class="ficha-element">
-                                <label class="form-label">¿Tiene Arritmias en actividad? *</label>
+                                <label class="form-label ficha-label">¿Tiene Arritmias en actividad? *</label>
 
                                 <label class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" wire:model.defer="arritmia" value="1" wire:click="refresh()">
@@ -759,7 +759,7 @@
                             </div>
 
                             <div class="ficha-element">
-                                <label class="form-label"> ¿Tiene alergia a algún componente de la planta? * </label>
+                                <label class="form-label ficha-label"> ¿Tiene alergia a algún componente de la planta? * </label>
 
                                 <label class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" wire:model.defer="alergia" value="1"  wire:click="refresh()">
@@ -778,7 +778,7 @@
                         <div class="col">
                         <!------ ROW ------->
                             <div class="ficha-element">
-                                <label class="form-label">Comentarios sobre su estado de salud que quiera comentar o aclarar</label>
+                                <label class="form-label ficha-label">Comentarios sobre su estado de salud que quiera comentar o aclarar</label>
                                 <input type="text" class="form-control" wire:model.defer="comentario">
                                 @error('comentario')<div class="text-danger">{{ $message }}</div>@enderror
                             </div>
@@ -787,7 +787,7 @@
 
                             <!--------  COL ---------->
                             <div class="ficha-element">
-                                <label class="form-label">¿Esta embarazada o realizando lactancia? *</label>
+                                <label class="form-label ficha-label">¿Esta embarazada o realizando lactancia? *</label>
 
                                 <label class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" wire:model.defer="embarazada" value="1"
@@ -822,7 +822,7 @@
                     <div class="row">
                         <div class='ficha-element col'>
 
-                            <label class="form-label">¿Tiene antecedentes de algún padecimiento en salud mental? ¿Se encuentra
+                            <label class="form-label ficha-label">¿Tiene antecedentes de algún padecimiento en salud mental? ¿Se encuentra
                                 actualmente en tratamiento? *</label>
 
                             <label class="form-check form-check-inline">
@@ -841,7 +841,7 @@
 
                         <!------ COL ------->
                         <div class='ficha-element col'>
-                            <label class="form-label">En caso de Si, especificar *</label>
+                            <label class="form-label ficha-label">En caso de Si, especificar *</label>
                             <textarea class="form-control" name="example-textarea-input" rows="3"
                                 wire:model.defer="salud_ment_esp"></textarea>
                             @error('salud_ment_esp')<div class="text-danger">{{ $message }}</div>@enderror
@@ -903,14 +903,14 @@
 
                 <div class="col-md-6 mt-3">
                     <div class="col-md-10">
-                      <label class="form-label">Síntomas</label>
+                      <label class="form-label ficha-label">Síntomas</label>
                       <textarea class="form-control" name="example-textarea-input" rows="2"
                         wire:model.defer="sintomas"></textarea>
                       @error('sintomas')<div class="text-danger">{{ $message }}</div>@enderror
                     </div>
 
                     <div class="col-md-10 mt-10"  style="margin-top:15px">
-                        <label class="form-label">Tratam. Previo</label>
+                        <label class="form-label ficha-label">Tratam. Previo</label>
                         <input type="text" class="form-control" wire:model.defer="tratam_previo">
                         @error('tratam_previo')<div class="text-danger">{{ $message }}</div>@enderror
                       </div>
@@ -919,7 +919,7 @@
 
               <div class="col-md-6 mt-3">
                 <div class="col-md-10">
-                  <label class="form-label">Diagnóstico</label>
+                  <label class="form-label ficha-label">Diagnóstico</label>
                   <textarea class="form-control" name="example-textarea-input" rows="6"
                     wire:model.defer="diagnostico"></textarea>
                 </div>
@@ -927,7 +927,7 @@
 
               <div class="col-md-6 mt-3">
                 <div class="col-md-10">
-                  <label class="form-label">Diagnóstico Items</label>
+                  <label class="form-label ficha-label">Diagnóstico Items</label>
                   @foreach($diagnosticos as $diag)
                   <button class="btn btn-secondary btn-sm btn-pill mb-1 py-1 px-3" style="word-wrap: break-word;"
                     wire:click="switchDiagnostico({{ $diag->iddiagnostico }})">{{ $diag->diagnostico }}</button>
@@ -937,7 +937,7 @@
 
               <div class="col-md-6"  style="margin-top:15px">
                 <div class="col-lg-3 col-md-4">
-                  <label class="form-label">Cantidad Plantas</label>
+                  <label class="form-label ficha-label">Cantidad Plantas</label>
                   <input type="text" class="form-control" wire:model.defer="cant_plantas">
                   @error('cant_plantas')<div class="text-danger">{{ $message }}</div>@enderror
                 </div>
@@ -968,7 +968,7 @@
 
               <div class="col-md-6 mt-3">
                 <div class="col-md-10">
-                  <label class="form-label">Beneficios del Tratamiento</label>
+                  <label class="form-label ficha-label">Beneficios del Tratamiento</label>
                   <textarea class="form-control" name="example-textarea-input" rows="6"
                     wire:model.defer="beneficios"></textarea>
                 </div>
@@ -976,7 +976,7 @@
 
               <div class="col-md-6 mt-3">
                 <div class="col-md-10">
-                  <label class="form-label">Beneficios Items</label>
+                  <label class="form-label ficha-label">Beneficios Items</label>
                   @foreach($beneficiosList as $benef)
                   <button class="btn btn-secondary btn-sm btn-pill mb-1 py-1 px-3"
                     wire:click="switchBeneficio({{ $benef->idbeneficio }})">{{ $benef->beneficio }}</button>
@@ -986,7 +986,7 @@
 
               <div class="col-md-6 mt-3">
                 <div class="col-md-10">
-                  <label class="form-label">Justificación</label>
+                  <label class="form-label ficha-label">Justificación</label>
                   <textarea class="form-control" name="example-textarea-input" rows="6"
                     wire:model.defer="justificacion"></textarea>
                 </div>
@@ -994,7 +994,7 @@
 
               <div class="col-md-6 mt-3">
                 <div class="col-md-10">
-                  <label class="form-label">Justificación Items</label>
+                  <label class="form-label ficha-label">Justificación Items</label>
                   @foreach($justificaciones as $justif)
                   <button class="btn btn-secondary btn-sm btn-pill mb-1 py-1 px-3"
                     wire:click="switchJustificacion({{ $justif->idjustifica }})">{{ $justif->justificacion }}</button>
@@ -1004,7 +1004,7 @@
 
               <div class="col-md-6 mt-3">
                 <div class="col-lg-3 col-md-4">
-                  <label class="form-label">Frecuencia de Analítica</label>
+                  <label class="form-label ficha-label">Frecuencia de Analítica</label>
                   <input type="text" class="form-control" wire:model.defer="frecuencia">
                   @error('frecuencia')<div class="text-danger">{{ $message }}</div>@enderror
                 </div>
@@ -1012,7 +1012,7 @@
 
               <div class="col-md-6 mt-3">
                 <div class="col-md-10">
-                  <label class="form-label">Dosis</label>
+                  <label class="form-label ficha-label">Dosis</label>
                   <input type="text" class="form-control" wire:model.defer="dosis">
                   @error('dosis')<div class="text-danger">{{ $message }}</div>@enderror
                 </div>
@@ -1020,7 +1020,7 @@
 
               <div class="col-md-6 mt-3">
                 <div class="col-lg-4 col-md-6">
-                  <label class="form-label">Concentración THC %</label>
+                  <label class="form-label ficha-label">Concentración THC %</label>
                   <input type="text" class="form-control" wire:model.defer="conc_thc">
                   @error('conc_thc')<div class="text-danger">{{ $message }}</div>@enderror
                 </div>
@@ -1028,7 +1028,7 @@
 
               <div class="col-md-6 mt-3">
                 <div class="col-lg-4 col-md-6">
-                  <label class="form-label">Concentración CBD %</label>
+                  <label class="form-label ficha-label">Concentración CBD %</label>
                   <input type="text" class="form-control" wire:model.defer="conc_cbd">
                   @error('conc_cbd')<div class="text-danger">{{ $message }}</div>@enderror
                 </div>
@@ -1036,7 +1036,7 @@
 
               <div class="col-md-6 mt-3">
                 <div class="col-lg-10 col-md-10">
-                  <label class="form-label">Producto</label>
+                  <label class="form-label ficha-label">Producto</label>
                   @foreach($productos as $prod)
                   <label class="form-check form-switch form-check-inline">
                     <input class="form-check-input" type="checkbox" @if(in_array($prod->idproducto,$producto)) checked
@@ -1049,7 +1049,7 @@
 
               <div class="col-md-6 mt-3">
                 <div class="col-md-10">
-                  <label class="form-label">Producto Indicado</label>
+                  <label class="form-label ficha-label">Producto Indicado</label>
                   <textarea class="form-control" name="example-textarea-input" rows="3"
                     wire:model.defer="producto_indicado"></textarea>
                   @error('producto_indicado')<div class="text-danger">{{ $message }}</div>@enderror

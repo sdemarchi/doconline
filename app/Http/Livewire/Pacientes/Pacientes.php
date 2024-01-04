@@ -66,6 +66,7 @@ class Pacientes extends Component
             }
         }
 
+
         $this->_setSortClasses();
         $this->emit('searchCompleted');
         return $pacientes->orderBy($this->sortField,$this->sortDir)->paginate(10);
@@ -75,6 +76,10 @@ class Pacientes extends Component
         $this->resetPagination();
         $this->searchMode = '';
         $this->searchString = '';
+    }
+
+    public function abrirFicha($pacienteId){
+        return redirect()-> route('pacientes.edit', $pacienteId);
     }
 
     public function buscarPorDatos(){
