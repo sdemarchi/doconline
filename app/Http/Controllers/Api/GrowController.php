@@ -32,7 +32,7 @@ class GrowController extends Controller
         $patologiasDelPaciente = '';
 
         if ($ficha) {
-            return (boolean) $ficha->pagado2023;
+            return (boolean) $ficha->pagado2023 || $ficha->pagado2024;
         } else {
             return (boolean) 0;
         }
