@@ -171,8 +171,8 @@ class TurnosController extends Controller
         }
 
         $data = [
-            'cbu' => '5453 35345 35345 3756858',
-            'alias' => 'doconline',
+            'cbu' => $cbu->cbu,
+            'alias' => $cbu->alias,
         ];
 
         return response()->json($data);
