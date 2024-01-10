@@ -48,6 +48,10 @@
       .select2-container .select2-selection--single {
           height: 36px;
       }
+      .container-xl{
+        width: 97vw;
+        max-width: 1700px;
+      }
     </style>
 		@livewireStyles
   </head>
@@ -56,7 +60,7 @@
       <x-header />
       <x-navigation />
         <div class="page-wrapper">
-            <div class="container-xl">
+            <div class="container-xl" >
                 <!-- Page title -->
                 <div class="page-header d-print-none">
                     {{ $header }}
