@@ -43,7 +43,7 @@
                                     </button>
                                 </td>
                                 <td><input type="text" class="form-control" rows="1" wire:model.defer="cuentas.{{ $index }}.alias"/></td>
-                                <td><input type="number" class="form-control" rows="1" wire:model.defer="cuentas.{{ $index }}.cbu"/></td>
+                                <td><input type="text" class="form-control" rows="1" wire:model.defer="cuentas.{{ $index }}.cbu"/></td>
                             </tr>
                         @endforeach
 
