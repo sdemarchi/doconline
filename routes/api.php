@@ -26,6 +26,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('turnero.login', [UserController::class, 'loginTurnero']);
 
 Route::get('pacienteSelect',[PacienteController::class, 'getSelectSearch'])->name('api.pacienteSelect');
+Route::get('paciente/{id}',[PacienteController::class, 'getPaciente']);
+Route::get('vinculador.pacientes',[PacienteController::class, 'getPacientesVinculador']);
+Route::get('vinculador.buscar/{string}',[PacienteController::class, 'buscarPacientesVinculador']);
 
 //Api de la aplicación
 Route::post('turnero.loginUser', [UserController::class, 'loginUsername']);

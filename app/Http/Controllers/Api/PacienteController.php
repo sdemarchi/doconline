@@ -59,4 +59,38 @@ class pacienteController extends Controller
 		$data = Dolencia::select(['iddolencia as id', 'dolencia as nombre'])->orderBy('nombre','ASC')->get();
         return response()->json($data);
 	}
+
+    public function getPaciente($id){
+        $data = Paciente::where('idpaciente',$id)
+                        ->select(['cod_vincu','res_historia','diagnostico','sintomas','tratam_previo',
+                        'justificacion','producto_indicado','cant_plantas'])
+                        ->first();
+        return response()->json($data);
+    }
+
+    public function getPacientesVinculador(){
+        $data = Paciente::select(['idpaciente','nom_ape'])
+                ->orderBy('idpaciente','desc')
+                ->limit(50)
+                ->get();
+        return response()->json(['items' => $data]);
+    }
+
+    public function buscarPacientesVinculador($string){
+        if(is_numeric($string)){
+            $data = Paciente::where('idpaciente',$string)
+                ->orWhere('nom_ape','like', '%' . $string . '%')
+                ->select(['idpaciente','nom_ape'])
+                ->orderBy('idpaciente','desc')
+                ->limit(50)
+                ->get();
+        } else {
+            $data = Paciente::where('nom_ape','like', '%' . $string . '%')
+                ->select(['idpaciente','nom_ape'])
+                ->orderBy('idpaciente','desc')
+                ->limit(50)
+                ->get();
+        }
+        return response()->json(['items' => $data]);
+    }
 }
