@@ -11,6 +11,7 @@ use App\Models\Turno;
 use App\Models\Prestador;
 use App\Models\Setting;
 use App\Models\Cupon;
+use App\Models\CBU;
 use App\Models\TurnoConf;
 
 class TurnosController extends Controller
@@ -149,13 +150,29 @@ class TurnosController extends Controller
     }
 
 
-    public function getDatosTransf(){
+   /* public function getDatosTransf(){
         $setting = new Setting;
         $cbu = $setting->getSetting('CBU');
         $alias = $setting->getSetting('Alias');
         $data = [
             'cbu' => $cbu,
             'alias' => $alias,
+        ];
+
+        return response()->json($data);
+    }*/
+
+    public function getDatosTransf(){
+        $cbuList = CBU::get();
+        if (!$cbuList->isEmpty()) {
+            $cbu = $cbuList->random();
+        } else {
+            $cbu = (object) ['cbu' => 'CBU_NO_DISPONIBLE', 'alias' => 'Nombre_NO_DISPONIBLE'];
+        }
+
+        $data = [
+            'cbu' => $cbu->cbu,
+            'alias' => $cbu->alias,
         ];
 
         return response()->json($data);

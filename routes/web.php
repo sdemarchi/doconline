@@ -136,9 +136,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::view('/productos', 'backend.productos')->name('productos');
     Route::view('/tratamientos', 'backend.tratamientos')->name('tratamientos');
     Route::view('/ocupaciones', 'backend.ocupaciones')->name('ocupaciones');
+    Route::view('/vinculador', 'backend.vinculador.vinculador')->name('vinculador');
 
     Route::view('/turnos', 'backend.turnero.turnos')->name('turnos');
     Route::view('/turnos/configuracion', 'backend.turnero.turno-conf')->name('turnos.configuracion');
+    Route::view('/turnos/cbu', 'backend.turnero.lista-cuentas')->name('turnos.cbu');
     Route::view('/calendario', 'backend.turnero.calendario')->name('calendario');
     Route::view('/turnos/pacientes', 'backend.turnero.pacientes')->name('turnos.pacientes');
     Route::get('/pacientes.turnero/{id}/ficha',function($id){

@@ -31,6 +31,7 @@ Route::get('vinculador.pacientes',[PacienteController::class, 'getPacientesVincu
 Route::get('vinculador.buscar/{string}',[PacienteController::class, 'buscarPacientesVinculador']);
 
 //Api de la aplicación
+
 Route::post('turnero.loginUser', [UserController::class, 'loginUsername']);
 Route::post('turnero.loginEmail', [UserController::class, 'loginEmail']);
 Route::post('turnero.loginGoogle', [UserController::class, 'loginGoogle']);

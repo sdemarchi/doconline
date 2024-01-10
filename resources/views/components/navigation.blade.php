@@ -127,6 +127,9 @@
                 <a class="dropdown-item" href="{{ route('turnos.pacientes') }}" >
                   Pacientes
                 </a>
+                <a class="dropdown-item" href="{{ route('turnos.cbu') }}" >
+                  Lista de CBU
+                </a>
                 <a class="dropdown-item" href="{{ route('cupones') }}" >
                   Cupones de Descuento
                 </a>
@@ -165,7 +168,7 @@
                   </a>
                 @endif
                 <a class="dropdown-item" href="{{ route('usuarios.mi-registro') }}" >
-                  Mi Registro Horario
+                   Mi Registro Horario
                 </a>
               </div>
             </li>
