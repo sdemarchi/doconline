@@ -1,7 +1,7 @@
 <div class="row row-cards">
     <style>
         .p-fila-paciente:hover{
-            background-color:#222e40;
+            background-color:#ffffff11;
             cursor:pointer !important;
         }
 
@@ -152,13 +152,13 @@
                             <td wire:click='abrirFicha({{$paciente->idpaciente}})'>{{ $paciente->email }}</td>
                             <td wire:click='abrirFicha({{$paciente->idpaciente}})'>{{ $paciente->celular }}</td>
 
-                            <td wire:click='abrirFicha({{$paciente->idpaciente}})'>
+                            <td>
                                 @if($paciente->foto_firma)
                                 <img src="{{ asset("img/uploads/$paciente->foto_firma")}}" style='max-width:70px;max-height:20px;margin:0 10px;'/>
                                 @endif
                             </td>
 
-                            <td wire:click='abrirFicha({{$paciente->idpaciente}})'>
+                            <td>
                                 <button class="btn btn-ghost-light btn-icon" style="margin:0 !important;padding:0;"
                                     wire:click="convertirFirmaAclaracion({{ $paciente->idpaciente }})"
                                     data-toggle="tooltip" data-placement="right" title="Importar Firma y Aclaración">
@@ -191,7 +191,7 @@
 
                                 <img src="{{ $paciente->firma_v2 }}" style='max-width:70px;max-height:20px;margin:0 10px;'/>
                             </td>
-                            <td wire:click='abrirFicha({{$paciente->idpaciente}})'><img src="{{ $paciente->aclaracion_v2 }}"  style='max-width:70px;max-height:20px;margin:0 10px;'/></td>
+                            <td><img src="{{ $paciente->aclaracion_v2 }}"  style='max-width:70px;max-height:20px;margin:0 10px;'/></td>
                             <td wire:click='abrirFicha({{$paciente->idpaciente}})'>{{ $paciente->dni }}</td>
                             <td wire:click='abrirFicha({{$paciente->idpaciente}})'>@if($paciente->provincia){{ $paciente->provincia->Provincia }}@endif</td>
                             <td wire:click='abrirFicha({{$paciente->idpaciente}})'>{{ $paciente->cant_plantas }}</td>

@@ -12,7 +12,9 @@ use Livewire\WithFileUploads;
 
 use Carbon\Carbon;
 
+use App\Models\TurnoPaciente;
 use App\Models\Grow;
+use App\Models\Paciente;
 use App\Models\Provincia;
 
 class GrowEdit extends Component
@@ -20,13 +22,21 @@ class GrowEdit extends Component
     use WithFileUploads;
 
     public $nombre, $cbu, $alias, $titular, $mail, $instagram, $celular, $idprovincia,
-    $localidad, $direccion, $cp, $cod_desc, $fe_ingreso, $observ, $activo, $imagen1, $imagen2;
+    $localidad, $direccion, $cp, $cod_desc = '', $fe_ingreso, $observ, $activo, $imagen1, $imagen2;
+    public $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
     public $imagen1_path, $imagen2_path,$url;
     public $growId;
     public $linkDeRastreo = '';
     public $descuento;
     public $qrImage;
     public $qrFrame;
+    public $pacientes = [];
+    public $mesActual;
+    public $anioActual;
+    public $anioReferencia;
+    public $pacientesMes = 0;
+    public $pagaronMes = 0;
+    public $growsPacientes = [];
 
     protected $listeners = ['imagenCopiada' => 'notificarImagenCopiada'];
 
@@ -56,10 +66,21 @@ class GrowEdit extends Component
         'imagen2_path' => '',
     ];
 
+    public function refresh(){
+        if($this->growId){
+            $this->growsPacientes = $this->getPacientes();
+        }
+    }
+
     public function mount(){
+        $this->mesActual = date('n');
+        $this->anioReferencia = date('Y');
+        $this->anioActual = date('Y');
 
         if($this->growId){
             $grow = Grow::find($this->growId);
+            $this->growsPacientes = $this->getPacientes();
+
             $this->nombre = $grow->nombre;
             $this->cbu = $grow->cbu;
             $this->alias = $grow->alias;
@@ -96,6 +117,42 @@ class GrowEdit extends Component
     {
         $provincias = Provincia::orderBy('Provincia', 'ASC')->get();
         return view('livewire.grows.grow-edit', compact('provincias'));
+    }
+
+    public function getPacientes(){
+        $pacientesDelGrow = TurnoPaciente::whereYear('created_at', $this->anioActual)
+        ->whereMonth('created_at', $this->mesActual)
+        ->where('grow',$this->growId)
+        ->select('id', 'dni', 'grow', 'nombre')
+        ->get();
+
+        $pacientesMes_ = 0;
+        $pagaronMes_ = 0;
+
+
+        foreach ($pacientesDelGrow as &$paciente) {
+            $pacientesMes_ = $pacientesMes_ + 1;
+            $paciente['pago'] = 'No';
+
+            $pac = Paciente::where('dni', $paciente['dni'])->first();
+
+            if ($pac !== null) {
+                if ($pac->pagado2023 == 1 || $pac->pagado2024 == 1) {
+                    $paciente['pago'] = 'Si';
+                    $pagaronMes_ = $pagaronMes_ + 1;
+                } else {
+                    $paciente['pago'] = 'No';
+                }
+            } else {
+                $paciente['pago'] = 'No';
+            }
+        }
+
+        $this->pacientesMes = $pacientesMes_;
+        $this->pagaronMes = $pagaronMes_;
+        $pacientesDelGrow = $pacientesDelGrow->toArray();
+
+        return $pacientesDelGrow;
     }
 
     public function update(){

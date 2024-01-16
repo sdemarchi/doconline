@@ -138,6 +138,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::view('/ocupaciones', 'backend.ocupaciones')->name('ocupaciones');
     Route::view('/vinculador', 'backend.vinculador.vinculador')->name('vinculador');
 
+    Route::view('/panel', 'backend.panel.panel')->name('panel');
+
     Route::view('/turnos', 'backend.turnero.turnos')->name('turnos');
     Route::view('/turnos/configuracion', 'backend.turnero.turno-conf')->name('turnos.configuracion');
     Route::view('/turnos/cbu', 'backend.turnero.lista-cuentas')->name('turnos.cbu');

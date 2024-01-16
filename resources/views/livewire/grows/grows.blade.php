@@ -1,4 +1,15 @@
 <div class="row row-cards">
+    <style>
+        tr{
+            height: fit-content;
+            padding:0;
+        }
+        tr:hover{
+            background-color:#ffffff0f;
+            cursor:pointer !important;
+        }
+
+    </style>
     <div class="col-12">
         <div class="card">
 
@@ -7,7 +18,7 @@
                     <button wire:click='generarCSV' class="btn btn-primary" style="border-radius:6px;height:26px;font-size:14px">Descargar CSV</button>
                     <div class="me-auto text-muted">
                         <div class="ms-2 d-inline-block mx-auto">
-                            <input style="border-radius:6px;height:26px; type="text" class="form-control form-control-sm" placeholder="Buscar Grow"
+                            <input style="border-radius:6px;height:26px;" type="text" class="form-control form-control-sm" placeholder="Buscar Grow"
                                 wire:model.defer="searchString" wire:keydown.enter="resetPagination">
                         </div>
                     </div>
@@ -76,7 +87,7 @@
                         @foreach($grows as $grow)
                         <tr>
                             <td>
-                                <a class="btn btn-ghost-light btn-icon"
+                                <a class="btn btn-ghost-light btn-icon"  style='margin:0 !important;padding:0 !important;'
                                     href="{{route('grows.edit',$grow->idgrow)}}" data-toggle="tooltip"
                                     data-placement="right" title="Editar">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit"
@@ -91,7 +102,7 @@
                                         <path d="M16 5l3 3"></path>
                                     </svg>
                                 </a>
-                                <button class="btn btn-ghost-light btn-icon"
+                                <button class="btn btn-ghost-light btn-icon" style='margin:0 !important:padding:0 !important;'
                                     wire:click="$emit('triggerDelete',{{ $grow->idgrow }})"
                                     data-toggle="tooltip" data-placement="right" title="Eliminar Registro">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash"
@@ -107,24 +118,24 @@
                                     </svg>
                                 </button>
                             </td>
-                            <td>{{ $grow->idgrow }}</td>
-                            <td>{{ $grow->nombre }}</td>
+                            <td wire:click='abrirGrow({{$grow->idgrow}})'>{{ $grow->idgrow }}</td>
+                            <td wire:click='abrirGrow({{$grow->idgrow}})'>{{ $grow->nombre }}</td>
                             <td><a href="https://wa.me/{{ $grow->celular }}" target="_blank">
-                                <img src="{{ asset('img/logo-whatsapp.png')}}" width="25" /></a></td>
-                            <td>{{ $grow->activo ? 'Sí' : 'No'}}</td>
-                            <td>{{ date_format(date_create($grow->fe_ingreso),"d/m/Y") }}</td>
-                            <td>@if($grow->provincia){{ $grow->provincia->Provincia }}@endif</td>
-                            <td>{{ $grow->cbu }}</td>
-                            <td>{{ $grow->alias }}</td>
-                            <td>{{ $grow->titular }}</td>
-                            <td>{{ $grow->mail }}</td>
-                            <td>{{ $grow->instagram }}</td>
-                            <td>{{ $grow->celular }}</td>
-                            <td>{{ $grow->localidad }}</td>
-                            <td>{{ $grow->direccion }}</td>
-                            <td>{{ $grow->cp }}</td>
-                            <td>{{ $grow->cod_desc }}</td>
-                            <td>{{ $grow->observ }}</td>
+                                <img src="{{ asset('img/logo-whatsapp.png')}}" width="20" /></a></td>
+                            <td wire:click='abrirGrow({{$grow->idgrow}})'>{{ $grow->activo ? 'Sí' : 'No'}}</td>
+                            <td wire:click='abrirGrow({{$grow->idgrow}})'>{{ date_format(date_create($grow->fe_ingreso),"d/m/Y") }}</td>
+                            <td wire:click='abrirGrow({{$grow->idgrow}})'>@if($grow->provincia){{ $grow->provincia->Provincia }}@endif</td>
+                            <td wire:click='abrirGrow({{$grow->idgrow}})'>{{ $grow->cbu }}</td>
+                            <td wire:click='abrirGrow({{$grow->idgrow}})'>{{ $grow->alias }}</td>
+                            <td wire:click='abrirGrow({{$grow->idgrow}})'>{{ $grow->titular }}</td>
+                            <td wire:click='abrirGrow({{$grow->idgrow}})'>{{ $grow->mail }}</td>
+                            <td wire:click='abrirGrow({{$grow->idgrow}})'>{{ $grow->instagram }}</td>
+                            <td wire:click='abrirGrow({{$grow->idgrow}})'>{{ $grow->celular }}</td>
+                            <td wire:click='abrirGrow({{$grow->idgrow}})'>{{ $grow->localidad }}</td>
+                            <td wire:click='abrirGrow({{$grow->idgrow}})'>{{ $grow->direccion }}</td>
+                            <td wire:click='abrirGrow({{$grow->idgrow}})'>{{ $grow->cp }}</td>
+                            <td wire:click='abrirGrow({{$grow->idgrow}})'>{{ $grow->cod_desc }}</td>
+                            <td wire:click='abrirGrow({{$grow->idgrow}})'>{{ $grow->observ }}</td>
                         @endforeach
 
                     </tbody>

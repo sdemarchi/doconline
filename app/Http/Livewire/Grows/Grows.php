@@ -47,6 +47,9 @@ class Grows extends Component
         return $grows->orderBy($this->sortField,$this->sortDir)->paginate(20);
     }
 
+    public function abrirGrow($id){
+        return redirect()-> route('grows.edit', $id);
+    }
 
     public function sort($field){
         $this->sortField = $field;
