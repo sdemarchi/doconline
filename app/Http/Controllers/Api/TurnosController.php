@@ -190,6 +190,7 @@ class TurnosController extends Controller
             'cupon' => $request->input('cupon'),
             'importe' => $request->input('importe'),
             'descuento' => $request->input('descuento'),
+            'pago_id' => $request->input('pago_id'),
         ];
         Turno::create($data);
 

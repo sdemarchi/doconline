@@ -26,6 +26,17 @@
             min-height: 100px;
         }
 
+        @keyframes effect{
+            0%{
+                opacity:0%;
+                transform:translateY(10px);
+            }
+            100%{
+                opacity:100%
+                transform:translateY(0px);
+            }
+        }
+
         .links-link p{
             margin-bottom: 0;
         }
@@ -201,9 +212,9 @@
         <div class='links-container'>
             @foreach($urlList as $url)
                 @if($url['destacado'] === 1 )
-                <a @if(!$editar)  href="{{$url['url']}}" target="_blank" @else wire:click="handleForm('editar',{{$url}})" @endif class="links-link">
+                <a @if(!$editar) href="{{$url['url']}}" target="_blank" @else wire:click="handleForm('editar',{{$url}})" @endif class="links-link">
 
-                    <img  onerror="this.src='{{ asset('https://www.pngmart.com/files/23/Link-Icon-PNG-File.png') }}'" class="links-image"
+                    <img onerror="this.src='{{ asset('https://www.pngmart.com/files/23/Link-Icon-PNG-File.png') }}'" class="links-image"
                     @if($url['image'] === null) src="https://www.pngmart.com/files/23/Link-Icon-PNG-File.png"  @else src="{{$url['image']}}"@endif/>
 
                     <p class="links-name">{{$url['nombre']}}</p>
@@ -231,8 +242,8 @@
             @if($url['destacado'] === 0 )
                 <a @if(!$editar)  href="{{$url['url']}}" target="_blank" @else wire:click="handleForm('editar',{{$url}})" @endif class="links-link">
 
-                    <img  onerror="this.src='{{ asset('https://www.pngmart.com/files/23/Link-Icon-PNG-File.png') }}'" class="links-image"
-                    @if($url['image'] === null) src="https://www.pngmart.com/files/23/Link-Icon-PNG-File.png"  @else src="{{$url['image']}}"@endif/>
+                    <img  onerror="this.src='{{ asset('/img/link-icon.png') }}'" class="links-image"
+                    @if($url['image'] === null) src="{{ asset('/img/link-icon.png') }}"  @else src="{{$url['image']}}"@endif/>
 
                     <p class="links-name">{{$url['nombre']}}</p>
                     @if($editar)

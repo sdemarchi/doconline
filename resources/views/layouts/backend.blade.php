@@ -15,6 +15,7 @@
     <title>DocOnline Argentina</title>
     <!-- CSS files -->
     <link href="{{ URL::asset('/css/tabler.min.css') }}" rel="stylesheet"/>
+
     <link href="{{ URL::asset('/css/tabler-flags.min.css') }}" rel="stylesheet"/>
     <link href="{{ URL::asset('/css/tabler-payments.min.css') }}" rel="stylesheet"/>
     <link href="{{ URL::asset('/css/tabler-vendors.min.css') }}" rel="stylesheet"/>
@@ -22,6 +23,9 @@
     <link href="{{ URL::asset('/css/stilod.css') }}" rel="stylesheet"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+
+    <link rel="icon" href=https://doconlineargentina.com/turnero/assets/favicon-2345e915.png" type="image/png">
     <style>
       .select2-container--default .select2-selection--single{
           background-color: #1b2434;

@@ -13,6 +13,8 @@
     <link href="{{ URL::asset('/css/demo.min.css') }}" rel="stylesheet"/>
     <link href="{{ URL::asset('/css/turnero.css') }}" rel="stylesheet"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css" rel="stylesheet">
+
+    <link rel="icon" href="https://doconlineargentina.com/turnero/assets/favicon-2345e915.png" type="image/png">
 		<style type="text/css">
       .toast-center {
           top: 50%;
@@ -22,11 +24,11 @@
     @livewireStyles
   </head>
   <body class="antialiased border-top-wide border-primary d-flex flex-column">
-    
+
     {{ $slot }}
 
     <a href="https://wa.me/3425319488" target="_blank">
-      <img src="{{ URL::asset('img/logo-whatsapp.svg.webp') }}" width="70" 
+      <img src="{{ URL::asset('img/logo-whatsapp.svg.webp') }}" width="70"
       style="position: absolute; bottom:30px; right:55px"/>
     </a>
 
@@ -34,13 +36,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="{{ URL::asset('/js/tabler.min.js') }}"></script>
-    
+
     @livewireScripts
 
     <script type="text/javascript">
-        
-      window.addEventListener('alert', event => { 
-          toastr[event.detail.type](event.detail.message, 
+
+      window.addEventListener('alert', event => {
+          toastr[event.detail.type](event.detail.message,
           event.detail.title ?? ''), toastr.options = {
                   "closeButton": true,
                   "positionClass": "toast-center",
@@ -48,7 +50,7 @@
               }
           });
     </script>
-    
+
     @stack('scripts')
   </body>
 </html>

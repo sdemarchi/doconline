@@ -159,6 +159,10 @@ Route::group(['middleware' => ['auth']], function () {
         return view('backend.turnero.turno-edit', compact('id'));
     })->name('turnos.edit');
 
+    Route::view('/pagos', 'backend.pagos.pagos-list')->name('pagos');
+    Route::get('/pago/{id}',function($id){
+        return view('backend.pagos.pago-detalles', compact('id'));
+    })->name('pago');
 });
 
 //Rutas del turnero

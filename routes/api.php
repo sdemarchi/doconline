@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\CalendarioController;
 use App\Http\Controllers\Api\FormController;
 use App\Http\Controllers\Api\GrowController;
 use App\Http\Controllers\Api\ResetPasswordController;
+use App\Http\Controllers\Api\PagoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,3 +72,9 @@ Route::post('formulario', [FormController::class, 'guardarFormulario']);
 Route::post('formulario/{id}', [FormController::class, 'actualizarFormulario']);
 Route::get('formulario/{dni}', [FormController::class, 'getFormulario']);
 
+Route::get('/pagos/{id}', [PagoController::class, 'show']);
+Route::get('/pagos/buscar-por-email/{email}', [PagoController::class, 'buscarPorEmail']);
+Route::get('/pagos/ultimo-regalado/{user_id}', [PagoController::class, 'ultimoRegalado']);
+Route::get('/pagos/buscar-por-codigo/{codigo}', [PagoController::class, 'buscarPorCodigo']);
+Route::post('/pagos/crear', [PagoController::class, 'nuevoPago']);
+Route::post('/pagos/utilizado', [PagoController::class, 'utilizado']);

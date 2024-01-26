@@ -5,6 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
+        <link rel="icon" href="https://doconlineargentina.com/turnero/assets/favicon-2345e915.png" type="image/png">
+
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Fonts -->

@@ -21,12 +21,14 @@
     <link href="{{ URL::asset('/css/demo.min.css') }}" rel="stylesheet"/>
     <link href="{{ URL::asset('/css/stilod.css') }}" rel="stylesheet"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css" rel="stylesheet">
+
+    <link rel="icon" href=https://doconlineargentina.com/turnero/assets/favicon-2345e915.png" type="image/png">
 		@livewireStyles
   </head>
   <body class="antialiased">
     <div class="wrapper">
       <x-header-front />
-      
+
         <div class="page-wrapper">
             <div class="container-xl">
                 <!-- Page title -->
@@ -42,7 +44,7 @@
             <x-footer />
         </div>
     </div>
-    
+
     <!-- Template Core -->
     <!--     <script src="{{ URL::asset('/libs/jquery/jquery.min.js')}}"></script>-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -51,13 +53,13 @@
     <script src="{{ URL::asset('/js/tabler.min.js') }}"></script>
     <script src="{{ URL::asset('/js/flashcanvas.js') }}"></script>
     <script src="{{ URL::asset('/js/jSignature.min.js') }}"></script>
-    
+
     @livewireScripts
 
     <script type="text/javascript">
-        
-      window.addEventListener('alert', event => { 
-          toastr[event.detail.type](event.detail.message, 
+
+      window.addEventListener('alert', event => {
+          toastr[event.detail.type](event.detail.message,
           event.detail.title ?? ''), toastr.options = {
                   "closeButton": true,
                   "positionClass": "toast-bottom-right",
@@ -65,7 +67,7 @@
               }
           });
     </script>
-    
+
     @stack('scripts')
 
   </body>

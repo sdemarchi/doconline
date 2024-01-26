@@ -13,3 +13,6 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+*.png
+*.jpg
+public/img/uploads/comprobante_2024-01-23_1012561413.jfif
