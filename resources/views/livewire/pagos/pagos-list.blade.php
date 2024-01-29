@@ -22,7 +22,7 @@
         .pagos-comprobante-window{
             width: 400px;
             background-color:rgba(19, 23, 35, 0.812);
-            max-width:90%:
+            max-width:90%;
             height: fit-content;
             max-height:95%;
             display:flex;
@@ -78,11 +78,11 @@
               @foreach($pagos as $pago)
               <tr>
                 <td wire:click="abrirPago({{$pago->id}})">{{ $pago->id }}</td>
-                <td wire:click="abrirPago({{$pago->id}})">${{ $pago->monto_final }}</td>
+                <td wire:click="abrirPago({{$pago->id}})">${{ number_format($pago->monto_final, 0, ',', '.')}}</td>
                 <td wire:click="abrirPago({{$pago->id}})">{{ $pago->nombre_paciente}}</td>
                 <td wire:click="abrirPago({{$pago->id}})">{{ $pago->formatted_created_at}}</td>
                 <td><label class="form-check form-switch float-sm-start ms-2 mt-1" style='max-width:fit-content'>
-                    <input class="form-check-input" type="checkbox"  @if($pago->verificado !== 0) checked @endif wire:click="handleVerificado({{$pago->id}})">
+                    <input class="form-check-input" type="checkbox" @if($pago->verificado !== 0) checked @endif wire:click="handleVerificado({{$pago->id}})">
                     <span class="form-check-label" style="margin-left: 4px"> @if($pago->verificado === 0) No @else Si @endif</span>
                 </label></td>
 
@@ -90,7 +90,7 @@
                     @if($pago->comprobante)
                     <button wire:click="mostrarComprobante('{{$pago->comprobante}}')" class="btn btn-primary" style="width:fit-content;height:fit-content;padding:0px 4px;">ver</button>
                     @else
-                    <span>-</span>
+                    <span>No</span>
                     @endif
                 </p></td>
 
@@ -99,19 +99,27 @@
               @endforeach
             </tbody>
 
-          </table>
+            </table>
+            <div style="margin-top:15px">
+                {{ $pagos->links() }}
+            </div>
         </div>
       </div>
     </div>
 
     @if($verComprobante)
-    <div id="pagos-comprobante-container">
-        <div class="pagos-comprobante-window">
-            <img  src="{{asset('img/uploads/'.$comprobanteImg)}}" class="pagos-comprobante-img"/>
-            <button wire:click="ocultarComprobante" class="btn btn-primary pagos-comprobante-btn">Cerrar</button>
+    @if(pathinfo($comprobanteImg, PATHINFO_EXTENSION) == 'pdf')
+        <script>window.open("{{ asset('img/uploads/'.$comprobanteImg) }}", '_blank');</script>
+    @else
+        <div id="pagos-comprobante-container">
+            <div class="pagos-comprobante-window">
+                <img src="{{asset('img/uploads/'.$comprobanteImg)}}" class="pagos-comprobante-img"/>
+                <button wire:click="ocultarComprobante" class="btn btn-primary pagos-comprobante-btn">Cerrar</button>
+            </div>
         </div>
-    </div>
     @endif
+@endif
+
 
   </div>
 

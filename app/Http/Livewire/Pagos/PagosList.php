@@ -2,12 +2,14 @@
 namespace App\Http\Livewire\Pagos;
 
 use App\Models\Pago;
-use WithPagination;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
+use Livewire\WithPagination;
 
 class PagosList extends Component
 {
+    use WithPagination;
+
     protected $paginationTheme = 'bootstrap';
     public $searchString;
     public $verComprobante = false;
@@ -68,14 +70,14 @@ class PagosList extends Component
         $pago = Pago::find($id);
         $pago->confirmado = 1;
         $pago->save();
-        $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "El Pago se marcó como condirmado"]);
+        $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "El Pago se marcó como verificado"]);
     }
 
     public function noConfirmado($id){
         $pago = Pago::find($id);
         $pago->atendido = 0;
         $pago->save();
-        $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "El Pago se marcó como no confirmado"]);
+        $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "El Pago se marcó como no verificado"]);
     }
 
     public function resetPagination(){

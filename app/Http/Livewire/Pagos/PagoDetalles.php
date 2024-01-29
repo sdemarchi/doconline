@@ -5,11 +5,11 @@ namespace App\Http\Livewire\Pagos;
 use Livewire\Component;
 use App\Models\Paciente;
 use App\Models\Pago;
+use App\Models\Grow;
 
 class PagoDetalles extends Component
 {
     public $pagoId;
-
     public $idPaciente;
     public $nombrePaciente;
     public $emailPaciente;
@@ -38,14 +38,14 @@ class PagoDetalles extends Component
         $this->emailPagador = $pago->email_pagador;
         $this->emailPaciente = $pago->email_paciente;
         $this->nombrePagador = $pago->pagador->nombre;
-        $this->monto = round($pago->monto);
+        $this->monto = '$' . number_format($pago->monto, 0, ',', '.');
         $this->descuento = $pago->descuento;
-        $this->montoFinal = round($pago->monto_final);
+        $this->montoFinal = '$' . number_format($pago->monto_final, 0, ',', '.');
         $this->comprobante = $pago->comprobante;
         $this->verificado = $pago->verificado;
         $this->utilizado = $pago->utilizado;
         $this->codigo = $pago->codigo;
-        $this->grow = $pago->grow->nombre;
+        $this->grow = $pago->grow ? $pago->grow -> nombre : '-';
         $this->idPaciente = $pago->id_paciente ? $pago->id_paciente : '-';
     }
 
