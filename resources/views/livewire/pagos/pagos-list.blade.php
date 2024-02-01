@@ -108,17 +108,17 @@
     </div>
 
     @if($verComprobante)
-    @if(pathinfo($comprobanteImg, PATHINFO_EXTENSION) == 'pdf')
-        <script>window.open("{{ asset('img/uploads/'.$comprobanteImg) }}", '_blank');</script>
-    @else
-        <div id="pagos-comprobante-container">
-            <div class="pagos-comprobante-window">
-                <img src="{{asset('img/uploads/'.$comprobanteImg)}}" class="pagos-comprobante-img"/>
-                <button wire:click="ocultarComprobante" class="btn btn-primary pagos-comprobante-btn">Cerrar</button>
+        @if(pathinfo($comprobanteImg, PATHINFO_EXTENSION) == 'pdf')
+            <script>window.open("{{ asset('img/uploads/'.$comprobanteImg) }}", '_blank');</script>
+        @else
+            <div id="pagos-comprobante-container">
+                <div class="pagos-comprobante-window">
+                    <img src="{{asset('img/uploads/'.$comprobanteImg)}}" class="pagos-comprobante-img"/>
+                    <button wire:click="ocultarComprobante" class="btn btn-primary pagos-comprobante-btn">Cerrar</button>
+                </div>
             </div>
-        </div>
+        @endif
     @endif
-@endif
 
 
   </div>

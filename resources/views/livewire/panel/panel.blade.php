@@ -24,6 +24,7 @@
             border-radius: 16px;
             color:white;
             min-height: 100px;
+            position: relative;
         }
 
         @keyframes effect{
@@ -196,9 +197,8 @@
                 width: 100px;
                 margin: 15px 0;
             }
+
         }
-
-
 
     </style>
 
@@ -212,15 +212,16 @@
         <div class='links-container'>
             @foreach($urlList as $url)
                 @if($url['destacado'] === 1 )
-                <a @if(!$editar) href="{{$url['url']}}" target="_blank" @else wire:click="handleForm('editar',{{$url}})" @endif class="links-link">
-
+                <a @if(!$editar)  href="{{$url['url']}}" target="_blank" @endif class="links-link">
+                 @if($editar)<button wire:click="handleForm('editar',{{$url}})"
+                 style="position:absolute;min-width:100%;min-height:70px;border-radius:0;top:0;"></button> @endif
                     <img onerror="this.src='{{ asset('https://www.pngmart.com/files/23/Link-Icon-PNG-File.png') }}'" class="links-image"
                     @if($url['image'] === null) src="https://www.pngmart.com/files/23/Link-Icon-PNG-File.png"  @else src="{{$url['image']}}"@endif/>
 
                     <p class="links-name">{{$url['nombre']}}</p>
                     @if($editar)
                         <div class="links-buttons">
-                            <button wire:click.stop="eliminarUrl({{$url['id']}});"  class="links-buttons-eliminar"><img src="https://cdn.icon-icons.com/icons2/1154/PNG/96/1486564399-close_81512.png"/></button>
+                            <button  class="links-buttons-eliminar"><img src="https://cdn.icon-icons.com/icons2/1154/PNG/96/1486564399-close_81512.png"/></button>
                         </div>
                     @endif
                 </a>

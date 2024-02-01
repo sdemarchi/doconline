@@ -8,7 +8,7 @@ use App\Models\Link;
 class Panel extends Component
 {
     public $urlList, $idSeleccionado, $url, $nombre, $showForm, $editar = false, $image, $destacadosCount;
-
+    protected $debug = true;
     protected $rules = [
         'nombre' => 'required|max:30',
         'url' => 'required',
@@ -65,7 +65,7 @@ class Panel extends Component
 
     public function agregarUrl(){
         $this->validate();
-        if(!$this->image || $this->image === ''){
+        if(!$this->image || $this->image === '' || $this->image === $this->url){
             $this->image = $this->getFavicon($this->url);
         }
 
@@ -88,28 +88,53 @@ class Panel extends Component
     function getFavicon($url) {
 
        try {
+            if (!preg_match('/^https?:\/\//i', $url)) {
+                $url = 'http://' . $url;
+            }
 
             if (strpos($url, 'spreadsheet') !== false) {
                 return 'https://cdn-icons-png.flaticon.com/256/2965/2965327.png';
             }
 
-            if (strpos($url, 'drive.google.com') !== false) {
+            else if (strpos($url, 'drive.google.com') !== false) {
                 return 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Google_Drive_icon_%282020%29.svg/1147px-Google_Drive_icon_%282020%29.svg.png';
             }
 
-            if (strpos($url, 'www.google.com') !== false) {
+            else if (strpos($url, 'www.google.com') !== false) {
                 return 'https://www.google.com/favicon.ico';
             }
 
-            if (!preg_match('/^https?:\/\//i', $url)) {
-                $url = 'http://' . $url;
-            }
-
-            if (strpos($url, 'doconlineargentina.com') !== false) {
+            else if (strpos($url, 'doconlineargentina.com') !== false) {
                 return 'http://doconlineargentina.com/turnero/assets/favicon-2345e915.png';
             }
 
-            if(filter_var($url, FILTER_VALIDATE_URL) !== false){
+            else if (strpos($url, 'sites.google.com') !== false) {
+                return 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Google_Sites_2020_Logo.svg/436px-Google_Sites_2020_Logo.svg.png';
+            }
+
+            else if (strpos($url, 'facebook.com') !== false) {
+                return 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/480px-Facebook_Logo_%282019%29.png';
+            }
+
+            else if (strpos($url, 'discord.com') !== false) {
+                return 'https://cdn.iconscout.com/icon/free/png-256/free-discord-4062811-3357697.png?f=webp';
+            }
+
+            else if (strpos($url, 'meet.google.com') !== false) {
+                return 'https://cdn.iconscout.com/icon/free/png-256/free-google-meet-2981835-247648';
+            }
+
+            else if (strpos($url, 'instagram.com') !== false) {
+                return 'https://cdn-icons-png.flaticon.com/256/1384/1384063.png';
+            }
+
+            else if (strpos($url, 'neocita.com') !== false) {
+                return 'https://www.neocita.com/imagenes/logo.png';
+            }
+
+
+
+            else if(filter_var($url, FILTER_VALIDATE_URL) !== false){
                 $html = @file_get_contents($url);
             }else{
                 return null;

@@ -64,6 +64,82 @@
             background-color: rgb(47, 103, 208);
         }
 
+        .pago-comprobante-card{
+            margin-top:15px;
+        }
+
+        .pago-comprobante-container{
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .pago-comprobante-img{
+            max-height: 500px;
+            object-fit:contain;
+            border-radius: 8px;
+            margin:15px 50px;
+            max-width: 350px;
+        }
+
+
+        .pago-comprobante-noimg{
+            display: flex;
+            border:solid 1px rgba(255, 255, 255, 0.156);
+            max-height: 300px;
+            object-fit:contain;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            width:300px;
+            height: 300px;
+            background-color:rgba(255, 255, 255, 0.035);
+            margin:15px 50px;
+        }
+
+        .pago-comprobante-buttons{
+            display: flex;
+            flex-direction: column;
+            min-width: 250px;
+        }
+
+        .pago-comprobante-solicitar{
+            margin-bottom: 15px;
+        }
+
+        .pago-comprobante-logo{
+            height: 60px;
+            width: 60px;
+            filter:invert();
+            opacity: 80%;
+        }
+
+        .pago-btn{
+            margin:7px 0;
+        }
+
+        .pago-subir-comprobante{
+            border:solid 1px rgba(255, 255, 255, 0.129);
+            padding:5px;
+            border-radius: 5px;
+
+        }
+
+        .pago-comprobante-head{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .pago-wsp-button{
+            background-color:rgb(27, 164, 73);
+            padding: 5px 5px;
+            font-size: 14px;
+        }
+
+
     </style>
 
     <div class="card">
@@ -126,5 +202,39 @@
             </div>
         </div>
     </div>
+    <div class="card pago-comprobante-card">
+        <div class="card-body border-bottom pt-3 pb-4" >
+            <h3>Comprobante</h3>
+
+            <div class="pago-comprobante-container">
+
+                @if($comprobante)
+                    <img class="pago-comprobante-img" src="{{asset('img/uploads/'.$comprobante)}}" />
+                @else
+                    <div class="pago-comprobante-noimg">
+                        <img class="pago-comprobante-logo" src="https://parspng.com/wp-content/uploads/2022/10/camerapng.parspng.com-11.png" />
+                    </div>
+                @endif
+
+                <div class="pago-comprobante-buttons">
+
+                    @if(!$comprobanteForm)
+                        <a href="https://wa.me/{{ str_replace(' ', '', $pagador->telefono) }}" target="_blank" class="pago-btn btn btn-primary pago-comprobante-solicitar">Solicitar por whatsapp</a>
+                        <button wire:click="switchForm" class="btn" type="submit">Adjuntar comprobante</button>
+                    @else
+                        <form method="POST" enctype="multipart/form-data" wire:submit.prevent="subirComprobante" >
+                            <div class="pago-subir-comprobante" >
+                                <input type="file" wire:model="comprobanteFile"/>
+                            </div>
+
+                            <button style="width:100%;margin-top:8px;height:fit-content;" class="btn btn-primary" type="submit">Aplicar</button>
+                        </form>
+                    @endif
+
+                </div>
+            </div>
+        </div>
     </div>
+    </div>
+
 </div>
