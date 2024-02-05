@@ -9,6 +9,7 @@ use App\Models\Pago;
 use Livewire\WithFileUploads;
 use App\Models\Grow;
 use App\Models\TurnoPaciente;
+use App\Models\Turno;
 
 class PagoDetalles extends Component
 {
@@ -19,7 +20,6 @@ class PagoDetalles extends Component
     protected $listeners = ['subirComprobante'];
 
     public $comprobanteForm = false;
-
 
     public $pagoId;
     public $idPaciente;
@@ -80,21 +80,30 @@ class PagoDetalles extends Component
 
     public function subirComprobante()
     {
-        if(!$this->comprobanteFile){
-            return $this->dispatchBrowserEvent('alert', ['type' => 'error', 'message' => 'No seleccionaste ningun archivo.']);
+        if (!$this->comprobanteFile) {
+            return $this->dispatchBrowserEvent('alert', ['type' => 'error', 'message' => 'No seleccionaste ningún archivo.']);
         }
-        $fileName = 'comprobante_' . Carbon::now()->format('Y-m-d_hiu') . '.png';
+
+        $fileName = 'comprobante_' . Carbon::now()->format('Y-m-d_hiu');
+
+        $fileExtension = $this->comprobanteFile->getClientOriginalExtension();
+
+        $fileName .= '.' . $fileExtension;
 
         $storagePath = storage_path('app/assets/img/uploads/');
         $publicPath = public_path('img/uploads/');
 
         $this->comprobanteFile->storeAs('assets/img/uploads', $fileName);
         rename($storagePath . $fileName, $publicPath . $fileName);
-        $this->foto_firma_img = $fileName;
+
         $pago = Pago::find($this->pagoId);
-        $pago->update([
-            'comprobante' => $fileName,
-        ]);
+        $pago->update(['comprobante' => $fileName]);
+
+        $turno = Turno::where('pago_id', $this->pagoId)->first();
+        if ($turno) {
+            $turno->update(['comprobante_pago' => $fileName]);
+        }
+
         $this->switchForm();
         $this->dispatchBrowserEvent('alert', ['type' => 'success', 'message' => 'Comprobante guardado']);
     }

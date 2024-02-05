@@ -51,7 +51,7 @@
 
 
             <div id="pacientes-table" class="table-responsive">
-               <table id="calendario-table" class="table table-vcenter card-table">
+               <table id="calendario-table" class="table table-vcenter card-table" style="margin-bottom:20px !important;">
                     <thead>
                         <tr>
                             <th></th>
@@ -126,7 +126,7 @@
                                         <path d="M16 5l3 3"></path>
                                     </svg>
                                 </a>
-                                <button class="btn btn-ghost-light btn-icon" style="margin:0 !important;padding:0;"
+                                <button class="btn btn-ghost-light btn-icon" style="margin:5px !important;padding:0;"
                                     wire:click="$emit('triggerDelete', {{ $paciente->idpaciente }})"
                                     data-toggle="tooltip" data-placement="right" title="Eliminar Registro">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash"
@@ -203,6 +203,7 @@
 
                     </tbody>
                 </table>
+
                 {{ $pacientes->links() }}
 
 

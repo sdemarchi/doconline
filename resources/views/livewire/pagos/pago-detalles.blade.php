@@ -209,12 +209,19 @@
             <div class="pago-comprobante-container">
 
                 @if($comprobante)
-                    <img class="pago-comprobante-img" src="{{asset('img/uploads/'.$comprobante)}}" />
+                    @if(pathinfo($comprobante, PATHINFO_EXTENSION) == 'pdf')
+                        <div class="pdf-container">
+                            <embed class="pago-comprobante-img"  style="margin-right:70px;" src="{{ asset('img/uploads/' . $comprobante) }}" type="application/pdf" width="100%" height="600px">
+                        </div>
+                    @else
+                        <img class="pago-comprobante-img" src="{{ asset('img/uploads/' . $comprobante) }}" />
+                    @endif
                 @else
                     <div class="pago-comprobante-noimg">
                         <img class="pago-comprobante-logo" src="https://parspng.com/wp-content/uploads/2022/10/camerapng.parspng.com-11.png" />
                     </div>
                 @endif
+
 
                 <div class="pago-comprobante-buttons">
 

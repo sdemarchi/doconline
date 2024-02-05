@@ -25,11 +25,9 @@ class PagosList extends Component
         $pagos = Pago::query();
 
         if ($this->searchString != '') {
-            $pacientes = Pago::select('id')
-                ->where('nombre', 'like', '%' . $this->searchString . '%')
-                ->orWhere('dni', $this->searchString)
-                ->get()->pluck('id');
-            $pagos->whereIn('paciente_id', $pacientes);
+            $pagos->where(function ($query) {
+                $query->where('nombre_paciente', 'like', '%' . $this->searchString . '%');
+            });
         }
 
         return $pagos
@@ -58,6 +56,7 @@ class PagosList extends Component
         $pago->verificado = !$verificado;
         $pago->save();
 
+        $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Cambios aplicados"]);
     }
 
     public function eliminar($id){

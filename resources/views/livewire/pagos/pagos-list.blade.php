@@ -100,6 +100,11 @@
             </tbody>
 
             </table>
+
+            @if(count($pagos) === 0)
+                <p style="width:100%;text-align:center;padding-top:35px;padding-bottom:20px;opacity:80%;">No se encontraron coincidencias para la busqueda</p>
+            @endif
+
             <div style="margin-top:15px">
                 {{ $pagos->links() }}
             </div>
