@@ -18,6 +18,7 @@ use App\Models\Prestador;
 use App\Models\Turno;
 use App\Models\Paciente;
 use App\Models\PacientePatologia;
+use App\Models\Pago;
 
 class Calendario extends Component
 {
@@ -130,13 +131,13 @@ class Calendario extends Component
                     <thead>
                     <th style="background-color:white;color:black;">'.$this->fechaSelFormateada.'</th>
                         <tr>
+                        <th style="background-color:#a4c2f4;color:black;">Paciente</th>
                         <th style="background-color:#a4c2f4;color:black;">Patologias</th>
                         <th style="background-color:#a4c2f4;color:black;">Pago</th>
-                            <th style="background-color:#a4c2f4;color:black;">Hora</th>
-                            <th style="background-color:#a4c2f4;color:black;">Paciente</th>
-                            <th style="background-color:#a4c2f4;color:black;">Telefono</th>
-                            <th style="background-color:#a4c2f4;color:black;">DNI</th>
-                            <th style="background-color:#a4c2f4;color:black;">Email</th>
+                        <th style="background-color:#a4c2f4;color:black;">Hora</th>
+                        <th style="background-color:#a4c2f4;color:black;">Telefono</th>
+                        <th style="background-color:#a4c2f4;color:black;">DNI</th>
+                        <th style="background-color:#a4c2f4;color:black;">Email</th>
                         </tr>
                     </thead>
                 <tbody>';
@@ -145,9 +146,10 @@ class Calendario extends Component
 
 
         foreach ($this->turnos as $turno) {
-
             $html .= '<tr>';
             $patologias = '';
+            $pago = '';
+
             if($turno['patologias'] !== 0){
                 if(isset($turno['patologias'][0])){
                     foreach ($turno['patologias'][0] as $patologia){
@@ -156,11 +158,16 @@ class Calendario extends Component
                         }
                     }
                 }
+            }
 
+            if($turno['pago']){
+               if($turno['pago']['verificado']){
+                $pago = 'Si';
+               };
             }
 
             $html .='<td style="background-color:#e9effc;color:black;text-align:left;">'.htmlspecialchars($patologias).'</td>';
-            $html .='<td style="background-color:#e9effc;color:black;text-align:left;"> </td>';
+            $html .='<td style="background-color:#e9effc;color:black;text-align:left;">'.htmlspecialchars($pago).'</td>';
             $html .='<td style="background-color:#e9effc;color:black;text-align:left;">'.htmlspecialchars((string)$turno['hora']) .'</td>';
             $html .='<td style="background-color:#e9effc;color:black;text-align:left;">'.htmlspecialchars((string)$turno['paciente']).'</td>';
             $html .='<td style="background-color:#e9effc;color:black;text-align:left;">'.htmlspecialchars((string)$turno['telefono']).'</td>';
@@ -226,6 +233,12 @@ class Calendario extends Component
                     ->orderBy('hora','ASC')->get();
 
         foreach($turnosFecha as $turno){
+            $pago = null;
+
+            if($turno->pago_id){
+                $pago = Pago::find($turno->pago_id);
+            }
+
             $date = date_create($fecha . ' ' . $turno->hora);
             if($turno->paciente){
                 $fichaDelPaciente = $this->_getFicha($turno->paciente->dni);
@@ -245,6 +258,7 @@ class Calendario extends Component
                 $asignado = false;
                 $cupon =  "-";
             }
+
             $this->turnos[] = [
                 'id' => $turno->id,
                 'hora' => date_format($date,"H:i"),
@@ -261,7 +275,8 @@ class Calendario extends Component
                 'mando_captura' => $turno->mando_captura,
                 'comentarios' => $turno->comentarios,
                 'dni'=>$turno->paciente->dni,
-                'email'=>$turno->paciente->email
+                'email'=>$turno->paciente->email,
+                'pago'=>$pago
             ];
         }
     }

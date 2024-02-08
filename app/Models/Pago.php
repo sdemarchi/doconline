@@ -24,7 +24,9 @@ class Pago extends Model
         'utilizado',
         'verificado',
         'comprobante',
-        'nombre_paciente'
+        'nombre_paciente',
+        'created_at',
+        'updated_at',
     ];
 
     public $timestamps = true;

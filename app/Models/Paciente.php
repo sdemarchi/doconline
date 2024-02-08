@@ -92,4 +92,18 @@ class Paciente extends Model
     public function paciente_turnero(){
         return $this->hasMany(TurnoPaciente::class, 'dni', 'dni');
     }
+
+    public function ultimoPago($year = null){
+        $pacTurn = $this->paciente_turnero()->first();
+
+        if($pacTurn && $year){
+            return $pacTurn->ultimoPago($year);
+
+        }else if($pacTurn){
+            return $pacTurn->ultimoPago();
+        }
+
+        return null;
+    }
+
 }

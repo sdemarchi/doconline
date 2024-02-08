@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Paciente;
+use App\Models\Pago;
 use App\Models\Turno;
 
 class TurnoPaciente extends Model
@@ -39,8 +40,18 @@ class TurnoPaciente extends Model
         // Cargar la relación grow
         $this->load('grow');
 
-        // Devolver el paciente con la información del grow incluida
         return $this->toArray();
+    }
+
+    public function ultimoPago($year)
+    {
+        $query = $this->hasOne(Pago::class, 'id_paciente', 'id');
+
+        if ($year) {
+            $query->whereYear('created_at', $year);
+        }
+
+        return $query->latest()->first();
     }
 
 }

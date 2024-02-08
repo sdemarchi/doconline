@@ -131,7 +131,7 @@
       <div style='border:none !important;' class="accordion-item theme-dark ficha-page">
 
         <div class="ficha-subtitulo-button">
-            <h2>Datos del paciente</h2>
+            <h2>Datos del paciente</h2>{{$test}}
             <button class="btn btn-primary mt-2" wire:click="actualizarFechaEdad()">Actualiz. Fecha de carga y Edad</button>
         </div>
 
@@ -145,6 +145,35 @@
 
                 <!------ ROW 1 ------->
                 <div class="ficha-row ficha-inputs-row">
+                    @if($pago)
+
+                    <div class="ficha-input-container ficha-pago">
+                        <div class='ficha-pagado-head'>
+                            <h4>Ultimo pago <a href="{{ route('pago',$pago->id) }}" style="margin-left: 3px;" target="_blank"><img height=13.5 src='{{asset('img/link-icon.ico')}}' /></a></h4>
+                            <span style="opacity:90%;font-size:12px;">{{$pago->fecha}}</span>
+                        </div>
+
+                        <div class="ficha-pagado-body">
+                            <p>
+                                <span class="form-check form-switch">
+                                    <input wire:model.defer="pago_verificado" wire:change="pagoVerificadoSwitch" class="form-check-input" type="checkbox">
+                                    <span class="form-check-label">Pagado</span>
+                                </span>
+
+                                @if($pago->comprobante)
+                                    <span style="min-width: fit-content">Comprobante:
+                                        <a href="{{ url('img/uploads/' . $pago->comprobante) }}" target="_blank" class="btn btn-primary" style="transform:translateY(-2px);width:fit-content;max-height:16px !important;padding:0px 3px !important;font-size:13px;margin-left:4px;margin-right:0;">ver</a>
+                                    </span>
+                                @else
+                                    <span>Comprobante: No</span>
+                                @endif
+                            </p>
+                        </div>
+                    </div>
+
+
+                    @else
+
                     <div class="ficha-input-container ficha-pagado ficha-doble-input">
                         <label class="form-check form-switch" style='margin-right:5px'>
                             <input class="form-check-input" type="checkbox" wire:model.defer="pagado" checked>
@@ -161,6 +190,8 @@
                             <span class="form-check-label">Pagado2024</span>
                         </label>
                     </div>
+
+                    @endif
 
                     <div class="ficha-input-container">
                         <label class="form-label">Apellido y Nombre *</label>

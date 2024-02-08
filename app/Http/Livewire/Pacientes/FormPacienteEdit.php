@@ -18,7 +18,11 @@ use App\Models\Diagnostico;
 use App\Models\Tratamiento;
 use App\Models\Producto;
 use App\Models\ModoContacto;
+use App\Models\Pago;
+use App\Models\TurnoPaciente;
 use App\Models\Turno;
+
+use Illuminate\Support\Facades\DB;
 
 
 class FormPacienteEdit extends Component
@@ -27,6 +31,8 @@ class FormPacienteEdit extends Component
 
     public $pacienteId, $patologias, $patologiaAgregar;
     public $_turno = ['hola'];
+    public $turnoPaciente;
+    public $pago;
     public $cupon = 'No uso cupon';
     public $paginaSeleccionada = 1;
     public $pestPacClass = 'ficha-pestaña-select';
@@ -34,6 +40,9 @@ class FormPacienteEdit extends Component
     public $pestPatClass  = 'ficha-pestaña-button';
     public $pestTutorClass = 'ficha-pestaña-button';
     public $pestDefClass = 'ficha-pestaña-button';
+    public $pago_verificado;
+    public $pago_utilizado;
+    public $test;
 
     public $pagado, $estado, $fe_carga, $fe_aprobacion, $email, $nom_ape, $dni, $fe_nacim, $cod_vincu,
             $edad, $domicilio, $localidad, $idprovincia, $cp, $ocupacion, $celular, $osocial,
@@ -142,6 +151,63 @@ class FormPacienteEdit extends Component
         $_turno = Turno::where('paciente_id', $this->pacienteId)->first();
     }
 
+    public function getPago(){
+        $this->turnoPaciente = TurnoPaciente::where('dni', $this->dni)->first();
+
+        if($this->turnoPaciente){
+            $this->pago = Pago::where('id_paciente', $this->turnoPaciente->id)
+            ->latest('created_at')
+            ->first(['*', DB::raw("DATE_FORMAT(created_at, '%d/%m/%Y') as fecha")]);
+
+
+            if($this->pago){
+                $this->pago_verificado = $this->pago->verificado;
+                $this->pago_utilizado = $this->pago->utilizado;
+            }
+        }
+    }
+
+    public function pagoVerificadoSwitch(){
+        if($this->pago){
+            $this->pago_verificado = !$this->pago_verificado;
+            $pago_ = Pago::find($this->pago->id);
+            if(!$this->pago_verificado){
+                $this->pago_verificado = 1;
+                $pago_->verificado = $this->pago_verificado;
+                $pago_->save();
+
+                $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Pago verificado"]);
+
+            }else{
+                $this->pago_verificado = 0;
+                $pago_->verificado = $this->pago_verificado;
+                $pago_->save();
+
+
+                $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Cambios guardados"]);
+
+            }
+        }
+    }
+
+    public function pagoUtilizadoSwitch(){
+        if($this->pago){
+            $pago_ = Pago::find($this->pago->id);
+            if($this->pago_utilizado === 0){
+                $this->pago_utilizado = 1;
+                $pago_->utilizado = $this->pago_utilizado;
+                $pago_->save();
+            }else{
+                $this->pago_utilizado = 0;
+                $pago_->utilizado = $this->pago_utilizado;
+                $pago_->save();
+            }
+
+            $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Cambios guardados"]);
+        }
+    }
+
+
     public function getCupon($paciente){
         if ($paciente) {
             $paciente_turnero = $paciente->paciente_turnero;
@@ -165,6 +231,7 @@ class FormPacienteEdit extends Component
     public function mount(){
         if($this->pacienteId){
             $paciente = Paciente::where('idpaciente', $this->pacienteId)->first();
+            $this->test ='';
             $this->cupon = $this->getCupon($paciente);
             $this->pagado = $paciente->pagado;
             $this->estado = $paciente->estado;
@@ -366,7 +433,7 @@ class FormPacienteEdit extends Component
     }
 
     public function render(){
-        $this -> getTurno();
+        $this -> getPago();
         $provincias = Provincia::orderBy('Provincia', 'ASC')->get();
         $dolencias = Dolencia::get();
         $modos_contacto = ModoContacto::get();

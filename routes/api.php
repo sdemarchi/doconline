@@ -9,7 +9,6 @@ use App\Http\Controllers\Api\FormController;
 use App\Http\Controllers\Api\GrowController;
 use App\Http\Controllers\Api\ResetPasswordController;
 use App\Http\Controllers\Api\PagoController;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -63,6 +62,8 @@ Route::get('grow/{route}', [GrowController::class, 'getGrowByRoute']);
 Route::get('grow.id/{id}', [GrowController::class, 'getGrowById']);
 Route::get('grow.email/{email}', [GrowController::class, 'getGrowByEmail']);
 Route::get('grow.pacientes/{id}', [GrowController::class, 'getGrowPacientes']);
+Route::post('/add-grow', [GrowController::class, 'createGrow'])->name('addGrow');
+
 
 Route::get('contactos', [pacienteController::class, 'getContactos']);
 Route::get('ocupaciones', [pacienteController::class, 'getOcupaciones']);

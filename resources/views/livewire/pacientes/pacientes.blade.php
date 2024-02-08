@@ -64,8 +64,8 @@
                             <th width=200 class="sorting" wire:click="sort('nom_ape')">Nombre y Apellido
                                 <x-sort-icon :sortField="$nom_apeSort" />
                             </th>
-                            <th class="sorting" wire:click="sort('pagado2023')">Pagado 23
-                                <x-sort-icon :sortField="$pagado2023Sort" />
+                            <th class="sorting" wire:click="sort('pagado2024')">Pagado {{$anioActual}}
+                                <x-sort-icon :sortField="$pagado2024Sort" />
                             </th>
                             <th class="sorting" wire:click="sort('estado')">Estado
                                 <x-sort-icon :sortField="$estadoSort" />
@@ -145,7 +145,14 @@
                             <td wire:click='abrirFicha({{$paciente->idpaciente}})'>{{ date_format(date_create($paciente->fe_carga),"d/m/Y") }}</td>
                             <td wire:click='abrirFicha({{$paciente->idpaciente}})'>{{ $paciente->idpaciente }}</td>
                             <td wire:click='abrirFicha({{$paciente->idpaciente}})'>{{ $paciente->nom_ape }}</td>
-                            <td wire:click='abrirFicha({{$paciente->idpaciente}})'>{{ $paciente->pagado2023 ? 'Sí' : 'No'}}</td>
+                            <td wire:click='abrirFicha({{$paciente->idpaciente}})' style="text-align: center;">
+                                @if ($pago = $paciente->ultimoPago($anioActual))
+                                    {{ ($pago->verificado || $paciente->pagado2024 ) ? 'Sí' : '-'}}
+                                @else
+                                {{ $paciente->pagado2024  ? 'Sí' : '-'}}
+                                @endif
+                            </td>
+
                             <td wire:click='abrirFicha({{$paciente->idpaciente}})'>{{ $paciente->getEstado() }}</td>
                             <td wire:click='abrirFicha({{$paciente->idpaciente}})'>@if($paciente->fe_aprobacion){{
                                 date_format(date_create($paciente->fe_aprobacion),"d/m/Y") }}@endif</td>

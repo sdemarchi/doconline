@@ -16,6 +16,7 @@ use App\Models\TurnoPaciente;
 use App\Models\Grow;
 use App\Models\Paciente;
 use App\Models\Provincia;
+use App\Models\Pago;
 
 class GrowEdit extends Component
 {
@@ -135,9 +136,29 @@ class GrowEdit extends Component
             $paciente['pago'] = 'No';
 
             $pac = Paciente::where('dni', $paciente['dni'])->first();
+            $añoActual = $this->anioActual;
+            $añoAnterior = $añoActual - 1;
 
-            if ($pac !== null) {
-                if ($pac->pagado2023 == 1 || $pac->pagado2024 == 1) {
+            //dd($paciente['id']);
+            $pago = Pago::where('id_paciente', $paciente['id'])
+            ->latest('created_at')
+            ->first();
+
+            $pagoVerificado = false;
+
+            if($pago && $pago->verificado == 1){
+                $pagoVerificado = true;
+            };
+
+            if ($pac !== null){
+                if ($pac->pagado2023 == 1 || $pac->pagado2024 == 1 || $pagoVerificado == true) {
+                    $paciente['pago'] = 'Si';
+                    $pagaronMes_ = $pagaronMes_ + 1;
+                } else {
+                    $paciente['pago'] = 'No';
+                }
+            } else if($pago){
+                if ($pago->verificado == 1) {
                     $paciente['pago'] = 'Si';
                     $pagaronMes_ = $pagaronMes_ + 1;
                 } else {

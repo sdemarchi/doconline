@@ -1,11 +1,11 @@
 <?php
-
 namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\TurnoPaciente;
 use App\Models\ModoContacto;
 use App\Models\Paciente;
+use App\Models\Pago;
 
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
@@ -41,7 +41,7 @@ class PacientesEstadisticas extends Component
     public $contactoCount;
     public $contactoSeleccionadoNombre;
     public $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
-
+/*
     public function getPacientes(){
         $pacientesData = Paciente::whereYear('fe_carga', $this->anioActual)
         ->whereMonth('fe_carga', $this->mesActual)
@@ -49,12 +49,87 @@ class PacientesEstadisticas extends Component
         ->get();
 
         $pacientes = $pacientesData->map(function ($paciente) {
+            $pagoVerificado = false;
+
+            if($pago){
+                $pagoVerificado = $pago->verificado;
+            };
+
             $paciente['pago'] = 'No';
 
-            if ($paciente->pagado2023 == 1 || $paciente->pagado2024 == 1) {
+            if ($paciente->pagado2023 || $paciente->pagado2024) {
                 $paciente['pago'] = 'Si';
             } else {
                 $paciente['pago'] = 'No';
+            }
+
+            return $paciente;
+        });
+
+        $pacientes = $pacientes->toArray();
+
+        return $pacientes;
+    }*/
+
+    public function getPacientes(){
+        $pacientes = TurnoPaciente::whereYear('created_at', $this->anioActual)
+        ->whereMonth('created_at', $this->mesActual)
+        ->select('id', 'dni', 'grow', 'nombre','email','telefono')
+        ->get();
+
+        $pacientes = $pacientes->map(function ($paciente) {
+            $paciente['pago'] = 'No';
+
+            $paciente['celular'] = $paciente->telefono;
+
+            $pac = Paciente::where('dni', $paciente['dni'])
+            ->select('idpaciente', 'dni', 'email', 'nom_ape','pagado2023','pagado2024','celular','idcontacto')
+            ->first();
+
+            $pago = Pago::where('id_paciente', $paciente->id)
+            ->latest('created_at')
+            ->first();
+
+            $pagoVerificado = false;
+
+            if($pago){
+                $pagoVerificado = $pago->verificado;
+            };
+
+            if ($pac !== null) {
+                if ($pac->pagado2023 || $pac->pagado2024 || $pagoVerificado) {
+                    $paciente['pago'] = 'Si';
+                } else {
+                    $paciente['pago'] = 'No';
+                }
+
+                $paciente['idcontacto'] = $pac->idcontacto;
+                $paciente['celular'] = $pac->celular;
+
+            } else if($pago){
+                if ($pagoVerificado) {
+                    $paciente['pago'] = 'Si';
+                } else {
+                    $paciente['pago'] = 'No';
+                }
+
+                if($paciente['grow']){
+                    $paciente['idcontacto'] = 37;
+                }else{
+                    $paciente['idcontacto'] = 37;
+                }
+
+
+            } else{
+                $paciente['pago'] = 'No';
+
+
+                if($paciente['grow']){
+                    $paciente['idcontacto'] = 37;
+                }else{
+                    $paciente['idcontacto'] = 37;
+                }
+
             }
 
             return $paciente;

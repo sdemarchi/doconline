@@ -11,6 +11,7 @@ use App\Lib\convertBase30;
 use Maatwebsite\Excel\Facades\Excel;
 
 use App\Exports\PacientesExport;
+use Carbon\Carbon;
 
 use App\Models\Paciente;
 
@@ -19,8 +20,9 @@ class Pacientes extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
+    public $anioActual;
 
-    public $sortField, $sortDir, $idpacienteSort, $fe_cargaSort, $fe_aprobacionSort, $pagado2023Sort, $estadoSort, $idcontactoSort,
+    public $sortField, $sortDir, $idpacienteSort, $fe_cargaSort, $fe_aprobacionSort, $pagado2024Sort, $estadoSort, $idcontactoSort,
             $contacto_otroSort, $nom_apeSort, $dniSort, $cod_vincuSort, $edadSort, $ocupacionSort, $patologiaSort,
             $res_historiaSort, $diagnosticoSort, $tratamientoSort, $justificacionSort, $beneficiosSort, $comentarioSort,
             $doloresSort, $conc_thcSort, $conc_cbdSort, $cant_plantasSort, $dosisSort, $frecuenciaSort, $domicilioSort,
@@ -29,6 +31,7 @@ class Pacientes extends Component
     public $searchMode, $searchString;
 
     public function mount(){
+        $this->anioActual = Carbon::now()->year;
         $this->searchString = session('pacienteSearchString');
         $this->searchMode = session('pacienteSearchMode');
         $this->sortField = 'idpaciente';
@@ -97,7 +100,8 @@ class Pacientes extends Component
         if(!$paciente->firma || !$paciente->aclaracion){
             $this->dispatchBrowserEvent('alert', ['type' => 'error',  'message' => "No existe la Firma o la Aclaración"]);
             return;
-        }
+        };
+
         $convert = new ConvertBase30();
         $rootDir = storage_path('app/imports/');
         $fileName = Str::random(30).'.png';
@@ -120,7 +124,7 @@ class Pacientes extends Component
         $this->idpacienteSort = '';
         $this->fe_cargaSort = '';
         $this->fe_aprobacionSort = '';
-        $this->pagado2023Sort = '';
+        $this->pagado2024Sort = '';
         $this->estadoSort = '';
         $this->idcontactoSort = '';
         $this->contacto_otroSort = '';
@@ -165,8 +169,8 @@ class Pacientes extends Component
             case 'fe_aprobacion':
                 $this->fe_aprobacionSort = $this->sortDir;
                 break;
-            case 'pagado2023':
-                $this->pagado2023Sort = $this->sortDir;
+            case 'pagado2024':
+                $this->pagado2024Sort = $this->sortDir;
                 break;
             case 'estado':
                 $this->estadoSort = $this->sortDir;

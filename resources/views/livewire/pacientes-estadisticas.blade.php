@@ -178,7 +178,7 @@
 
                 @foreach($pacientesContacto as &$paciente)
                     <tr class='grow-button' wire:click='abrirFicha({{$paciente['dni']}})'>
-                        <td>{{ $paciente['nom_ape']}}</td>
+                        <td>{{ $paciente['nombre']}}</td>
                         <td>{{ $paciente['email']}}</td>
                         <td>{{ $paciente['celular']}}</td>
                         <td>{{ $paciente['pago']}}</td>

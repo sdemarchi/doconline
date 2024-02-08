@@ -168,6 +168,8 @@ Route::group(['middleware' => ['auth']], function () {
 //Rutas del turnero
 Route::view('/turnero', 'turnero.login')->name('turnero');
 
+Route::view('/terminos', 'terminos')->name('terminos');
+
 Route::group(['middleware' => [TurneroLogin::class]], function () {
     Route::view('/turnero/mipanel', 'turnero.panel')->name('turnero.panel');
     Route::view('/turnero/datos', 'turnero.datos')->name('turnero.datos');

@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Grows;
 use Livewire\Component;
 use App\Models\TurnoPaciente;
 use App\Models\Grow;
+use App\Models\Pago;
 use App\Models\Paciente;
 
 use Carbon\Carbon;
@@ -53,13 +54,30 @@ class GrowEstadisticasLivewire extends Component{
             $paciente['pago'] = 'No';
 
             $pac = Paciente::where('dni', $paciente['dni'])->first();
+
+            $pago = Pago::where('id_paciente', $paciente->id)
+            ->latest('created_at')
+            ->first();
+
+            $pagoVerificado = false;
+
+            if($pago){
+                $pagoVerificado = $pago->verificado;
+            };
+
             if ($pac !== null) {
-                if ($pac->pagado2023 == 1 || $pac->pagado2024 == 1) {
+                if ($pac->pagado2023 || $pac->pagado2024 || $pagoVerificado ) {
                     $paciente['pago'] = 'Si';
                 } else {
                     $paciente['pago'] = 'No';
                 }
-            } else {
+            } else if($pago){
+                if ($pagoVerificado ) {
+                    $paciente['pago'] = 'Si';
+                } else {
+                    $paciente['pago'] = 'No';
+                }
+            } else{
                 $paciente['pago'] = 'No';
             }
             return $paciente;

@@ -193,6 +193,73 @@
     flex-direction: row;
     flex-wrap: wrap;
     align-items: flex-end;
+    border-radius: 6px;
+    align-items: center;
+}
+
+.ficha-pagado-body{
+    width: 95%;
+}
+
+
+.ficha-pagado-body p{
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+    font-size: 13px;
+    margin:0;
+    margin-top:12px;
+}
+
+.ficha-pagado-body span{
+   width: 100%;
+}
+
+.ficha-pago{
+    background-color: #36445d7e;
+    border-radius: 6px;
+    padding:5px 7px;
+    padding-bottom: 0;
+    position:relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ficha-pagado-head h4{
+    font-size: 14px;
+    margin-bottom: 0px;
+    display: flex;
+    align-items: center;
+}
+
+.ficha-pagado-head a:hover{
+    text-decoration: none;
+}
+
+.ficha-pagado-head a img{
+    margin-left: 3px;
+    opacity: 50%;
+    filter:invert();
+}
+
+.ficha-pagado-head a img:hover{
+    opacity: 80%;
+}
+
+.ficha-pagado-head span{
+    font-size: 13px;
+    margin-bottom: 0px;
+    font-weight: 500;
+    box-sizing: border-box;
+}
+
+.ficha-pagado-head{
+    width:100%;
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+    margin-bottom: 2px;
 }
 
 .ficha-inputs-row{
