@@ -139,20 +139,41 @@
             font-size: 14px;
         }
 
+        .pago-buttons{
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        .pago-buttons button{
+            color:rgba(255, 255, 255, 0.786);
+            background-color:rgba(216, 51, 51, 0.711);
+            border:none;
+            border-radius: 6px;
+            padding:2px 6px;
+            height: fit-content;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
 
     </style>
 
     <div class="card">
-        <div class="card-footer ">
-            <label class="form-check form-switch float-sm-start ms-2 mt-1" style='max-width:fit-content'>
-                <input class="form-check-input" type="checkbox" wire:model.defer="verificado" wire:change="verificadoSwitch">
-                <span class="form-check-label">Verificado</span>
-            </label>
+        <div class="card-footer pago-buttons">
+            <div>
+                <label class="form-check form-switch float-sm-start ms-2 mt-1" style='max-width:fit-content'>
+                    <input class="form-check-input" type="checkbox" wire:model.defer="verificado" wire:change="verificadoSwitch">
+                    <span class="form-check-label">Verificado</span>
+                </label>
 
-            <label class="form-check form-switch float-sm-start ms-2 mt-1" style='max-width:fit-content'>
-                <input class="form-check-input" type="checkbox" wire:model.defer="utilizado" wire:change="utilizadoSwitch">
-                <span class="form-check-label">Utilizado</span>
-            </label>
+                <label class="form-check form-switch float-sm-start ms-2 mt-1" style='max-width:fit-content'>
+                    <input class="form-check-input" type="checkbox" wire:model.defer="utilizado" wire:change="utilizadoSwitch">
+                    <span class="form-check-label">Utilizado</span>
+                </label>
+            </div>
+            <button wire:click="eliminarPago()">Eliminar</button>
+
         </div>
 
         <div class="card-body border-bottom pt-3 pb-4" >
@@ -226,7 +247,9 @@
                 <div class="pago-comprobante-buttons">
 
                     @if(!$comprobanteForm)
-                        <a href="https://wa.me/{{ str_replace(' ', '', $pagador->telefono) }}" target="_blank" class="pago-btn btn btn-primary pago-comprobante-solicitar">Solicitar por whatsapp</a>
+                        @if($pagador)
+                           <a href="https://wa.me/{{ str_replace(' ', '', $pagador->telefono) }}" target="_blank" class="pago-btn btn btn-primary pago-comprobante-solicitar">Solicitar por whatsapp</a>
+                        @endif
                         <button wire:click="switchForm" class="btn" type="submit">Adjuntar comprobante</button>
                     @else
                         <form method="POST" enctype="multipart/form-data" wire:submit.prevent="subirComprobante" >

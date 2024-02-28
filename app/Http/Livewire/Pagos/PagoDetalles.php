@@ -45,13 +45,18 @@ class PagoDetalles extends Component
         return view('livewire.pagos.pago-detalles');
     }
 
+    public function eliminarPago(){
+        $pago = Pago::find($this->pagoId);
+        $pago->delete();
+        return redirect()->route('pagos');
+    }
+
     public function getPagos(){
         $pago = Pago::find($this->pagoId);
         $this->nombrePaciente = $pago->nombre_paciente;
-        $this->nombrePagador = $pago->pagador->nombre;
+        $this->nombrePagador = $pago->pagador ? $pago->pagador->nombre: '';
         $this->emailPagador = $pago->email_pagador;
         $this->emailPaciente = $pago->email_paciente;
-        $this->nombrePagador = $pago->pagador->nombre;
         $this->monto = '$' . number_format($pago->monto, 0, ',', '.');
         $this->descuento = $pago->descuento;
         $this->montoFinal = '$' . number_format($pago->monto_final, 0, ',', '.');

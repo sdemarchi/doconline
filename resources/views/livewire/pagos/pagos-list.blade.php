@@ -21,7 +21,7 @@
 
         .pagos-comprobante-window{
             width: 400px;
-            background-color:rgba(19, 23, 35, 0.812);
+            background-color:rgba(19, 23, 35, 0.871);
             max-width:90%;
             height: fit-content;
             max-height:95%;
@@ -29,6 +29,7 @@
             flex-direction: column;
             border-radius:8px;
             padding:15px;
+            backdrop-filter: blur(6px);
         }
 
         .pagos-comprobante-img{
@@ -45,11 +46,26 @@
             margin: 0 auto;
         }
 
+        @media only screen and (max-width:760px){
+            .display-pc{
+                display: none;
+            }
+
+            .pagos-list-container{
+                padding-left: 9px;
+                padding-right: 9px;
+            }
+        }
+
+        @media only screen and (min-width:761px){
+            .display-cel{
+                display: none;
+            }
+        }
 
     </style>
 
-    <div class="col-12">
-      <div class="card">
+      <div class="card pagos-list-container">
         <div class="card-body border-bottom py-3">
           <div class="d-flex">
             <div class="ms-auto text-muted">
@@ -64,23 +80,29 @@
           <table class="table table-vcenter card-table">
             <thead>
               <tr>
-                <th>Id</th>
-                <th>Monto final</th>
+                <th class="display-pc">Id</th>
+                <th class="display-pc">Monto final</th>
                 <th>Paciente</th>
                 <th>Fecha</th>
                 <th>Verificado</td>
-                <th>Comprobante</th>
-                <th>Codigo</th>
+                <th class="display-pc">Comprobante</th>
+                <th class='display-cel'>Comprob.</th>
+                <th class="display-pc">Codigo</th>
               </tr>
             </thead>
 
             <tbody class="pagos-table-body">
               @foreach($pagos as $pago)
               <tr>
-                <td wire:click="abrirPago({{$pago->id}})">{{ $pago->id }}</td>
-                <td wire:click="abrirPago({{$pago->id}})">${{ number_format($pago->monto_final, 0, ',', '.')}}</td>
+                <td class="display-pc"  wire:click="abrirPago({{$pago->id}})">{{ $pago->id }}</td>
+                <td class="display-pc" wire:click="abrirPago({{$pago->id}})">${{ number_format($pago->monto_final, 0, ',', '.')}}</td>
                 <td wire:click="abrirPago({{$pago->id}})">{{ $pago->nombre_paciente}}</td>
-                <td wire:click="abrirPago({{$pago->id}})">{{ $pago->formatted_created_at}}</td>
+                <td class="display-cel" wire:click="abrirPago({{$pago->id}})">
+                    {{substr( $pago->formatted_created_at,0,-10)}}
+                </td>
+                <td class="display-pc" wire:click="abrirPago({{$pago->id}})">
+                    {{ $pago->formatted_created_at}}
+                </td>
                 <td><label class="form-check form-switch float-sm-start ms-2 mt-1" style='max-width:fit-content'>
                     <input class="form-check-input" type="checkbox" @if($pago->verificado !== 0) checked @endif wire:click="handleVerificado({{$pago->id}})">
                     <span class="form-check-label" style="margin-left: 4px"> @if($pago->verificado === 0) No @else Si @endif</span>
@@ -94,7 +116,7 @@
                     @endif
                 </p></td>
 
-                <td wire:click="abrirPago({{$pago->id}})">{{ $pago->codigo }}</td>
+                <td class="display-pc" wire:click="abrirPago({{$pago->id}})">{{ $pago->codigo }}</td>
               </tr>
               @endforeach
             </tbody>
@@ -110,7 +132,6 @@
             </div>
         </div>
       </div>
-    </div>
 
     @if($verComprobante)
         @if(pathinfo($comprobanteImg, PATHINFO_EXTENSION) == 'pdf')

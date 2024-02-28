@@ -33,7 +33,7 @@ class PagosList extends Component
         return $pagos
             ->select('*', DB::raw("DATE_FORMAT(created_at, '%d/%m/%y - %H:%ihs') as formatted_created_at"))
             ->orderBy('created_at', 'DESC')
-            ->paginate(10);
+            ->paginate(20);
     }
 
     public function mostrarComprobante($img){
