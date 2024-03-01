@@ -14,6 +14,8 @@ class PacientesExport implements FromCollection, ShouldAutoSize, WithHeadings, W
     /**
     * @return \Illuminate\Support\Collection
     */
+
+    public $pagado2024;
     public function collection()
     {
         return Paciente::get();
@@ -22,11 +24,16 @@ class PacientesExport implements FromCollection, ShouldAutoSize, WithHeadings, W
     public function headings(): array
     {
     return ['id','Cod. Descto.','E-Mail','Celular','Nombre y Apellido','DNI','Fecha Nac.','Domicilio','Localidad',
-            'Fecha de Carga','Cod. Vinc.','Contacto','Contacto Otro','Pagado','Pagado 2023','Estado'];
+            'Fecha de Carga','Cod. Vinc.','Contacto','Contacto Otro','Pagado 2024','Estado'];
     }
 
     public function map($paciente): array
     {
+        if($pago = $paciente->ultimoPago(2024)){
+            $this->pagado2024 = ($pago->verificado || $paciente->pagado2024 ) ? 'Sí' : '-';
+        }else{
+            $this->pagado2024 =  $paciente->pagado2024 ? 'Sí' : '-';
+        }
         return [
             $paciente->idpaciente,
             $paciente->cod_descto,
@@ -41,8 +48,7 @@ class PacientesExport implements FromCollection, ShouldAutoSize, WithHeadings, W
             $paciente->cod_vincu,
             $paciente->modo_contacto ? $paciente->modo_contacto->modo_contacto : '',
             $paciente->contacto_otro,
-            $paciente->pagado ? 'Sí' : 'No',
-            $paciente->pagado2023 ? 'Sí' : 'No',
+            $this->pagado2024,
             $paciente->getEstado(),
         ];
     }
