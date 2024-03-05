@@ -7,7 +7,7 @@
                 </h2>
             </div>
             <div class="col-sm-6">
-                <a href="{{ route('pacientes.create') }}" class="btn btn-primary float-sm-end">Nuevo Paciente</a>
+                <a href="{{ route('pacientes.create') }}" class="btn btn-primary float-sm-end" style='max-height:28px;font-size:15px;'>Nuevo Paciente</a>
             </div>
         </div>
 

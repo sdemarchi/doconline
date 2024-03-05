@@ -284,6 +284,10 @@ class Pacientes extends Component
         $this->resetPage();
     }
 
+    public function copiarCsv($mes){
+
+    }
+
     public function generarCsv(){
         return Excel::download(new PacientesExport, 'pacientes.csv');
     }

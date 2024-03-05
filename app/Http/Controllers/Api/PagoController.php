@@ -61,9 +61,32 @@ class PagoController extends Controller
         return response()->json($pago);
     }
 
-    public function abrirPago(){
+    public function editarPago(Request $request, $id)
+    {
+        $pago = Pago::find($id);
 
+        if (!$pago) {
+            return response()->json(['message' => 'Pago no encontrado.'], 404);
+        }
+
+        $pago->id_paciente = $request->input('id_paciente', $pago->id_paciente);
+        $pago->id_pagador = $request->input('id_pagador', $pago->id_pagador);
+        $pago->id_grow = $request->input('id_grow', $pago->id_grow);
+        $pago->email_paciente = $request->input('email_paciente', $pago->email_paciente);
+        $pago->email_pagador = $request->input('email_pagador', $pago->email_pagador);
+        $pago->monto = $request->input('monto', $pago->monto);
+        $pago->descuento = $request->input('descuento', $pago->descuento);
+        $pago->monto_final = $request->input('monto_final', $pago->monto_final);
+        $pago->codigo = $request->input('codigo', $pago->codigo);
+        $pago->utilizado = $request->input('utilizado', $pago->utilizado);
+        $pago->nombre_paciente = $request->input('nombre_paciente', $pago->nombre_paciente);
+        $pago->comprobante = $request->input('comprobante', $pago->comprobante);
+
+        $pago->save();
+
+        return response()->json($pago, 200);
     }
+
 
 
     public function nuevoPago(Request $request)

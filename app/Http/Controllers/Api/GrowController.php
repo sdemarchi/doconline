@@ -19,11 +19,17 @@ class GrowController extends Controller
 
     public function getGrowById($id){
         $grow = Grow::where('idgrow','like', $id)->first();
+        if($grow->descuento == 0){
+            $grow->descuento = 18;
+        }
         return response()->json($grow);
     }
 
     public function getGrowByEmail($email){
         $grow = Grow::where('mail','like', $email)->first();
+        if($grow->descuento == 0){
+            $grow->descuento = 18;
+        }
         return response()->json($grow);
     }
 

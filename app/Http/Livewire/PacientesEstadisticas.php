@@ -23,7 +23,6 @@ class PacientesEstadisticas extends Component
         $this->anioActual = date('Y');
         $this->pacientes = $this->getPacientes();
         $this->contactoPacientes = $this->getContactos();
-
     }
 
     public function refresh(){

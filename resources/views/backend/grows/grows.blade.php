@@ -7,7 +7,7 @@
                 </h2>
             </div>
             <div class="col-sm-6">
-                <a href="{{ route('grows.create') }}" class="btn btn-primary float-sm-end">Nuevo Grow</a>
+                <a href="{{ route('grows.create') }}" class="btn btn-primary float-sm-end" style='max-height:28px;font-size:15px;'>Nuevo Grow</a>
             </div>
         </div>
 

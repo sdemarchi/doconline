@@ -40,9 +40,13 @@
             font-size:14px;
             height:25px;
         }
+
+        .turno-pacientes-container{
+            min-width: 97vw;
+        }
+
     </style>
-    <div class="col-12">
-      <div class="card">
+      <div class="card turno-pacientes-container">
         <div class="card-body border-bottom py-3">
           <div class="d-flex tp-header">
             <div class="tp-filters-container">
@@ -133,7 +137,6 @@
         </div>
       </div>
     </div>
-  </div>
 
   @push('scripts')
     <script type="text/javascript">

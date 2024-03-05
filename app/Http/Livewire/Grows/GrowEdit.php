@@ -28,7 +28,7 @@ class GrowEdit extends Component
     public $imagen1_path, $imagen2_path,$url;
     public $growId;
     public $linkDeRastreo = '';
-    public $descuento;
+    public $descuento = 18;
     public $qrImage;
     public $qrFrame;
     public $pacientes = [];

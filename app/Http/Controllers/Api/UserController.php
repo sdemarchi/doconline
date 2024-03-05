@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 
 use App\Models\TurnoPaciente;
+use App\Models\Grow;
 
 class userController extends Controller
 {
@@ -23,6 +24,15 @@ class userController extends Controller
 		$nombre = '';
 
 		$usuario = TurnoPaciente::where('username',$username)->first();
+        $grow = Grow::where('mail',$email)->first();
+
+        if($grow){
+            $growAdminId = $grow->idgrow;
+        }else{
+
+            $growAdminId = 0;
+        }
+
 		if($usuario){
 			if(Hash::check($password, $usuario->password)){
 				$code = 0;
@@ -38,8 +48,11 @@ class userController extends Controller
 		];
 		$user = [
 			'id' => $id,
-			'userName' => $nombre
+			'userName' => $nombre,
+            'growAdmin' => $growAdminId
 		];
+
+
 
 		return response()->json(['error' => $error, 'user' => $user]);
 	}
@@ -54,6 +67,16 @@ class userController extends Controller
 		$nombre = '';
 
 		$usuario = TurnoPaciente::where('email',$email)->first();
+        $grow = Grow::where('mail',$email)->first();
+
+        if($grow){
+            $growAdminId = $grow->idgrow;
+        }else{
+
+            $growAdminId = 0;
+        }
+
+
 		if($usuario){
 			if(Hash::check($password, $usuario->password)){
 				$code = 0;
@@ -67,9 +90,11 @@ class userController extends Controller
 			'code' => $code,
 			'message' => $message
 		];
+
 		$user = [
 			'id' => $id,
-			'userName' => $nombre
+			'userName' => $nombre,
+            'growAdmin' => $growAdminId
 		];
 
 		return response()->json(['error' => $error, 'user' => $user]);
@@ -84,6 +109,15 @@ class userController extends Controller
 		$nombre = '';
 
 		$usuario = TurnoPaciente::where('email',$email)->first();
+        $grow = Grow::where('mail',$email)->first();
+
+        if($grow){
+            $growAdminId = $grow->idgrow;
+        }else{
+            $growAdminId = 0;
+        }
+
+
 		if($usuario){
 				$code = 0;
 				$message = '';
@@ -97,7 +131,8 @@ class userController extends Controller
 		];
 		$user = [
 			'id' => $id,
-			'userName' => $nombre
+			'userName' => $nombre,
+            'growAdmin' => $growAdminId
 		];
 
 		return response()->json(['error' => $error, 'user' => $user]);

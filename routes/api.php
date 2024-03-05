@@ -74,6 +74,7 @@ Route::post('formulario/{id}', [FormController::class, 'actualizarFormulario']);
 Route::get('formulario/{dni}', [FormController::class, 'getFormulario']);
 
 Route::get('/pagos/{id}', [PagoController::class, 'show']);
+Route::put('/pagos/editar/{id}', [PagoController::class, 'editarPago']);
 Route::get('/pagos/buscar-por-email/{email}', [PagoController::class, 'buscarPorEmail']);
 Route::get('/pagos/ultimo-regalado/{user_id}', [PagoController::class, 'ultimoRegalado']);
 Route::get('/pagos/buscar-por-codigo/{codigo}', [PagoController::class, 'buscarPorCodigo']);

@@ -1,12 +1,12 @@
-<x-backend-layout>
+<x-backend-fluid-layout>
     <x-slot name="header">
         <div class="row">
-            
+
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                     Pacientes del Turnero
                 </h2>
-            
-            
+
+
         </div>
     </x-slot>
 
@@ -20,6 +20,6 @@
         </div>
     </div>
 
-   
-    
-</x-backend-layout>
+
+
+</x-backend-fluid-layout>
