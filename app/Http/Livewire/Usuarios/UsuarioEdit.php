@@ -12,7 +12,8 @@ use App\Models\Role;
 
 class UsuarioEdit extends Component
 {
-    public $usuario, $usuarioId, $name, $username, $email, $role_id, $password, $repassword, $pago_hora;
+    public $usuario, $usuarioId, $name, $username, $email, $role_id, $password, 
+            $repassword, $pago_hora, $comentarios;
 
     protected $rules = [
         'name' => 'required|max:255',
@@ -22,6 +23,7 @@ class UsuarioEdit extends Component
         'repassword' => '',
         'pago_hora'=> '',
         'role_id' => 'required',
+        'comentarios' => ''
     ];
 
     public function mount(){
@@ -32,6 +34,7 @@ class UsuarioEdit extends Component
             $this->email = $this->usuario->email;
             $this->pago_hora = $this->usuario->pago_hora;
             $this->role_id = $this->usuario->role_id;
+            $this->comentarios = $this->usuario->comentarios;
         } else {
             $this->role_id = 1;
         }
@@ -75,6 +78,7 @@ class UsuarioEdit extends Component
                 $this->usuario->password = Hash::make($this->password);
             }
             $this->usuario->updated_at = Carbon::now();
+            $this->usuario->comentarios = $this->comentarios;
             $this->usuario->save();
             $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "El Usuario se actualizó con éxito"]);
 
@@ -95,6 +99,7 @@ class UsuarioEdit extends Component
                 'password' => Hash::make($this->password),
                 'role_id' => $this->role_id,
                 'pago_hora' => $this->pago_hora,
+                'comentarios' => $this->comentarios,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
 

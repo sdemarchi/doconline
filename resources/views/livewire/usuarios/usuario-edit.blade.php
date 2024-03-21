@@ -42,6 +42,13 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="col mt-4">
+                <label class="form-label">Comentarios</label>
+                <textarea  rows="3" class="form-control" wire:model.defer="comentarios"></textarea>
+            </div>
+        </div>
+
         <div style="display:flex;align-items:center;justify-content:center;margin:50px 0;min-width:100%">
             <button class="btn btn-link float-start" style="margin-right:20px" onclick="window.history.back();">Volver</button>
             <button class="btn btn-primary" wire:click="update()">
