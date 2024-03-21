@@ -11,6 +11,9 @@ class UsuarioIngreso extends Component
 {
     public $fecha, $hora, $comentarios, $feriado = 0;
 
+    protected $listeners = ['actualizarFechaYHora'];
+
+
     protected $rules = [
         'fecha' => 'required',
         'hora' => 'required',
@@ -42,6 +45,12 @@ class UsuarioIngreso extends Component
             'comentarios' => $this->comentarios
         ]);
         return redirect()->route('usuarios.mi-registro')->with('ok',"Se registró el Ingreso a las $this->hora");
+    }
+
+    public function actualizarFechaYHora($fecha, $hora)
+    {
+        $this->fecha = $fecha;
+        $this->hora = $hora;
     }
 
     private function _buscarIngreso(){

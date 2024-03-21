@@ -52,7 +52,7 @@
               Sacar turno
             </a>
 
-            <a class="ficha-button ficha-wsp-button" href="https://wa.me/{{ $celular }}" target="_blank">
+            <a class="ficha-button ficha-wsp-button" href="https://wa.me/{{$this->formatearTelefono($celular)}}" target="_blank">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-whatsapp" width="24"
                     height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
                     stroke-linejoin="round">
@@ -333,7 +333,7 @@
                 <!----------------->
 
             <!--//////---------------------///////-->
-
+      @if($pacienteId)
             <h2 class="ficha-subtitulo ficha-sub-in">Firma y aclaracion</h2>
 
             <!--/////// firma y aclaracion ///////-->
@@ -342,7 +342,7 @@
             <div class="ficha-row ficha-inputs-row">
 
             <!------ COL ------->
-              @if(!$pacienteId)
+              @if(!$pacienteId && false)
                 <div class="col-md-6 mt-3" style:"overflow:hidden;">
                   <div class="col-md-10">
                     <label class="form-label">Firma *</label>
@@ -382,15 +382,18 @@
 
                 <!------ COLS IN ROW ------->
                 @else
-                    <div class="ficha-input-container">
-                        <label class="form-label pb-3">Firma *</label>
-                        <img class="ficha-firma" src="{{$firma}}" />
-                    </div>
-
-                    <div class="ficha-input-container">
-                        <label class="form-label pb-3">Aclaración *</label>
-                        <img class="ficha-firma" src="{{$aclaracion}}" />
-                    </div>
+                    @if($firma)
+                        <div class="ficha-input-container">
+                            <label class="form-label pb-3">Firma *</label>
+                            <img class="ficha-firma" src="{{$firma}}" />
+                        </div>
+                    @endif
+                    @if($aclaracion)
+                        <div class="ficha-input-container">
+                            <label class="form-label pb-3">Aclaración *</label>
+                            <img class="ficha-firma" src="{{$aclaracion}}" />
+                        </div>
+                    @endif
                 @endif
                 <!------------------>
 
@@ -411,6 +414,7 @@
             <!--/////// ----------------------- ///////-->
 
             </div>
+            @endif
 
 
             <h2 class="ficha-subtitulo ficha-sub-in">¿Otra persona cultivará para el paciente</h2>

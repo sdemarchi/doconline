@@ -52,5 +52,8 @@
                 </x-button>
             </div>
         </form>
+        <script>
+            sessionStorage.setItem('from-login',true);
+        </script>
     </x-auth-card>
 </x-guest-layout>

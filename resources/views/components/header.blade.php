@@ -9,6 +9,12 @@
             align-items:center;
             text-decoration:none;
             padding: 0 8px;
+            cursor:pointer;
+            text-decoration: none;
+        }
+
+        .header-log-button :hover{
+            text-decoration: none !important;
         }
 
         #header-items-container{
@@ -43,9 +49,19 @@
 
         }
 
-
     </style>
+
+    <div id="ingreso-container"  style="display: none;">
+        <livewire:usuarios.usuario-ingreso/>
+    </div>
+
+    <div id="egreso-container"  style="display: none;">
+        <livewire:usuarios.usuario-egreso/>
+    </div>
+
+
     <div class="container-fluid">
+
         <div id="header-items-container">
             <div id="header-items-menu-logo">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
@@ -58,11 +74,11 @@
                 </h1>
             </div>
             @if(Auth::user()->ingresoActivo())
-            <a class="btn-primary header-log-button" href="{{ route('usuarios.egreso') }}" >
+            <a class="btn-primary header-log-button egreso-switch" >
                 Registrar Egreso
             </a>
             @else
-            <a class="btn-primary header-log-button"  href="{{ route('usuarios.ingreso') }}" >
+            <a class="btn-primary header-log-button ingreso-switch">
                 Registrar Ingreso
             </a>
             @endif
@@ -92,3 +108,43 @@
         </div>
     </div>
 </header>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var ingresoSwitches = document.querySelectorAll('.ingreso-switch');
+        var ingresoContainer = document.getElementById("ingreso-container");
+
+        ingresoSwitches.forEach(function(button) {
+            button.addEventListener("click", function() {
+                ingresoContainer.style.display = (ingresoContainer.style.display === "none" || ingresoContainer.style.display === "") ? "block" : "none";
+            });
+        });
+    });
+
+    document.addEventListener("DOMContentLoaded", function() {
+        var ingresoSwitches = document.querySelectorAll('.egreso-switch');
+        var egresoContainer = document.getElementById("egreso-container");
+
+        ingresoSwitches.forEach(function(button) {
+            button.addEventListener("click", function() {
+                egresoContainer.style.display = (egresoContainer.style.display === "none" || egresoContainer.style.display === "") ? "block" : "none";
+            });
+        });
+    });
+
+    @if(!Auth::user()->ingresoActivo())
+    document.addEventListener("DOMContentLoaded", function() {
+        var ingresoContainer = document.getElementById("ingreso-container");
+        const urlParams = new URLSearchParams(window.location.search);
+
+        if (sessionStorage.getItem('from-login') !== null){
+            sessionStorage.removeItem('from-login');
+            ingresoContainer.style.display = (ingresoContainer.style.display === "none" || ingresoContainer.style.display === "") ? "block" : "none";
+        }
+    });
+    @else
+    if (sessionStorage.getItem('from-login') !== null){
+            sessionStorage.removeItem('from-login');
+    }
+    @endif
+</script>

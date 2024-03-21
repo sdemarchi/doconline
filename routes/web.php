@@ -36,7 +36,7 @@ Route::get('/google-callback', function () {
         session(['pacienteDni' => $paciente->dni]);
         session(['pacienteFechaNac' => $paciente->fecha_nac]);
 
-        if($paciente->nombre && $paciente->dni && $paciente->fecha_nac) { //Ya ingresó sus datos
+        if($paciente->nombre && $paciente->dni && $paciente->fecha_nac) {
             return redirect()->route('turnero.panel');
         } else {
             return redirect()->route('turnero.datos');

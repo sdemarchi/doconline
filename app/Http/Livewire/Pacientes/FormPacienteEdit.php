@@ -53,7 +53,7 @@ class FormPacienteEdit extends Component
             $tut_tel_cel, $tut_mail, $tut_osocial, $tut_reg_fam,
             $res_historia, $beneficios, $justificacion, $diagnostico, $tratamiento, $cant_plantas,
             $frecuencia, $dosis, $conc_thc, $conc_cbd, $producto = [], $tratam_previo, $producto_indicado,
-            $sintomas, $pagado2023, $instagram;
+            $sintomas, $pagado2023,$pagado2024 = false, $instagram;
 
     protected $rules = [
         'pagado' => '',
@@ -120,6 +120,26 @@ class FormPacienteEdit extends Component
         'patologias.*.atenua_dolor' => ''
 
     ];
+
+    public function redireccionarWhatsApp($celular) {
+        $numeroFormateado = $this->formatearTelefono($celular);
+        $url = 'https://wa.me/' . $numeroFormateado;
+        return redirect()->to($url);
+    }
+
+    public function formatearTelefono($numero){
+        $numeroLimpio = preg_replace('/[^0-9]/', '', $numero);
+        if (substr($numeroLimpio, 0, 1) == '0') {
+            $numeroLimpio = substr($numeroLimpio, 1);
+        }
+        if (substr($numeroLimpio, 0, 2) !== '54') {
+            $numeroLimpio = '54' . $numeroLimpio;
+        }
+        $numeroFinal = '+' . $numeroLimpio;
+
+        return $numeroFinal;
+    }
+
 
     public function cambiarPestana($pest){
         $this->paginaSeleccionada = $pest;
@@ -225,6 +245,7 @@ class FormPacienteEdit extends Component
                 }
             }
         }
+
         return 'El paciente no usó cupón';
     }
 
@@ -537,6 +558,7 @@ class FormPacienteEdit extends Component
             'pagado2024' => $this->pagado2024,
             'instagram' => $this->instagram,
         ];
+
         if($this->pacienteId){
             Paciente::find($this->pacienteId)->update($dataPaciente);
         } else {
@@ -587,7 +609,7 @@ class FormPacienteEdit extends Component
         } else {
             unset($this->dolores[$index]);
         }
-        //El array de nombres de dolores se usa para autocompletar el campo diagnóstico
+
         $indexNombre = array_search($dolencia, $this->doloresNombres);
         if($index === false){
             $this->doloresNombres[] = $dolencia;
@@ -644,6 +666,7 @@ class FormPacienteEdit extends Component
             } else {
                 $this->diagnostico = $this->diagnostico . ", " . $string;
             }
+
         } else {
             $this->diagnostico = trim(str_replace(", " . $string, "", $this->diagnostico),"\n");
             $this->diagnostico = trim(str_replace("," . $string, "", $this->diagnostico),"\n");

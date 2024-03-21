@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Grows;
 use Imagine\Image\Box;
 use Imagine\Image\Point;
 use Imagine\Gd\Imagine;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Intervention\Image\Facades\Image;
 
 use Livewire\Component;
@@ -18,12 +17,16 @@ use App\Models\Paciente;
 use App\Models\Provincia;
 use App\Models\Pago;
 
+use chillerlan\QRCode\{QRCode, QROptions};
+
 class GrowEdit extends Component
 {
     use WithFileUploads;
 
     public $nombre, $cbu, $alias, $titular, $mail, $instagram, $celular, $idprovincia,
     $localidad, $direccion, $cp, $cod_desc = '', $fe_ingreso, $observ, $activo, $imagen1, $imagen2;
+    public $codigoQR;
+
     public $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
     public $imagen1_path, $imagen2_path,$url;
     public $growId;
@@ -38,11 +41,21 @@ class GrowEdit extends Component
     public $pacientesMes = 0;
     public $pagaronMes = 0;
     public $growsPacientes = [];
-
+    public $imageQR;
     protected $listeners = ['imagenCopiada' => 'notificarImagenCopiada'];
 
-    public function notificarImagenCopiada()
-    {
+    //------------- QR Functions -------------//
+
+    public function generarCodigoQR(){
+        if($this->linkDeRastreo){
+            $this->codigoQR = (new QRCode)->render($this->linkDeRastreo);
+        }
+    }
+
+    //---------------------------------------//
+
+
+    public function notificarImagenCopiada(){
         $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "QR copiado al portapapeles"]);
     }
 
@@ -106,19 +119,21 @@ class GrowEdit extends Component
             }
             if($grow->cod_desc){
                 $this->linkDeRastreo = 'https://doconlineargentina.com/turnero/login/'.$grow->cod_desc;
+                $this->generarCodigoQR();
             }
         } else {
             $this->fe_ingreso = date('Y-m-d');
         }
-
-        $this->generarQR();
     }
 
-    public function render()
-    {
+    public function render(){
         $provincias = Provincia::orderBy('Provincia', 'ASC')->get();
-        return view('livewire.grows.grow-edit', compact('provincias'));
+        return view('livewire.grows.grow-edit', [
+            'provincias' => $provincias,
+        ]);
     }
+
+
 
     public function getPacientes(){
         $pacientesDelGrow = TurnoPaciente::whereYear('created_at', $this->anioActual)
@@ -273,70 +288,5 @@ class GrowEdit extends Component
             Grow::find($this->growId)->update(['imagen2' => '']);
         }
         $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Se eliminó la Imagen 1"]);
-    }
-
-    public function descargarQR(){
-        $image = base64_decode($this->qrImage);
-        file_put_contents('qr-descuento.png', $image);
-    }
-
-    public function generarQR(){
-        $url = 'https://api.qr-code-generator.com/v1/create?access-token=QA5z8dG2yQmj_oU-gl6e8AetkRDjxIVPQaHSbrTU2ibmV_BGxm0xPvaDgYHVS_vk';
-
-        $data = array(
-            "frame_name" => "no-frame",
-            "qr_code_text" => $this->linkDeRastreo,
-            "image_width"=>'300',
-            "image_format" => "PNG"
-        );
-
-        $json_data = json_encode($data);
-
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-
-        $response = curl_exec($ch);
-        curl_close($ch);
-
-        if ($response) {
-            $base64Image = base64_encode($response);
-            $this->qrImage = 'data:image/png;base64,'. $base64Image;
-        }
-    }
-
-    public function generarQRFondo(){
-        $url = 'https://api.qr-code-generator.com/v1/create?access-token=QA5z8dG2yQmj_oU-gl6e8AetkRDjxIVPQaHSbrTU2ibmV_BGxm0xPvaDgYHVS_vk';
-
-        $data = array(
-            "frame_name" => "no-frame",
-            "qr_code_text" => $this->linkDeRastreo,
-            "image_width"=>'300',
-            "image_format" => "PNG"
-        );
-
-        $json_data = json_encode($data);
-
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-
-        $response = curl_exec($ch);
-        curl_close($ch);
-
-        if ($response) {
-            $base64Image = base64_encode($response);
-            $this->qrImage = 'data:image/png;base64,'. $base64Image;
-            $imagePath = asset('img/qr-base.png');
-            $backgroundImage = Image::make($imagePath);
-            $qrImage = Image::make('data:image/png;base64,' . $base64Image);
-            $backgroundImage->insert($qrImage, 'top-left', 50, 50);
-            $backgroundImage = $backgroundImage->encode('data-url');
-            $this->qrFrame = 'data:image/png;base64,'.  $backgroundImage;
-        }
     }
 }

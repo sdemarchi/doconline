@@ -81,6 +81,22 @@ class Pacientes extends Component
         $this->searchString = '';
     }
 
+    public function formatearTelefono($numero){
+        $numeroLimpio = preg_replace('/[^0-9]/', '', $numero);
+
+        if (substr($numeroLimpio, 0, 1) == '0') {
+            $numeroLimpio = substr($numeroLimpio, 1);
+        }
+
+        if (substr($numeroLimpio, 0, 2) !== '54') {
+            $numeroLimpio = '54' . $numeroLimpio;
+        }
+
+        $numeroFinal = '+' . $numeroLimpio;
+
+        return $numeroFinal;
+    }
+
     public function abrirFicha($pacienteId){
         return redirect()-> route('pacientes.edit', $pacienteId);
     }

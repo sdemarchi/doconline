@@ -253,13 +253,37 @@
 
     <div class="card grow-card mb-3">
         <div class="card-body border-bottom pt-3 pb-4">
-            <div class='grows-inputs-container'>
-                    <div class="grows-input">
-                        <label class="form-label">Código de Descuento</label>
-                        <input type="text" class="form-control" wire:model.defer="cod_desc">
-                        @error('cod_desc')<div class="text-danger">{{ $message }}</div>@enderror
-                    </div>
 
+            <div class='grows-inputs-container'>
+                    <div class="grows-input" style="display:flex;">
+
+                        <div @if($codigoQR) style="width: 55%" @else style="width: 100%" @endif>
+                            <label class="form-label">Código de Descuento</label>
+                            <input type="text" class="form-control" wire:model.defer="cod_desc">
+                            @error('cod_desc')<div class="text-danger">{{ $message }}</div>@enderror
+                        </div>
+
+                        @if($codigoQR)
+                        <div style="
+                            width:45%;
+                            height:70px;display:flex;
+                            align-items:center;
+                            display:flex;
+                            justify-content:space-around;
+                            background-color:#182130d4;
+                            padding:15px;
+                            border-radius:8px;
+                            margin: 0 15px;
+                            margin-right: 0;
+                        ">
+                            <img id="qrImagen" style="height:50px;border-radius:6px;" src="{{$codigoQR}}" alt="Código QR">
+                            <button onclick="copiarQR()" style="display:flex;align-items:center;justify-content:center;height:25px;width:30px;border-radius: 6px;background-color:#2f67d0;border:none;color:white;margin-left:5px;padding:1px;">
+                                <img style="max-height:16px;max-width:22px;margin:auto;" src="{{ asset('svg/copy.svg') }}" alt="Descargar">
+                            </button>
+                        </div>
+                        @endif
+
+                    </div>
                     <div class="grows-input">
                         <label class="form-label">Link de rastreo</label>
                         <div style="display:flex;flex-direction:row;">
@@ -310,7 +334,7 @@
 
                     <div class="grows-input">
                         <label class="form-label">Observaciones</label>
-                        <textarea class="form-control" name="example-textarea-input" rows="3"
+                        <textarea  style="height:27px" class="form-control" name="example-textarea-input" rows="3"
                             wire:model.defer="observ"></textarea>
                         @error('observ')<div class="text-danger">{{ $message }}</div>@enderror
                     </div>
@@ -376,6 +400,7 @@
             @endif
         </div>
     </div>
+
     <div class="card" style="display:none">
         <div class="card-body border-bottom pt-3 pb-4">
             <div class="row mb-3">
@@ -420,7 +445,6 @@
                   confirmButtonText: 'Eliminar!'
               }).then((result) => {
                   if (result.value) {
-
                       @this.call('eliminar')
 
                   }
@@ -431,17 +455,15 @@
       function copiarAlPortapapeles(texto) {
         navigator.clipboard.writeText(texto)
             .then(() => {
-                // Copiado exitoso
                 var boton = document.getElementById("copiarBoton");
                 boton.style.backgroundColor = "#58D035";
                 boton.innerHTML = "Copiado!";
                 setTimeout(function() {
                     boton.style.backgroundColor = "";
                     boton.innerHTML = "Copiar";
-                }, 3000); // Volver a la configuración original después de 2 segundos
+                }, 3000);
             })
             .catch((error) => {
-                // Manejar errores, por ejemplo, si no se permite el acceso al portapapeles
                 console.error('Error al copiar al portapapeles: ', error);
             });
     }

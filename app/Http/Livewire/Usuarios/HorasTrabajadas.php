@@ -76,8 +76,8 @@ class HorasTrabajadas extends Component
         $finMes = Carbon::createFromFormat('Y-n-d',"$this->anioActual-$this->mesActual-01")->endOfMonth();
         $fechas = ControlHorario::where('user_id',$userId)
                     ->whereNotNull('fin')
-                    ->where('inicio', '>=', $inicioMes)
-                    ->where('inicio', '<=', $finMes)
+                    ->whereDate('inicio', '>=', $inicioMes)
+                    ->whereDate('inicio', '<=', $finMes)
                     ->get();
         foreach($fechas as $fecha){
             $fecha->liquidado = 1;
@@ -164,7 +164,6 @@ class HorasTrabajadas extends Component
                 $faltanPagar += $diferencia;
             }
 
-            // Verifica si la fecha es feriado y suma las horas durante los feriados
             if ($fecha->feriado == 1) {
                 $totalFeriado += $diferencia;
             }

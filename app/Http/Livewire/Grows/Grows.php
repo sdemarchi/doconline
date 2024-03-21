@@ -16,6 +16,7 @@ class Grows extends Component
 
     public $idgrowSort, $nombreSort, $cbuSort, $aliasSort, $titularSort, $mailSort, $instagramSort, $celularSort, $idprovinciaSort,
             $localidadSort, $direccionSort, $cpSort, $cod_descSort, $fe_ingresoSort, $observSort, $activoSort;
+
     public $searchString;
 
     public function mount(){
@@ -56,6 +57,11 @@ class Grows extends Component
         if($field == $this->sortField){
             $this->sortDir = $this->sortDir == 'ASC' ? 'DESC' : 'ASC';
         }
+    }
+
+    public function generarCodigoQR()
+    {
+        $this->codigoQR = QrCode::size(300)->generate($this->url);
     }
 
     private function _setSortClasses(){

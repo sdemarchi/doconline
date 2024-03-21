@@ -29,9 +29,7 @@ Route::get('pacienteSelect',[PacienteController::class, 'getSelectSearch'])->nam
 Route::get('paciente/{id}',[PacienteController::class, 'getPaciente']);
 Route::get('vinculador.pacientes',[PacienteController::class, 'getPacientesVinculador']);
 Route::get('vinculador.buscar/{string}',[PacienteController::class, 'buscarPacientesVinculador']);
-
 //Api de la aplicación
-
 Route::post('turnero.loginUser', [UserController::class, 'loginUsername']);
 Route::post('turnero.loginEmail', [UserController::class, 'loginEmail']);
 Route::post('turnero.loginGoogle', [UserController::class, 'loginGoogle']);
@@ -63,7 +61,6 @@ Route::get('grow.id/{id}', [GrowController::class, 'getGrowById']);
 Route::get('grow.email/{email}', [GrowController::class, 'getGrowByEmail']);
 Route::get('grow.pacientes/{id}', [GrowController::class, 'getGrowPacientes']);
 Route::post('/add-grow', [GrowController::class, 'createGrow'])->name('addGrow');
-
 
 Route::get('contactos', [pacienteController::class, 'getContactos']);
 Route::get('ocupaciones', [pacienteController::class, 'getOcupaciones']);

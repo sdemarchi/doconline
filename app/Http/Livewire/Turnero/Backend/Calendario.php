@@ -264,7 +264,7 @@ class Calendario extends Component
                 'hora' => date_format($date,"H:i"),
                 'patologias' => $patologias,
                 'paciente' => $nombrePaciente,
-                'telefono' => $telefono,
+                'telefono' =>$this->formatearTelefono($telefono),
                 'asignado' => $asignado,
                 'cupon' => $cupon,
                 'comprobante_pago' => $turno->comprobante_pago,
@@ -274,8 +274,8 @@ class Calendario extends Component
                 'pedi_captura' => $turno->pedi_captura,
                 'mando_captura' => $turno->mando_captura,
                 'comentarios' => $turno->comentarios,
-                'dni'=>$turno->paciente->dni,
-                'email'=>$turno->paciente->email,
+                'dni'=>$turno->paciente ? $turno->paciente->dni : "",
+                'email'=>$turno->paciente ? $turno->paciente->email : "",
                 'pago'=>$pago
             ];
         }
@@ -390,6 +390,22 @@ class Calendario extends Component
         $turno->save();
         $this->fechaSelect($this->fechaSeleccionada);
         $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Cambio guardado"]);
+    }
+
+    public function formatearTelefono($numero){
+        $numeroLimpio = preg_replace('/[^0-9]/', '', $numero);
+
+        if (substr($numeroLimpio, 0, 1) == '0') {
+            $numeroLimpio = substr($numeroLimpio, 1);
+        }
+
+        if (substr($numeroLimpio, 0, 2) !== '54') {
+            $numeroLimpio = '54' . $numeroLimpio;
+        }
+
+        $numeroFinal = '+' . $numeroLimpio;
+
+        return $numeroFinal;
     }
 
     public function noPediCaptura($id){

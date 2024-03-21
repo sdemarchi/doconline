@@ -17,6 +17,8 @@ class userController extends Controller
     public function loginUsername(Request $request){
 		$username = $request->input('userid');
 		$password = $request->input('password');
+        $growAdminId = 0;
+        $email;
 
 		$code = 1;
 		$message = 'Nombre de Usuario o Contraseña incorrectos';
@@ -24,16 +26,19 @@ class userController extends Controller
 		$nombre = '';
 
 		$usuario = TurnoPaciente::where('username',$username)->first();
-        $grow = Grow::where('mail',$email)->first();
 
-        if($grow){
-            $growAdminId = $grow->idgrow;
-        }else{
-
-            $growAdminId = 0;
-        }
 
 		if($usuario){
+
+            $email = $usuario->email;
+            $grow = Grow::where('mail',$email)->first();
+
+            if($grow){
+                $growAdminId = $grow->idgrow;
+            }else{
+                $growAdminId = 0;
+            }
+
 			if(Hash::check($password, $usuario->password)){
 				$code = 0;
 				$message = '';
@@ -46,6 +51,7 @@ class userController extends Controller
 			'code' => $code,
 			'message' => $message
 		];
+
 		$user = [
 			'id' => $id,
 			'userName' => $nombre,
