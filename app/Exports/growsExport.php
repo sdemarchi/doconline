@@ -28,7 +28,7 @@ class GrowsExport implements FromCollection, ShouldAutoSize, WithHeadings, WithM
     public function map($grow): array
     {
         return [
-            $grow->id,
+            $grow->idgrow,
             $grow->nombre,
             $grow->cbu,
             $grow->alias,
