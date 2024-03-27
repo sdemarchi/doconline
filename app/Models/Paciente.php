@@ -50,27 +50,39 @@ class Paciente extends Model
             case 'P':
                 return 'Por Realizar';
                 break;
+
             case 'H':
                 return 'Hecho';
                 break;
+
             case '3':
                 return 'Hecho 2023';
                 break;
+
             case 'E':
                 return 'Espera';
-            break;
+                break;
+
             case '2':
                 return 'En espera 2';
                 break;
+
+            case '4':
+                return 'Hecho 2024';
+                break;
+
             case 'A':
                 return 'Aprobado';
                 break;
+
             case 'R':
                 return 'Rechazado';
                 break;
+
             case 'N':
                 return 'No responde';
                 break;
+
             default:
                 return 'No Definido';
                 break;

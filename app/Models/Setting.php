@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Setting extends Model
 {
     public $timestamps = false;
-    
+
     public function setSetting($key,$value)
     {
     	Setting::where('key', $key)->update(['value' => $value]);

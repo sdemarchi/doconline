@@ -8,7 +8,7 @@ use App\Models\Setting;
 
 class Configuracion extends Component
 {
-    public $precioTransf, $precioMP, $CBU, $Alias, $OrdenTurnos;
+    public $precioTransf, $precioMP, $CBU, $Alias, $OrdenTurnos, $Link = "";
 
     protected $rules = [
         'precioTransf' => 'required|numeric|max:999999',
@@ -26,6 +26,7 @@ class Configuracion extends Component
         $this->CBU = $setting->getSetting('CBU');
         $this->Alias = $setting->getSetting('Alias');
         $this->OrdenTurnos = $setting->getSetting('OrdenTurnos');
+        $this->Link = $setting->getSetting('Link');
         return view('livewire.configuracion');
     }
 
@@ -39,6 +40,7 @@ class Configuracion extends Component
         $setting->setSetting('CBU', $this->CBU);
         $setting->setSetting('Alias', $this->Alias);
         $setting->setSetting('OrdenTurnos', $this->OrdenTurnos);
+        $setting->setSetting('Link', $this->Link);
 
         $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Se guardaron las configuraciones"]);
 
