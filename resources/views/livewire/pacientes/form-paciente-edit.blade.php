@@ -229,6 +229,7 @@
                           <option value="P">Por Realizar</option>
                           <option value="H">Hecho</option>
                           <option value="3">Hecho 2023</option>
+                          <option value="4">Hecho 2024</option>
                           <option value="E">Espera</option>
                           <option value="2">En espera 2</option>
                           <option value="A">Aprobado</option>
@@ -461,6 +462,8 @@
                         <div type="text" class="form-control">
                             @if($cupon)
                                 {{$cupon}}
+                            @elseif($pago)
+                                {{$pago->cupon}}
                             @endif
                         </div>
                     </div>

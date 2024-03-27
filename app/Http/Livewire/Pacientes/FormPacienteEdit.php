@@ -21,6 +21,7 @@ use App\Models\ModoContacto;
 use App\Models\Pago;
 use App\Models\TurnoPaciente;
 use App\Models\Turno;
+use App\Models\Grow;
 
 use Illuminate\Support\Facades\DB;
 
@@ -183,6 +184,9 @@ class FormPacienteEdit extends Component
             if($this->pago){
                 $this->pago_verificado = $this->pago->verificado;
                 $this->pago_utilizado = $this->pago->utilizado;
+                if($this->pago->id_grow){
+                    $this->cupon = Grow::find($this->pago->id_grow)->cod_desc;
+                }
             }
         }
     }

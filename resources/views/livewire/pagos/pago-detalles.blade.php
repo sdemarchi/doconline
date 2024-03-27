@@ -155,8 +155,6 @@
             font-weight: 500;
             font-size: 14px;
         }
-
-
     </style>
 
     <div class="card">
@@ -256,7 +254,6 @@
                             <div class="pago-subir-comprobante" >
                                 <input type="file" wire:model="comprobanteFile"/>
                             </div>
-
                             <button style="width:100%;margin-top:8px;height:fit-content;" class="btn btn-primary" type="submit">Aplicar</button>
                         </form>
                     @endif
