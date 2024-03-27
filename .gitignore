@@ -24,3 +24,4 @@ composer.lock
 *.lock
 /public/vendor
 package-lock.json
+package-lock.json
