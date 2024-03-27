@@ -18,7 +18,7 @@ yarn-error.log
 public/img/uploads/comprobante_2024-01-23_1012561413.jfif
 *.pdf
 package-lock.json
-package-lock.json
-package-lock.json
-composer.json
 composer.lock
+package-lock.json
+composer.lock
+*.lock
