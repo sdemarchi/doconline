@@ -9,28 +9,62 @@ use Carbon\Carbon;
 use App\Models\Pago;
 use App\Models\Grow;
 use App\Models\Paciente;
+use App\Models\Setting;
 
 class GrowController extends Controller
 {
+
+    private function getMetaInf(){
+        $setting = new Setting;
+        $meta_inf = [];
+
+        $link = $setting->getSetting('Link');
+        $meta_inf['link_contenido' ] =  $link;
+
+        return $meta_inf;
+    }
+
+
     public function getGrowByRoute($url){
         $grow = Grow::where('cod_desc','like', $url)->first();
+
+        if($grow){
+            $meta_inf = $this->getMetaInf();
+            $grow = $grow->toArray();
+            $grow['meta_inf'] = $meta_inf;
+        }
+
         return response()->json($grow);
     }
+
 
     public function getGrowById($id){
         $grow = Grow::where('idgrow','like', $id)->first();
 
+        if($grow){
+            $meta_inf = $this->getMetaInf();
+            $grow = $grow->toArray();
+            $grow['meta_inf'] = $meta_inf;
+        }
+
         return response()->json($grow);
     }
+
 
     public function getGrowByEmail($email){
         $grow = Grow::where('mail','like', $email)->first();
 
+        if($grow){
+            $meta_inf = $this->getMetaInf();
+            $grow = $grow->toArray();
+            $grow['meta_inf'] = $meta_inf;
+        }
+
         return response()->json($grow);
     }
 
-    public function pago($paciente)
-    {
+
+    public function pago($paciente){
         $ficha = Paciente::where('dni', $paciente->dni)->first();
 
         $pago = Pago::where('id_paciente', $paciente->id)
@@ -53,8 +87,8 @@ class GrowController extends Controller
         }
     }
 
-    public function getGrowPacientes($id)
-    {
+
+    public function getGrowPacientes($id){
         $pacientes = [];
         $growPacientes = Grow::with('pacientes')->find($id);
 
@@ -73,8 +107,8 @@ class GrowController extends Controller
         return response()->json($grow);
     }
 
-    public function createGrow(Request $request)
-    {
+
+    public function createGrow(Request $request){
         $original_cod_desc = strtoupper(str_replace([' ', '.'], ['', '-'], $request->nombre));
         $cod_desc = $original_cod_desc;
 

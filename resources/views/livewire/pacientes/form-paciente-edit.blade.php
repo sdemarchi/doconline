@@ -1,96 +1,47 @@
 <div class="card">
   <link rel="stylesheet" type="text/css" href="{{ asset('css/ficha-paciente.css') }}">
 
-    <!--
-      <div class="col-sm-1">
-        <button class="btn btn-link float-start" onclick="window.history.back();">Volver</button>
-      </div>
-    -->
-
     <div class="ficha-buttons-container">
         <div class="ficha-buttons">
 
             @if($pacienteId)
             <a  class="ficha-button" href="{{ route('paciente.pronto-despacho',$pacienteId) }}" target="_blank">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-printer" width="24" height="24"
-                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                    stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                    <path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2"></path>
-                    <path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4"></path>
-                    <rect x="7" y="13" width="10" height="8" rx="2"></rect>
-                </svg>
+                <img src="{{ asset('svg/despacho.svg') }}" alt="Imprimir">
                 Pronto Despacho
             </a>
 
-            <a class="ficha-button" href="{{ route('paciente.consentimiento',$pacienteId) }}"
-            target="_blank">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-printer" width="24" height="24"
-                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                    stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                    <path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2"></path>
-                    <path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4"></path>
-                    <rect x="7" y="13" width="10" height="8" rx="2"></rect>
-                </svg>
+            <a class="ficha-button" href="{{ route('paciente.consentimiento',$pacienteId) }}" target="_blank">
+                <img src="{{ asset('svg/despacho.svg') }}" alt="Imprimir">
                 Consentimiento
             </a>
 
             <a class="ficha-button" href="{{ route('paciente.declaracion',$pacienteId) }}" target="_blank">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-printer" width="24" height="24"
-                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                    stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                    <path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2"></path>
-                    <path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4"></path>
-                    <rect x="7" y="13" width="10" height="8" rx="2"></rect>
-                </svg>
+                <img src="{{ asset('svg/despacho.svg') }}" alt="Imprimir">
                 Decl. Jurada
             </a>
 
             <a class="ficha-button" href="{{ route('turnos.create.pacienteId',$pacienteId) }}" target="_blank">
-              Sacar turno
+                Sacar turno
             </a>
 
             <a class="ficha-button ficha-wsp-button" href="https://wa.me/{{$this->formatearTelefono($celular)}}" target="_blank">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-whatsapp" width="24"
-                    height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                    stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                    <path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9"></path>
-                    <path
-                    d="M9 10a0.5 .5 0 0 0 1 0v-1a0.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a0.5 .5 0 0 0 0 -1h-1a0.5 .5 0 0 0 0 1">
-                    </path>
-                </svg>Whatsapp
+                <img src="{{ asset('svg/wsp.svg') }}" alt="Whatsapp">
+                Whatsapp
             </a>
             @endif
 
         </div>
 
         <div class="ficha-buttons-edit-delete">
+            <button class="ficha-button ficha-delete-button" wire:click="$emit('triggerDeletePaciente')">
+                <img src="{{ asset('svg/white-delete.svg') }}" alt="Delete">
+                Eliminar
+            </button>
 
-                <button class="ficha-button ficha-delete-button" wire:click="$emit('triggerDeletePaciente')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="24" height="24"
-                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                    stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                    <line x1="4" y1="7" x2="20" y2="7"></line>
-                    <line x1="10" y1="11" x2="10" y2="17"></line>
-                    <line x1="14" y1="11" x2="14" y2="17"></line>
-                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
-                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
-                </svg>Eliminar</button>
-
-                <button class="ficha-button ficha-save-button" wire:click="$emit('guardar')">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24"
-                        height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                        <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2"></path>
-                        <circle cx="12" cy="14" r="2"></circle>
-                        <polyline points="14 4 14 8 8 8 8 4"></polyline>
-                    </svg>
-                    Guardar</button>
+            <button class="ficha-button ficha-save-button" wire:click="$emit('guardar')">
+                <img src="{{ asset('svg/white-save.svg') }}" alt="Guardar">
+                Guardar
+            </button>
         </div>
     </div>
 
