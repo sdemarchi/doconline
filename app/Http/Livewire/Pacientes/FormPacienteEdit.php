@@ -290,7 +290,6 @@ class FormPacienteEdit extends Component
             $this->idcontacto = $paciente->idcontacto;
             $this->contacto_otro = $paciente->contacto_otro;
             $this->es_menor = $paciente->es_menor;
-
             $this->tut_apeynom = $paciente->tut_apeynom;
             $this->tut_tipo_nro_doc = $paciente->tut_tipo_nro_doc;
             $this->tut_fe_nacim = $paciente->tut_fe_nacim;
@@ -321,6 +320,7 @@ class FormPacienteEdit extends Component
             $this->pagado2023 = $paciente->pagado2023;
             $this->pagado2024 = $paciente->pagado2024;
             $this->instagram = $paciente->instagram;
+
             //Autocompletado de campos incompletos en la edición
             if($this->diagnostico == '') $this->diagnostico = $this->_generarDoloresNombres();
             if(!$this->res_historia){

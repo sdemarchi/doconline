@@ -32,7 +32,7 @@ class Panel extends Component
         $this->email_conf = $this->paciente->email;
         $this->telefono_conf = $this->paciente->telefono;
     }
-    
+
     public function render(){
         $pacienteR = Paciente::where('dni',$this->paciente->dni)->first();
         $this->hayTurnos = Turno::where('paciente_id',$this->pacienteId)
@@ -47,7 +47,7 @@ class Panel extends Component
         $turnos = [];
         foreach($misTurnos as $turno){
             $fecha = $this->_formatearFecha($turno->fecha);
-            
+
             $turnos[] = [
                 'id' => $turno->id,
                 'prestador' => $turno->prestador->nombre,
@@ -78,7 +78,7 @@ class Panel extends Component
                     $this->dispatchBrowserEvent('alert', ['type' => 'error',  'message' => 'La dirección de E-Mail ingresada ya está en uso']);
                     return;
                 }
-            } 
+            }
             if($this->paciente->email <> $this->email_conf){
                 $this->dispatchBrowserEvent('alert', ['type' => 'error',  'message' => "Los E-Mail no coinciden"]);
                 return;
@@ -87,8 +87,8 @@ class Panel extends Component
         if($this->paciente->telefono <> $this->telefono_conf){
             $this->dispatchBrowserEvent('alert', ['type' => 'error',  'message' => "Los Teléfonos no coinciden"]);
             return;
-        } 
-        
+        }
+
         $this->paciente->update();
         $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Los Datos se actualizaron con éxito"]);
     }

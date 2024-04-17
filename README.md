@@ -1,64 +1,181 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Grows - Estadistica y seguimiento.
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
 
-## About Laravel
+### Cupón de descuento y link de seguimiento
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Al registrar un nuevo grow, se le asigna automaticamente un cupón de descuento. El mismo se genera de la siguiente manera:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+1. Se toma el nombre del grow, se eliminan los espacios y se cambian todas las letras a mayúsculas.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+3. Se verifica que ningún otro grow tenga el mismo cupón de descuento. Si esto no se cumple, se le coloca el número 2 al final del cupón y se vuelve a comprobar. Si el cupón sigue existiendo, se incrementa el número en una unidad y se vuelve a intentar hasta obtener un cupón único.
 
-## Learning Laravel
+5. A partir del cupón se autogenera un enlace de seguimiento único para cada grow según la fórmula:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+``` javascript
+const linkDeSeguimiento = urlweb + '/turnero/login/' + cuponDelGrow.
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+por ejemplo para un grow registrado como Aires Weed Grow, su link de seguimiento sera:
 
-## Laravel Sponsors
+    www.doconlineargentina.com.ar/turnero/login/AIRESWEEDGROW
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
 
-### Premium Partners
+### ¿En que momento se asigna un grow a un paciente determinado?
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+El grow se asigna al paciente cuando este se REGISTRA en el turnero a travez del link de seguimiento, de la siguiente manera:
 
-## Contributing
+1. Al entrar al Login, se extrae el cupón de la url.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+2. Se utiliza el cupón para solicitar el grow a la API y se guarda su id en el Session Storage para ser utilizada mas adelante.
 
-## Code of Conduct
+``` javascript
+   //Login.jsx
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+    const growRoute = routeParams.grow;
 
-## Security Vulnerabilities
+    const getGrow = () => {
+        if(growRoute !== undefined){
+            getGrowByRoute(growRoute).then((resp)=>{
+                sessionStorage.setItem('growId',resp.idgrow);
+            });
+        }
+    }
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```
 
-## License
+3. Cuando el usuario accede al formulario de registro se extrae el ID del grow del Session Storage.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+4. Se agrega el cupon al JSON con la información del formulario que finalmente será enviado a la API para registrar el usuario.
+
+
+``` javascript
+  //Register.jsx
+
+   const submit = async (e) => {
+
+        const datos = {
+            nombre:nombre,
+            username:username,
+            password:password,
+            telefono:telefono,
+            email:email,
+            domicilio:domicilio,
+            dni:dni,
+            fecha_nac:fechaNac,
+            grow:grow  // Se agrega el Grow
+        }
+        
+        if(validate(datos)){
+            // se envian los datos
+        }
+		
+    }
+```
+
+El proceso se realiza tanto en el registro de usuario de forma manual (Register.jsx) como por google (GoogleRegister.jsx).
+
+
+### Asignación de un grow post-registro
+
+Si el usuario no se registró a través del enlace de seguimiento, todavía puede asignarse el grow al momento de sacar un turno.
+
+1. Cuando el usuario introduce el cupón de descuento, se solicita el grow a la api.
+
+2. El cupón es guardado en el Session Storage junto con la informacion del turno y del pago.
+
+3. Al momento de confirmar el turno, se busca el grow en el Session Storage y se asigna al paciente.
+
+``` javascript
+  // PagoTransf.jsx
+
+    async function guardarTurno() {
+        setDatosCargados(false);
+
+        const pagoSession = JSON.parse(sessionStorage.getItem('pago'));
+		
+        const pago = {
+			// Se crea el JSON a enviar
+			};
+
+        PagosService.crear(pago).then((resp)=>{
+		
+            if(sessionStorage.getItem('growId')){
+                const idgrow = sessionStorage.getItem('growId');
+
+                setGrowPaciente(user.userId,idgrow); // Se asigna el grow al paciente.
+            }
+        })
+    }
+```
+
+<br>
+
+
+## Estadisticas del Grow 
+
+El proceso estadistico de los grows se lleva a cabo en Laravel para ser mostrado en el panel de Administracion. 
+
+### Sistema de pagos antes y después de 2024
+Hasta el principio de 2024, para saber si un usuario pago o no en determinado momento se creaba por cada año una columna en la tabla paciente que indicaba pagado<añoActual>, por ejemplo en 2023 se creo la columna pagado2023 y en 2024 se creo la columna pagado2024. 
+
+Para evitar tener que crear una nueva columna cada año, se implemento un nuevo sistema de pagos disponible desde principios del año 2024. Cada vez que un paciente saca un turno se registra un nuevo pago en la tabla 'pagos', que contiene informacion sobre si el mismo fue efectuado o no, en que año se realizó, que grow utilizó, etc.
+
+Esto influyo en la forma de hacer estadisticas ya que debio implementarse una funcion que contemple los usuarios hasta 2024 y desde 2024 en adelante.
+
+
+### Conteo de pacientes de un grow
+El mecanismo para contar los pacientes de cada grow es el siguiente:
+
+1. Se listan todos los pacientes REGISTRADOS en el mes seleccionado cuyo valor en la columna 'grow' sea distinto de null (tabla "turn_pacientes").
+
+2. Se verifica si el paciente contiene ficha (tabla "pacientes").
+
+2. Se recorre la lista de obtenida y se busca si el paciente tiene un pago registrado.
+
+
+3. Se verifica si el paciente cumple con algunas de las siguientes condiciones: <br>
+    a. La columna pagado2024 es 'true'. <br>
+    b. La columna pagado2023 es 'true'. <br>
+    c. El paciente registra un pago cuya columna verificado es 'true'. <br>
+
+4. Se agrega la propiedad "pago" al paciente actual que indica si el mismo pago o no en el mes seleccionado.
+
+
+``` php
+   // GrowEstadisticasLivewire.php
+
+     public function getPacientes(){
+        $pacientesConGrow /* = Se solicitan los pacientes del mes al modelo TurnoPaciente */;
+
+        $pacientesConGrow = $pacientesConGrow->map(function ($paciente) {
+            $paciente['pago'] = 'No';
+            $pagoVerificado = false;
+
+            // Se verifica si el paciente tiene ficha
+            $ficha = Paciente::where('dni', $paciente['dni'])->first();
+
+            // Se verifica si el paciente tiene pago
+            $pago = Pago::where('id_paciente', $paciente->id)->latest('created_at')->first();
+
+            // Si hay pago se comprueba si esta verificado
+            if($pago) $pagoVerificado = $pago->verificado;
+
+            //Si el paciente tiene ficha.
+            if ($ficha) { 
+                if ($ficha->pagado2023 || $ficha->pagado2024 || $pagoVerificado ) $paciente['pago'] = 'Si';
+
+            //Si el paciente tiene ficha pero no tiene pago.
+            } else if($pago){ 
+                if ($pagoVerificado ) $paciente['pago'] = 'Si';
+            }
+
+            return $paciente;
+        });
+
+        return $pacientesConGrow->toArray();
+    }
+
+```
+
+<br>
+<i>Este archivo README se encuentra actualizado a la fecha 9/4/2024.</i>

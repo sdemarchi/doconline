@@ -33,17 +33,17 @@ class Grows extends Component
     private function _query(){
     $grows = Grow::where('idgrow','>',0);
     if($this->searchString != ''){
-        if(is_numeric($this->searchString)){
-            $grows->where('idgrow', $this->searchString)
-                ->orWhere('celular','like', '%' . $this->searchString . '%');
-        } else {
-            $grows->where('nombre','like', '%' . $this->searchString . '%')
-                ->orWhere('mail','like', '%' . $this->searchString . '%')
-                ->orWhere('celular','like', '%' . $this->searchString . '%')
-                ->orWhere('titular','like', '%' . $this->searchString . '%');
+            if(is_numeric($this->searchString)){
+                $grows->where('idgrow', $this->searchString)
+                    ->orWhere('celular','like', '%' . $this->searchString . '%');
+            } else {
+                $grows->where('nombre','like', '%' . $this->searchString . '%')
+                    ->orWhere('mail','like', '%' . $this->searchString . '%')
+                    ->orWhere('celular','like', '%' . $this->searchString . '%')
+                    ->orWhere('titular','like', '%' . $this->searchString . '%');
+            }
         }
 
-        }
         $this->_setSortClasses();
         return $grows->orderBy($this->sortField,$this->sortDir)->paginate(20);
     }
@@ -59,8 +59,7 @@ class Grows extends Component
         }
     }
 
-    public function generarCodigoQR()
-    {
+    public function generarCodigoQR(){
         $this->codigoQR = QrCode::size(300)->generate($this->url);
     }
 
@@ -134,18 +133,18 @@ class Grows extends Component
         }
     }
 
-public function eliminar($idPaciente){
-    Grow::find($idPaciente)->delete();
-    $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Se eliminó el registro del Grow"]);
-}
+    public function eliminar($idPaciente){
+        Grow::find($idPaciente)->delete();
+        $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Se eliminó el registro del Grow"]);
+    }
 
-public function generarCSV(){
-    return Excel::download(new GrowsExport, 'grows.csv');
-}
+    public function generarCSV(){
+        return Excel::download(new GrowsExport, 'grows.csv');
+    }
 
-public function resetPagination(){
-    $this->resetPage();
-}
+    public function resetPagination(){
+        $this->resetPage();
+    }
 
 
 }

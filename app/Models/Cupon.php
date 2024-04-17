@@ -9,6 +9,6 @@ class Cupon extends Model
 {
     public $timestamps = false;
     protected $table = "cupones";
-    
+
     protected $fillable = ['codigo','descripcion','descuento','activo'];
 }

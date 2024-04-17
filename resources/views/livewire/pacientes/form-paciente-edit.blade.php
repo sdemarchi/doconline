@@ -29,14 +29,16 @@
                 Whatsapp
             </a>
             @endif
-
         </div>
 
         <div class="ficha-buttons-edit-delete">
-            <button class="ficha-button ficha-delete-button" wire:click="$emit('triggerDeletePaciente')">
-                <img src="{{ asset('svg/white-delete.svg') }}" alt="Delete">
-                Eliminar
-            </button>
+
+            @if($pacienteId)
+                <button class="ficha-button ficha-delete-button" wire:click="$emit('triggerDeletePaciente')">
+                    <img src="{{ asset('svg/white-delete.svg') }}" alt="Delete">
+                    Eliminar
+                </button>
+            @endif
 
             <button class="ficha-button ficha-save-button" wire:click="$emit('guardar')">
                 <img src="{{ asset('svg/white-save.svg') }}" alt="Guardar">
@@ -122,7 +124,6 @@
                         </div>
                     </div>
 
-
                     @else
 
                     <div class="ficha-input-container ficha-pagado ficha-doble-input">
@@ -136,11 +137,13 @@
                             <span class="form-check-label">Pagado2023</span>
                         </label>
 
+
                         <label class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" wire:model.defer="pagado2024" checked>
                             <span class="form-check-label">Pagado2024</span>
                         </label>
                     </div>
+
 
                     @endif
 

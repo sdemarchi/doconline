@@ -68,9 +68,12 @@
         <div class="card">
           <div class="card-body border-bottom pb-4">
             <div class="row">
+
               <div class="col">
                 <h3>Pacientes durante el mes</h3>
               </div>
+
+
               <div class="col-md-2 col-sm-3 mt-1">
                 <select class="form-select" wire:model="mesActual"  wire:change="refresh" wire:click="refresh" onChange="growsLoading()">
 
@@ -80,6 +83,8 @@
 
                 </select>
               </div>
+
+
               <div class="col-md-2 col-sm-3 mt-1">
                 <select class="form-select" wire:model="anioActual" wire:change="refresh">
 
@@ -183,8 +188,10 @@
       </div>
     </div>
   </div>
-  <script>
 
+
+
+  <script>
     function growsLoading(){
             let loader = document.querySelector("#loader-grows");
             let contactoTable = document.querySelector("#table-grows");
@@ -204,6 +211,5 @@
         });
 
      })
-
 </script>
 

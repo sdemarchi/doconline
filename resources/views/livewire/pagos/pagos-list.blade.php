@@ -76,6 +76,7 @@
             </div>
           </div>
         </div>
+
         <div class="table-responsive">
           <table class="table table-vcenter card-table">
             <thead>

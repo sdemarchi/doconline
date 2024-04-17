@@ -197,6 +197,7 @@ class userController extends Controller
 			'telefono' => $paciente->telefono,
 			'direccion' => $paciente->direccion,
 			'email' => $paciente->email,
+            'grow' => $paciente->grow,
 		];
 		return response()->json($data);
 	}

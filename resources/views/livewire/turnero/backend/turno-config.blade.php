@@ -44,9 +44,9 @@
                 </div>
         </div>
         <div class="card">
-            <div class="card-body border-bottom pt-3 pb-4">
-                <h2 class="tc-title">Configurar franja horaria</h2>
-                <div class="row">
+            <div class="card-body border-bottom pt-3">
+                <h2 class="tc-title mb-2">Configurar franja horaria</h2>
+                <div class="row" style="display:none;">
                     <div class="col-md-4 col-sm-5 mt-1">
                         <h4 style="color:rgba(255, 255, 255, 0.283);font-size:12px;font-weight:400">PRESTADOR</h4>
                         <select class="form-select" wire:change="initDiasDeAnticipacion($event.target.value)" wire:model="prestadorId" style="width:300px;">
@@ -175,7 +175,7 @@
             @endif
         </div>
         <div class="card tc-exentos-card">
-            <h2 class="tc-title">Dias exentos de turnos</h2>
+            <h2 class="tc-title mb-2">Dias exentos de turnos</h2>
 
             <div class="table-responsive">
                 <table class="table table-vcenter card-table">

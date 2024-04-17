@@ -5,6 +5,54 @@
 2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)
 */
 
+
+
+.doc-button{
+    background-color: rgb(47, 103, 208);
+    margin:6px 10px;
+    width: fit-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    border:none;
+    border-radius:6px;
+    color:white;
+}
+
+.doc-red{
+    background-color: rgb(223, 66, 66) !important;
+}
+
+.doc-green{
+    background-color: rgb(68, 193, 72) !important;
+}
+
+.doc-blue{
+    background-color: rgb(47, 103, 208) !important;
+}
+
+.doc-grey{
+    background-color:#626976;
+}
+
+.doc-grey-button{
+    background-color:#626976;
+    border:none;
+    border-radius: 4px;
+    color:rgb(255, 255, 255);
+    font-weight: 500;
+    padding:4px 12px;
+    margin:6px 4px;
+    height:fit-content;
+    min-width: max-content;
+    font-size:13px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    min-height: 30px;
+}
+
+
 *,
 ::before,
 ::after {

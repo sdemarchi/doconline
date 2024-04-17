@@ -145,6 +145,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::view('/turnos/cbu', 'backend.turnero.lista-cuentas')->name('turnos.cbu');
     Route::view('/calendario', 'backend.turnero.calendario')->name('calendario');
     Route::view('/turnos/pacientes', 'backend.turnero.pacientes')->name('turnos.pacientes');
+    Route::view('/turnos/linksdirectos', 'backend.turnero.links-directos-layout')->name('turnos.linksdirectos');
     Route::get('/pacientes.turnero/{id}/ficha',function($id){
         return view('backend.turnero.ficha-paciente', compact('id'));
     })->name('pacientes.turnero.edit');
@@ -167,7 +168,6 @@ Route::group(['middleware' => ['auth']], function () {
 
 //Rutas del turnero
 Route::view('/turnero', 'turnero.login')->name('turnero');
-
 Route::view('/terminos', 'terminos')->name('terminos');
 
 Route::group(['middleware' => [TurneroLogin::class]], function () {

@@ -130,22 +130,25 @@
 
               <div class="dropdown-menu">
                 <a class="dropdown-item" href="{{ route('turnos') }}" >
-                  Lista
+                    Lista
                 </a>
                 <a class="dropdown-item" href="{{ route('calendario') }}" >
-                  Calendario
+                    Calendario
                 </a>
                 <a class="dropdown-item" href="{{ route('turnos.configuracion') }}" >
-                  Configuración
+                    Configuración
                 </a>
                 <a class="dropdown-item" href="{{ route('turnos.pacientes') }}" >
-                  Pacientes
+                    Pacientes
                 </a>
                 <a class="dropdown-item" href="{{ route('turnos.cbu') }}" >
-                  Lista de CBU
+                    Lista de CBU
                 </a>
                 <a class="dropdown-item" href="{{ route('cupones') }}" >
-                  Cupones de Descuento
+                    Cupones de Descuento
+                </a>
+                <a class="dropdown-item" href="{{ route('turnos.linksdirectos') }}" >
+                    Links directos
                 </a>
               </div>
             </li>

@@ -165,9 +165,9 @@
                     <span class="form-check-label">Verificado</span>
                 </label>
 
-                <label class="form-check form-switch float-sm-start ms-2 mt-1" style='max-width:fit-content'>
+                <label class="form-check form-switch float-sm-start ms-4 mt-1" style='max-width:fit-content'>
                     <input class="form-check-input" type="checkbox" wire:model.defer="utilizado" wire:change="utilizadoSwitch">
-                    <span class="form-check-label">Utilizado</span>
+                    <span class="form-check-label">Asignado a un turno</span>
                 </label>
             </div>
             <button wire:click="eliminarPago()">Eliminar</button>

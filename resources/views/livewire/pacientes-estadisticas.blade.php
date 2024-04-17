@@ -202,7 +202,9 @@
       </div>
     </div>
   </div>
-  <script>
+
+
+<script>
 
     function contactoLoading(){
             let loader = document.querySelector("#loader-contacto");
