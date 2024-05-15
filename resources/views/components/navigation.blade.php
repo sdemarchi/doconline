@@ -175,15 +175,6 @@
                   Control Horario
                 </a>
                 @endif
-                @if(Auth::user()->ingresoActivo())
-                  <a class="dropdown-item" href="{{ route('usuarios.egreso') }}" >
-                    Registrar Egreso
-                  </a>
-                @else
-                  <a class="dropdown-item" href="{{ route('usuarios.ingreso') }}" >
-                    Registrar Ingreso
-                  </a>
-                @endif
                 <a class="dropdown-item" href="{{ route('usuarios.mi-registro') }}" >
                    Mi Registro Horario
                 </a>
