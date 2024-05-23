@@ -17,7 +17,7 @@ use App\Models\Paciente;
 use App\Models\Provincia;
 use App\Models\Pago;
 
-use chillerlan\QRCode\{QRCode, QROptions};
+//use chillerlan\QRCode\{QRCode, QROptions};
 
 class GrowEdit extends Component
 {
@@ -47,9 +47,9 @@ class GrowEdit extends Component
     //------------- QR Functions -------------//
 
     public function generarCodigoQR(){
-        if($this->linkDeRastreo){
+      /*  if($this->linkDeRastreo){
             $this->codigoQR = (new QRCode)->render($this->linkDeRastreo);
-        }
+        }*/
     }
 
     //---------------------------------------//
@@ -58,6 +58,7 @@ class GrowEdit extends Component
     public function notificarImagenCopiada(){
         $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "QR copiado al portapapeles"]);
     }
+
 
     protected $rules = [
         'nombre' => 'required|max:100',
@@ -80,11 +81,13 @@ class GrowEdit extends Component
         'imagen2_path' => '',
     ];
 
+
     public function refresh(){
         if($this->growId){
             $this->growsPacientes = $this->getPacientes();
         }
     }
+
 
     public function mount(){
         $this->mesActual = date('n');
@@ -126,13 +129,13 @@ class GrowEdit extends Component
         }
     }
 
+
     public function render(){
         $provincias = Provincia::orderBy('Provincia', 'ASC')->get();
         return view('livewire.grows.grow-edit', [
             'provincias' => $provincias,
         ]);
     }
-
 
 
     public function getPacientes(){
@@ -191,6 +194,7 @@ class GrowEdit extends Component
         return $pacientesDelGrow;
     }
 
+
     public function update(){
         $this->validate();
         $dataGrow = [
@@ -224,16 +228,19 @@ class GrowEdit extends Component
 
     }
 
+
     public function eliminar(){
         Grow::find($this->growId)->delete();
         $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Se eliminó el Grow"]);
         return redirect(route('grows'));
     }
 
+
     public function updatedImagen1(){
         $this->_actualizarImagen1();
         $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Se subió la Imagen 1"]);
     }
+
 
     private function _actualizarImagen1(){
         $ext = "." . $this->imagen1->getClientOriginalExtension();
@@ -250,6 +257,7 @@ class GrowEdit extends Component
         }
     }
 
+
     public function eliminarImagen1(){
         $path = public_path('img/uploads/');
         if(file_exists($path . $this->imagen1_path)) unlink($path . $this->imagen1_path);
@@ -260,10 +268,12 @@ class GrowEdit extends Component
         $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Se eliminó la Imagen 1"]);
     }
 
+
     public function updatedImagen2(){
         $this->_actualizarImagen2();
         $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Se subió la Imagen 1"]);
     }
+
 
     private function _actualizarImagen2(){
         $ext = "." . $this->imagen2->getClientOriginalExtension();
@@ -279,6 +289,7 @@ class GrowEdit extends Component
             Grow::find($this->growId)->update(['imagen2' => $this->imagen2_path]);
         }
     }
+
 
     public function eliminarImagen2(){
         $path = public_path('img/uploads/');
