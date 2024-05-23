@@ -70,6 +70,7 @@ Route::get('dolencias', [pacienteController::class, 'getDolencias']);
 Route::post('formulario', [FormController::class, 'guardarFormulario']);
 Route::post('formulario/{id}', [FormController::class, 'actualizarFormulario']);
 Route::get('formulario/{dni}', [FormController::class, 'getFormulario']);
+Route::post('form-oscuro', [FormController::class, 'formularioOscuro']);
 
 Route::get('/pagos/{id}', [PagoController::class, 'show']);
 Route::put('/pagos/editar/{id}', [PagoController::class, 'editarPago']);

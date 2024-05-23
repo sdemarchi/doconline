@@ -198,4 +198,100 @@ class formController extends Controller
         }
         return response()->json(['error' => $error, 'data' => $data, 'patologias' => $patologias]);
     }
+
+    public function formularioOscuro( Request $request){
+        $dataTutor = [];
+        $patologias = [];
+        $patologList = $request->input('patologias', []);
+        $pacienteRegistrado = false;
+        $dni = $request->input('dni');
+        $email = $request->input('email');
+        $paciente = Paciente::where('dni', $dni)->first();
+
+        if(!$paciente){
+            $paciente = Paciente::where('email', $email)->first();
+        }
+
+        if ($paciente) {
+            $pacienteRegistrado = true;
+        }
+
+        $dataPaciente = [
+        'fe_carga' => date('Y-m-d'),
+        'email' => $request->input('email'),
+        'nom_ape' => $request->input('nom_ape'),
+        'dni' => $request->input('dni'),
+        'fe_nacim' => Carbon::parse($request->input('fe_nacim'))->format('Y-m-d'),
+        'cod_vincu' => $request->input('cod_vincu'),
+        'edad' => $request->input('edad'),
+        'domicilio' => $request->input('domicilio'),
+        'localidad' => $request->input('localidad'),
+        'idprovincia' => $request->input('idprovincia'),
+        'cp' => $request->input('cp'),
+        'ocupacion' => $request->input('ocupacion'),
+        'celular' => $request->input('celular'),
+        'osocial' => $request->input('osocial'),
+        'comentario' => $request->input('comentario'),
+        'firma_v2' => $request->input('firma'),
+        'aclaracion_v2' => $request->input('aclaracion'),
+        'arritmia' => $request->input('arritmia'),
+        'salud_mental' => $request->input('salud_mental'),
+        'salud_ment_esp' => $request->input('salud_ment_esp'),
+        'alergia' => $request->input('alergia'),
+        'embarazada' => $request->input('embarazada'),
+        'maneja_maq' => $request->input('maneja_maq'),
+        'patologia' => $request->input('patologia'),
+        'idcontacto' => $request->input('idcontacto'),
+        'contacto_otro' => $request->has('contacto_otro') ? $request->input('contacto_otro') : '',
+        'es_menor' => $request->input('tutor'),
+        'version' => 3, // Versión 3 es el nuevo formulario oscuro
+        ];
+
+        $dataTutor = [
+            'tut_apeynom' => $request->input('tut_apeynom'),
+            'tut_tipo_nro_doc' => $request->input('tut_tipo_nro_doc'),
+            'tut_fe_nacim' =>  Carbon::parse($request->input('tut_fe_nacim'))->format('Y-m-d'),
+            'tut_domicilio' => $request->input('tut_domicilio'),
+            'tut_localidad' => $request->input('tut_localidad'),
+            'tut_idprovincia' => $request->input('tut_idprovincia'),
+            'tut_cp' => $request->input('tut_cp'),
+            'tut_vinculo' => $request->input('tut_vinculo'),
+            'tut_tel_part' => $request->input('tut_tel_part'),
+            'tut_tel_cel' => $request->input('tut_tel_cel'),
+            'tut_mail' => $request->input('tut_mail'),
+            'tut_osocial' => $request->input('tut_osocial')
+        ];
+
+        $data = array_merge($dataPaciente, $dataTutor);
+
+        foreach($patologList as $pat){
+            $patologias[] = [
+                'dni' => $request->input('dni'),
+                'item' => isset($pat['item']) ? $pat['item'] : null,
+                'anio_aprox' => isset($pat['anio_aprox']) ? $pat['anio_aprox'] : null,
+                'medicacion' => isset($pat['medicacion']) ? $pat['medicacion'] : null,
+                'prob_trabajo' => isset($pat['prob_trabajo']) ? $pat['prob_trabajo'] : null,
+                'dolor_intensidad' => isset($pat['dolor_intensidad']) ? $pat['dolor_intensidad'] : null,
+                'partes_cuerpo' => isset($pat['partes_cuerpo']) ? $pat['partes_cuerpo'] : null,
+                'atenua_dolor' => isset($pat['atenua_dolor']) ? $pat['atenua_dolor'] : null
+            ];
+        }
+
+        try{
+            if($paciente){
+                $paciente->update($dataPaciente);
+            }else{
+                Paciente::create($data);
+            }
+
+            foreach($patologias as $pat){
+                PacientePatologia::create($pat);
+            }
+        }catch(e){
+            echo(e);
+            $data = e;
+        }
+
+        return response()->json($data);
+    }
 }
