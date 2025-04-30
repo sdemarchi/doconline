@@ -1,5 +1,5 @@
 <head>
-    
+
     <style>
     body {
         background-image: url({{ asset("/img/formularios/consentimiento1.jpg")}});
@@ -18,7 +18,7 @@
         margin: 0px;
         padding: 0px;
     }
-    
+
     .bloque {
         position: absolute;
         line-height: 18.6px;
@@ -50,9 +50,9 @@
 
     </style>
     </head>
-    
+
     <body>
-    
+
         <div class="bloque bloque1">
             <span style="position: fixed; left: 170px">{{ $paciente->nom_ape }}</span>
             <span style="position: fixed; left: 555px"> {{ $paciente->dni }}</span> <br/>
@@ -64,7 +64,7 @@
             <span style="position: fixed; left: 440px"> {{ $medico->apeynom }}</span> <br/>
             <span style="position: fixed; left: 127px"> {{ $medico->matricula }}</span>
             <span style="position: fixed; left: 290px"> {{ $medico->domicilio }}</span> <br/>
-        
+
         </div>
 
         <div class="bloque bloque2">
@@ -78,7 +78,7 @@
             <span>{{ $paciente->conc_cbd }}%</span><br/>
             <span>{{ $paciente->frecuencia }}</span><br/>
         </div>
-        
+
         <div class="bloque bloque4">
             <span>{{ $paciente->beneficios }}</span>
         </div>
@@ -98,12 +98,12 @@
                 <img style="max-width:130px; max-height:130px" src="{{ $paciente->aclaracion_v2 }}" />
             </div>
         @endif
-    
 
-    
 
-        
-    
+
+
+
+
     </body>
     <body class="page2">
         <div class="bloque" style="position: fixed; left: 470px; top: 689px">
@@ -112,7 +112,7 @@
         <div class="bloque" style="position: fixed; left: 80px; top: 708px">
             <span>{{ $mes }} </span><span style="position: fixed; left: 233px;">{{ $anio }}</span>
         </div>
-        
+
         <div style="position: relative; left: 80px; top: 735px">
             <img src="{{ asset('/img/uploads/' . $medico->firma) }}" height="80" />
         </div>
@@ -128,10 +128,8 @@
                 <img style="max-width:130px; max-height:130px" src="{{ $paciente->aclaracion_v2 }}" width="140" />
             </div>
         @endif
-        
-    
 
-    
+
+
+
     </body>
-
-    

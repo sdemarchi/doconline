@@ -1,5 +1,5 @@
 <head>
-    
+
     <style>
     body {
         background: url({{ asset("/img/formularios/declaracion.png")}});
@@ -11,7 +11,7 @@
         margin: 0px;
         padding: 0px;
     }
-    
+
     .bloque {
         position: absolute;
         line-height: 17.3px;
@@ -50,7 +50,7 @@
         top: 898px;
         left: 50px;
         line-height: 16px;
-        
+
     }
 
     .bloque7{
@@ -60,7 +60,7 @@
     </style>
     </head>
     <body>
-        
+
         <div class="bloque bloque1">
             <span>{{ $paciente->nom_ape }}</span> <br/>
             <span>DNI {{ $paciente->dni }}</span> <span style="position: fixed; left: 450px"> {{ date_format(date_create($paciente->fe_nacim),"d/m/Y") }}</span> <br/>
@@ -71,12 +71,12 @@
             <span> {{ $paciente->email }}</span> <br/>
             <span> {{ $paciente->osocial }}</span> <br/>
         </div>
-        
+
         @if($paciente->es_menor)
         <div class="bloque bloque2">
             <span>{{ $paciente->tut_apeynom }}</span> <span style="position: fixed; left: 430px">{{ $paciente->tut_tipo_nro_doc }}</span>
                 <span style="position: fixed; left: 620px"> {{ date_format(date_create($paciente->tut_fe_nacim),"d/m/Y") }}</span>  <br/>
-            <span style="position: fixed; left: 100px">{{ $paciente->tut_domicilio }}</span><span style="position: fixed; left: 380px">{{ $paciente->tut_localidad }}</span> 
+            <span style="position: fixed; left: 100px">{{ $paciente->tut_domicilio }}</span><span style="position: fixed; left: 380px">{{ $paciente->tut_localidad }}</span>
                 <span style="position: fixed; left: 510px">{{ $paciente->tut_provincia->Provincia }}</span><span style="position: fixed; left: 620px">{{ $paciente->tut_cp }}</span><br/>
             <span style="position: fixed; left: 300px">{{ $paciente->tut_vinculo }}</span> <br/>
             <span>{{ $paciente->tut_tel_part }}</span> <span style="position: fixed; left: 450px">{{ $paciente->tut_tel_cel }}</span><br/>
@@ -84,14 +84,14 @@
             <span>{{ $paciente->tut_osocial }}</span> <br/>
             @if($paciente->tut_reg_fam)
             <span style="position: fixed; left: 285px">x</span> <br/>
-            
+
             @else
             <span style="position: fixed; left: 368px">x</span> <br/>
-            
+
             @endif
         </div>
         @endif
-        
+
         <div class="bloque bloque3">
             <span>{{ $medico->apeynom }}</span> <span style="position: fixed; left: 550px">{{ $medico->tipo_nro_doc }}</span><br/>
             <span>{{ $medico->matricula }}</span> <span style="position: fixed; left: 380px">{{ $medico->especialidad }}</span><br/>
@@ -119,7 +119,7 @@
             <span>{{ $paciente->tratam_previo }}</span><br/>
             <span>{{ $paciente->producto_indicado }}</span><br/>
         </div>
-        
+
         <div style="position: fixed; left: 40px; top: 960px">
             <img src="{{ asset('/img/uploads/' . $medico->firma) }}" height="60" />
         </div>
@@ -138,11 +138,12 @@
                 <img style="max-width:110px; max-height:110px" src="{{ $paciente->aclaracion_v2 }}" />
             </div>
         @endif
-        
+
 
         <div class="bloque bloque7">
             <span>Santa Fe&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ date_format(date_create($paciente->fe_carga),"d/m/Y") }}</span>
             <span style="position: fixed; left: 600px">Santa Fe&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ date_format(date_create($paciente->fe_carga),"d/m/Y") }}</span><br/>
         </div>
     </body>
-    
+    <body class="page3" style="background-image: url({{ asset('/img/formularios/titulo.jpg') }}); background-size: 100% auto; background-repeat: no-repeat;">
+    </body>

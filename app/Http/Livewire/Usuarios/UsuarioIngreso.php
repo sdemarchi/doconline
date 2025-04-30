@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Usuarios;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 
+use Carbon\Carbon;
 use App\Models\ControlHorario;
 
 class UsuarioIngreso extends Component
@@ -31,20 +32,26 @@ class UsuarioIngreso extends Component
         return view('livewire.usuarios.usuario-ingreso');
     }
 
-    public function registrar(){
-        if($this->_buscarIngreso()){
-            $this->dispatchBrowserEvent('alert', ['type' => 'error',  'message' => "Ya existe un ingreso registrado. Debe anularlo para volver a registrarlo"]);
+    public function registrar() {
+        if ($this->_buscarIngreso()) {
+            $this->dispatchBrowserEvent('alert', ['type' => 'error', 'message' => "Ya existe un ingreso registrado. Debe anularlo para volver a registrarlo"]);
             return;
         }
         $this->validate();
-        //dd($this->fecha . ' ' . $this->hora);
+
+        // Obtener la fecha y hora actual usando Carbon
+        $currentDateTime = Carbon::now();
+        $this->fecha = $currentDateTime->format('Y-m-d');
+        $this->hora = $currentDateTime->format('H:i');
+
         ControlHorario::create([
             'user_id' => Auth::user()->id,
-            'inicio' => $this->fecha . ' ' . $this->hora,
+            'inicio' => $currentDateTime->format('Y-m-d H:i'),
             'feriado' => $this->feriado,
             'comentarios' => $this->comentarios
         ]);
-        return redirect()->route('usuarios.mi-registro')->with('ok',"Se registró el Ingreso a las $this->hora");
+
+        return redirect()->route('usuarios.mi-registro')->with('ok', "Se registró el Ingreso a las $this->hora");
     }
 
     public function actualizarFechaYHora($fecha, $hora)

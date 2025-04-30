@@ -6,6 +6,7 @@ use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\ControlHorario;
+use Carbon\Carbon;
 
 class UsuarioEgreso extends Component
 {
@@ -42,19 +43,25 @@ class UsuarioEgreso extends Component
         return view('livewire.usuarios.usuario-egreso');
     }
 
-    public function registrar(){
+
+    public function registrar() {
         $ingreso = $this->_buscarIngreso();
-        if(!$ingreso){
-            $this->dispatchBrowserEvent('alert', ['type' => 'error',  'message' => "No se puede registrar un egreso ya que no existe ningún ingreso registrado"]);
+        if (!$ingreso) {
+            $this->dispatchBrowserEvent('alert', ['type' => 'error', 'message' => "No se puede registrar un egreso ya que no existe ningún ingreso registrado"]);
             return;
         }
         $this->validate();
-        $ingreso->fin = $this->fecha . ' ' . $this->hora;
+
+        // Obtener la fecha y hora actual usando Carbon
+        $currentDateTime = Carbon::now();
+        $this->fecha = $currentDateTime->format('Y-m-d');
+        $this->hora = $currentDateTime->format('H:i');
+
+        $ingreso->fin = $currentDateTime->format('Y-m-d H:i');
         $ingreso->comentarios = $this->comentarios;
         $ingreso->save();
 
-        return redirect()->route('usuarios.mi-registro')->with('ok',"Se registró el Egreso a las $this->hora");
-
+        return redirect()->route('usuarios.mi-registro')->with('ok', "Se registró el Egreso a las $this->hora");
     }
 
     private function _buscarIngreso(){
