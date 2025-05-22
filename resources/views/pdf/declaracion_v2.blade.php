@@ -2,7 +2,7 @@
 
     <style>
     body {
-        background: url({{ asset("/img/formularios/declaracion.png")}});
+        /*background: url({{ asset("/img/formularios/declaracion.png")}});*/
         background-size: 21cm;
         color: #000;
     }
@@ -57,10 +57,25 @@
         top: 1050px;
         left: 80px;
     }
+
+    .pagina {
+    width: 21cm;
+    height: 29.7cm;
+    position: relative;
+    }
+
+    .pagina:not(:last-child) {
+        page-break-after: always;
+    }
+
+     .pagina3 {
+            /*background: url({{ asset('/img/titulo.jpg') }}) no-repeat center top;*/
+            background-size: 100% auto;
+        }
     </style>
     </head>
     <body>
-
+        <img src="{{  asset("/img/formularios/declaracion.png") }}" style="position:absolute; max-width:795px" width="1500"/>
         <div class="bloque bloque1">
             <span>{{ $paciente->nom_ape }}</span> <br/>
             <span>DNI {{ $paciente->dni }}</span> <span style="position: fixed; left: 450px"> {{ date_format(date_create($paciente->fe_nacim),"d/m/Y") }}</span> <br/>
@@ -112,7 +127,7 @@
             @if(!$paciente->maneja_maq)<span>x</span>@else<span style="position: fixed; left: 495px">x</span>@endif<br/>
         </div>
 
-        <span class="bloque" style="position: fixed; left: 120px; top: 847px">{{ $paciente->diagnostico }}</span>
+        <span class="bloque" style="left: 120px; top: 847px">{{ $paciente->diagnostico }}</span>
 
         <div class="bloque bloque6">
             <span>{{ $paciente->justificacion }}</span><br/>
@@ -120,14 +135,14 @@
             <span>{{ $paciente->producto_indicado }}</span><br/>
         </div>
 
-        <div style="position: fixed; left: 40px; top: 960px">
+        <div style="position: absolute; left: 40px; top: 960px">
             <img src="{{ asset('/img/uploads/' . $medico->firma) }}" height="60" />
         </div>
-        <div style="position: fixed; left: 305px; top: 956px">
+        <div style="position: absolute; left: 305px; top: 956px">
             <img src="{{ asset('/img/uploads/' . $medico->sello) }}" height="70" />
         </div>
         @if($paciente->foto_firma)
-            <div style="position: fixed; left: 540px; top: 960px">
+            <div style="position: absolute; left: 540px; top: 960px">
                 <img src="{{ asset('/img/uploads/' . $paciente->foto_firma) }}" height="60" />
             </div>
         @else
@@ -144,6 +159,16 @@
             <span>Santa Fe&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ date_format(date_create($paciente->fe_carga),"d/m/Y") }}</span>
             <span style="position: fixed; left: 600px">Santa Fe&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ date_format(date_create($paciente->fe_carga),"d/m/Y") }}</span><br/>
         </div>
+
+
+        <div class="pagina pagina3">
+
+            <!-- Si querés superponer algo, podés hacerlo acá -->
+        </div>
     </body>
-    <body class="page3" style="background-image: url({{ asset('/img/formularios/titulo.jpg') }}); background-size: 100% auto; background-repeat: no-repeat;">
+
+    <body>
+        <img src="{{  asset("/img/titulo.jpg") }}" style="position:absolute; max-width:795px; image-resolution: from-image;" width="1500"/>
+
     </body>
+

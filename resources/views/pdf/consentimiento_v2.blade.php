@@ -2,14 +2,14 @@
 
     <style>
     body {
-        background-image: url({{ asset("/img/formularios/consentimiento1.jpg")}});
+        /*background-image: url({{ asset("/img/formularios/consentimiento1.jpg")}});*/
         background-repeat: no-repeat;
         background-size: 21cm;
         color: #000;
     }
 
     .page2{
-        background-image: url({{ asset("/img/formularios/consentimiento2.jpg")}});
+        /*background-image: url({{ asset("/img/formularios/consentimiento2.jpg")}});*/
         background-size: 21cm;
         color: #000;
     }
@@ -52,6 +52,7 @@
     </head>
 
     <body>
+        <img src="{{  asset("/img/formularios/consentimiento1.jpg") }}" style="position:absolute; max-width:795px" width="1500"/>
 
         <div class="bloque bloque1">
             <span style="position: fixed; left: 170px">{{ $paciente->nom_ape }}</span>
@@ -106,6 +107,8 @@
 
     </body>
     <body class="page2">
+        <img src="{{  asset("/img/formularios/consentimiento2.jpg") }}" style="position:absolute; max-width:795px" width="1500"/>
+
         <div class="bloque" style="position: fixed; left: 470px; top: 689px">
             <span>Santa Fe &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ $dia }}</span><br/>
         </div>
@@ -133,3 +136,4 @@
 
 
     </body>
+

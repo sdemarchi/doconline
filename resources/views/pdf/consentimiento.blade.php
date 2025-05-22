@@ -1,15 +1,15 @@
 <head>
-    
+
     <style>
     body {
-        background-image: url({{ asset("/img/formularios/consentimiento1.jpg")}});
+        /*background-image: url({{ asset("/img/formularios/consentimiento1.jpg")}});*/
         background-repeat: no-repeat;
         background-size: 21cm;
         color: #000;
     }
 
     .page2{
-        background-image: url({{ asset("/img/formularios/consentimiento2.jpg")}});
+        /*background-image: url({{ asset("/img/formularios/consentimiento2.jpg")}});*/
         background-size: 21cm;
         color: #000;
     }
@@ -18,7 +18,7 @@
         margin: 0px;
         padding: 0px;
     }
-    
+
     .bloque {
         position: absolute;
         line-height: 18.6px;
@@ -50,9 +50,10 @@
 
     </style>
     </head>
-    
+
     <body>
-    
+        <img src="{{  asset("/img/formularios/consentimiento1.jpg") }}" style="position:absolute; max-width:795px" width="1500"/>
+
         <div class="bloque bloque1">
             <span style="position: fixed; left: 170px">{{ $paciente->nom_ape }}</span>
             <span style="position: fixed; left: 555px"> {{ $paciente->dni }}</span> <br/>
@@ -64,7 +65,7 @@
             <span style="position: fixed; left: 440px"> {{ $medico->apeynom }}</span> <br/>
             <span style="position: fixed; left: 127px"> {{ $medico->matricula }}</span>
             <span style="position: fixed; left: 290px"> {{ $medico->domicilio }}</span> <br/>
-        
+
         </div>
 
         <div class="bloque bloque2">
@@ -78,7 +79,7 @@
             <span>{{ $paciente->conc_cbd }}%</span><br/>
             <span>{{ $paciente->frecuencia }}</span><br/>
         </div>
-        
+
         <div class="bloque bloque4">
             <span>{{ $paciente->beneficios }}</span>
         </div>
@@ -98,21 +99,23 @@
                 <img src="{{ $paciente->aclaracion_v2 }}" height="70" />
             </div>
         @endif
-    
 
-    
 
-        
-    
+
+
+
+
     </body>
     <body class="page2">
+        <img src="{{  asset("/img/formularios/consentimiento2.jpg") }}" style="position:absolute; max-width:795px" width="1500"/>
+
         <div class="bloque" style="position: fixed; left: 470px; top: 689px">
             <span>Santa Fe &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ $dia }}</span><br/>
         </div>
         <div class="bloque" style="position: fixed; left: 80px; top: 708px">
             <span>{{ $mes }} </span><span style="position: fixed; left: 233px;">{{ $anio }}</span>
         </div>
-        
+
         <div style="position: relative; left: 80px; top: 735px">
             <img src="{{ asset('/img/uploads/' . $medico->firma) }}" height="80" />
         </div>
@@ -128,10 +131,9 @@
                 <img src="{{ $paciente->aclaracion_v2 }}" height="70" />
             </div>
         @endif
-        
-    
 
-    
+
+
+
     </body>
 
-    
