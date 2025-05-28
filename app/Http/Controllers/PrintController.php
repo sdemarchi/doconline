@@ -25,8 +25,45 @@ class PrintController extends Controller
         return $pdf->stream("declaracion.pdf");
     }
 
+    public function declaracionPacienteToken($token){
+        $paciente = Paciente::where('token',$token)->first();
+        if(!$paciente){
+            return redirect("https://v2.doconlineargentina.com");
+        }
+        $medico = DatoMedico::first();
+        if($paciente->version == 2){ //formulario creado con la app React
+            $view = 'pdf.declaracion_v2';
+        } else {
+            $view = 'pdf.declaracion';
+        }
+        $pdf = \PDF::loadView($view,compact('paciente','medico'));
+
+        return $pdf->stream("declaracion.pdf");
+    }
+
     public function consentimientoPaciente($id){
         $paciente = Paciente::find($id);
+        $medico = DatoMedico::first();
+        setlocale(LC_TIME, 'es_ES', 'Spanish_Spain', 'Spanish');
+        $dateTs = Carbon::createFromFormat('Y-m-d',"$paciente->fe_carga")->timestamp;
+        $dia = strftime("%e",$dateTs);
+        $mes = strftime("%B",$dateTs);
+        $anio = strftime("%G",$dateTs);
+        if($paciente->version == 2){ //formulario creado con la app React
+            $view = 'pdf.consentimiento_v2';
+        } else {
+            $view = 'pdf.consentimiento';
+        }
+        $pdf = \PDF::loadView($view,compact('paciente','medico','dia','mes','anio'));
+
+        return $pdf->stream("consentimiento.pdf");
+    }
+
+    public function consentimientoPacienteToken($token){
+        $paciente = Paciente::where('token',$token)->first();
+        if(!$paciente){
+            return redirect("https://v2.doconlineargentina.com");
+        }
         $medico = DatoMedico::first();
         setlocale(LC_TIME, 'es_ES', 'Spanish_Spain', 'Spanish');
         $dateTs = Carbon::createFromFormat('Y-m-d',"$paciente->fe_carga")->timestamp;

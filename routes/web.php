@@ -77,6 +77,10 @@ Route::get('paciente/consentimiento/{id}', [PrintController::class, 'consentimie
 Route::get('paciente/pronto-despacho/{id}', [PrintController::class, 'prontoDespacho'])->name('paciente.pronto-despacho');
 Route::get('receta/impresion/{id}', [PrintController::class, 'receta'])->name('receta.impresion');
 
+//Descargas con token
+Route::get('downloads/1/{token}', [PrintController::class, 'declaracionPacienteToken']);
+Route::get('downloads/2/{token}', [PrintController::class, 'consentimientoPacienteToken']);
+
 //Rutas con Auth
 Route::group(['middleware' => ['auth']], function () {
 

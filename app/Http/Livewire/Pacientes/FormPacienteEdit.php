@@ -2,11 +2,13 @@
 
 namespace App\Http\Livewire\Pacientes;
 
+use App\Mail\EnviarFormularios;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Str;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 
 use App\Models\Paciente;
 use App\Models\PacientePatologia;
@@ -735,5 +737,22 @@ class FormPacienteEdit extends Component
         $ahora =  Carbon::now();
         $diferencia = $ahora->diff($nacimiento);
         return $diferencia->format("%y");
+    }
+
+    public function enviarFormularios(){
+        $paciente = Paciente::find($this->pacienteId);
+        if(!$paciente->token){
+            $token = bin2hex(random_bytes(16));
+            $paciente->token = $token;
+            $paciente->save();
+        }
+        if (!filter_var($paciente->email, FILTER_VALIDATE_EMAIL)) {
+            $this->dispatchBrowserEvent('alert', ['type' => 'error',  'message' => "El paciente no tiene un E-Mail válido registrado. No se enviaron los formularios."]);
+        } else {
+            //$mailTo = $paciente->email;
+            $mailTo = "joaquinjozami@gmail.com";
+            Mail::to($mailTo)->send(new EnviarFormularios($paciente));
+            $this->dispatchBrowserEvent('alert', ['type' => 'warning',  'message' => "Enviar Formularios. Función en Desarrollo!!!!"]);
+        }
     }
 }

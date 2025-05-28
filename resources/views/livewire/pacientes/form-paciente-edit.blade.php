@@ -24,6 +24,10 @@
                 Sacar turno
             </a>
 
+            <button class="ficha-button" wire:click="enviarFormularios">
+                Enviar Formularios
+            </button>
+
             <a class="ficha-button ficha-wsp-button" href="https://wa.me/{{$this->formatearTelefono($celular)}}" target="_blank">
                 <img src="{{ asset('svg/wsp.svg') }}" alt="Whatsapp">
                 Whatsapp
