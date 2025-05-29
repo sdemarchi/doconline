@@ -19,7 +19,8 @@ class Kernel extends ConsoleKernel
             $schedule->command('queue:work')
                      ->everyFiveMinutes();
         }
-        
+
+        $schedule->command('turnos:recordatorio')->dailyAt('19:22');
     }
 
     /**
