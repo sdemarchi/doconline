@@ -15,13 +15,13 @@
     page-break-after: always;
 }
         .pagina1 {
-            background: url({{ asset('/img/formularios/declaracion.png') }}) no-repeat;
+            /*background: url({{ asset('/img/formularios/declaracion.png') }}) no-repeat;*/
             background-size: 21cm auto;
             color: #000;
         }
 
         .pagina3 {
-            background: url({{ asset('/img/titulo.jpg') }}) no-repeat center top;
+            /*background: url({{ asset('/img/titulo.jpg') }}) no-repeat center top;*/
             background-size: 100% auto;
         }
 
@@ -43,6 +43,7 @@
 </head>
 <body>
     <!-- Página 1 -->
+    <img src="{{  asset("/img/formularios/declaracion.png") }}" style="position:absolute; max-width:795px" width="1500"/>
     <div class="pagina pagina1">
         <div class="bloque bloque1">
             <span>{{ $paciente->nom_ape }}</span><br/>
@@ -128,6 +129,11 @@
 
     <!-- Página 2 (solo imagen) -->
     <div class="pagina pagina3">
+        <img src="{{  asset("/img/titulo.jpg") }}" style="position:absolute; max-width:795px; image-resolution: from-image;" width="1500"/>
+
         <!-- Si querés superponer algo, podés hacerlo acá -->
     </div>
 </body>
+
+
+

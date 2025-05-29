@@ -21,7 +21,7 @@ class Paciente extends Model
                             'res_historia','cant_plantas','dosis','conc_thc','conc_cbd','frecuencia','beneficios','diagnostico',
                             'justificacion','tratamiento','producto','pagado','estado','firma','aclaracion','diagnos_items','beneficios_items',
                             'justifica_items','tratam_items','tratam_previo','producto_indicado','firma_v2','aclaracion_v2','sintomas',
-                            'pagado2023','pagado2024','instagram','version'];
+                            'pagado2023','pagado2024','instagram','version','token'];
 
 
     public function getOcupacionIdAttribute(){
