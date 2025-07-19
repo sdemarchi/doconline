@@ -1,0 +1,89 @@
+th.sorting {
+    cursor: pointer;
+}
+
+.item-calendario {
+    background-color: #1e293b;
+    width: 35px;
+    height: 35px;
+    margin-bottom: 5px;
+    border: 1px solid #30425f;
+    border-radius: 3px;
+    font-size: 12px;
+    color:white;
+}
+
+.enmes,
+.control-calendario {
+    background-color: #2c3c56;
+}
+
+.control-calendario {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.titulo-calendario {
+    width: 190px;
+    font-size: 16px;
+    background-color:#2c3c56;
+}
+
+.encabez-calendario {
+    width: 35px;
+    height: 30px;
+    background-color: #1e293b;
+    border: none;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 0px;
+    color:white;
+}
+
+.inactivo {
+    color: #a3a3a3;
+    cursor: not-allowed!important;
+}
+
+.turnos {
+    background-color: #23a826;
+    color: white;
+}
+
+.turnosAsign {
+    background-color: #13A8C6;
+    color: white;
+}
+
+.turno {
+    width: 250px;
+    height: 35px;
+    background-color: white;
+    font-size: 14px;
+    border: 1px solid #969696;
+    border-radius: 5px;
+    margin-bottom: 7px;
+}
+
+input::file-selector-button {
+    border: 0;
+    border-radius: 3px;
+    padding: 6px;
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

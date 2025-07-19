@@ -1,0 +1,23 @@
+.grow-estadisticas-container{
+    min-width: 95vw;
+    display:flex;
+    flex-direction:row;
+    margin-bottom:50px;
+}
+
+.grow-card{
+    margin: 0 10px;
+}
+
+.grow-button{
+    cursor:pointer;
+}
+
+.grow-button:hover{
+    background-color:rgba(255, 255, 255, 0.048) !important;
+}
+
+#grow-seleccion-mensaje{
+    color:rgb(182, 182, 182);
+    text-align: center;
+}
