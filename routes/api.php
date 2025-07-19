@@ -10,7 +10,7 @@ use App\Http\Controllers\Api\FormController;
 use App\Http\Controllers\Api\GrowController;
 use App\Http\Controllers\Api\ResetPasswordController;
 use App\Http\Controllers\Api\PagoController;
-
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -81,3 +81,15 @@ Route::get('/pagos/ultimo-regalado/{user_id}', [PagoController::class, 'ultimoRe
 Route::get('/pagos/buscar-por-codigo/{codigo}', [PagoController::class, 'buscarPorCodigo']);
 Route::post('/pagos/crear', [PagoController::class, 'nuevoPago']);
 Route::post('/pagos/utilizado', [PagoController::class, 'utilizado']);
+
+
+Route::get('/enviar-recordatorio-turnos', function () {
+    Artisan::call('turnos:recordatorio');
+
+    $output = Artisan::output();
+
+    return response()->json([
+        'mensaje' => 'Comando ejecutado: Se enviaron los recordatorios de turnos a los pacientes.',
+        'salida' => $output
+    ]);
+});

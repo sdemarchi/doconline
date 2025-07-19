@@ -20,7 +20,11 @@ class Kernel extends ConsoleKernel
                      ->everyFiveMinutes();
         }
 
+<<<<<<< HEAD
         $schedule->command('turnos:recordatorio')->dailyAt('19:22');
+=======
+        $schedule->command('turnos:recordatorio')->dailyAt('19:28');
+>>>>>>> recuperar-cambios-locales
     }
 
     /**

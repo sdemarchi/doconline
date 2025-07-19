@@ -4,6 +4,7 @@ use Illuminate\Support\Str;
 
 return [
 
+<<<<<<< HEAD
     /*
     |--------------------------------------------------------------------------
     | Default Database Connection Name
@@ -33,6 +34,10 @@ return [
     |
     */
 
+=======
+    'default' => env('DB_CONNECTION', 'mysql'),
+
+>>>>>>> recuperar-cambios-locales
     'connections' => [
 
         'sqlite' => [
