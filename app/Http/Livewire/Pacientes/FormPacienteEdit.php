@@ -322,6 +322,7 @@ class FormPacienteEdit extends Component
             $this->pagado2023 = $paciente->pagado2023;
             $this->pagado2024 = $paciente->pagado2024;
             $this->instagram = $paciente->instagram;
+            $this->datos_tramite = $paciente->datos_tramite;
 
             //Autocompletado de campos incompletos en la edición
             if($this->diagnostico == '') $this->diagnostico = $this->_generarDoloresNombres();
