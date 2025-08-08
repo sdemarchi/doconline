@@ -56,7 +56,7 @@ class FormPacienteEdit extends Component
             $tut_tel_cel, $tut_mail, $tut_osocial, $tut_reg_fam,
             $res_historia, $beneficios, $justificacion, $diagnostico, $tratamiento, $cant_plantas,
             $frecuencia, $dosis, $conc_thc, $conc_cbd, $producto = [], $tratam_previo, $producto_indicado,
-            $sintomas, $pagado2023,$pagado2024 = false, $instagram;
+            $sintomas, $pagado2023,$pagado2024 = false, $instagram, $datos_tramite;
 
     protected $rules = [
         'pagado' => '',
@@ -120,8 +120,8 @@ class FormPacienteEdit extends Component
         'patologias.*.prob_trabajo' => '',
         'patologias.*.dolor_intensidad' => 'numeric|nullable|min:0|max:10',
         'patologias.*.partes_cuerpo' => 'max:100',
-        'patologias.*.atenua_dolor' => ''
-
+        'patologias.*.atenua_dolor' => '',
+        'datos_tramite' => ''
     ];
 
     public function redireccionarWhatsApp($celular) {
@@ -563,6 +563,7 @@ class FormPacienteEdit extends Component
             'pagado2023' => $this->pagado2023,
             'pagado2024' => $this->pagado2024,
             'instagram' => $this->instagram,
+            'datos_tramite' => $this->datos_tramite
         ];
 
         if($this->pacienteId){

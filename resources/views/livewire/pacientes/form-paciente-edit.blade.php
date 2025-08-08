@@ -862,13 +862,32 @@
         <span></span>
 
             <h2 class="ficha-subtitulo">
+                Datos del tramite
+            </h2>
+
+            <div class="mx-3">
+                <label class="form-label hidden md:flex">
+                    <span style="margin-right:30px">Trámite</span>
+                    <span style="margin-right:30px">Tipo</span>
+                    <span style="margin-right:30px">Paciente</span>
+                    <span style="margin-right:30px">Profesional</span>
+                    <span style="margin-right:30px">Fecha Modificación</span>
+                    <span style="margin-right:30px">Estado</span>
+                    <span style="margin-right:30px">Vigencia</span>
+                    <span style="margin-right:30px">Inicio</span>
+                    <span>Fin</span>
+                </label>
+
+                <textarea  class="form-control" class="w-full" wire:model.defer="datos_tramite"></textarea>
+            </div>
+
+
+            <h2 class="ficha-subtitulo">
                 Datos medicos
             </h2>
 
-        <div id="collapse-4" class="accordion-collapse collapse show" data-bs-parent="#acc-datos-medicos">
-          <div class="accordion-body pt-0">
-            <div class="row">
 
+            <div class="row mx-3">
               <div class="col-md-6 mt-3">
                 <div class="col-md-10">
                   <div style='display:flex;flex-direction:row;align-items:baseline;justify-content:space-between'>
@@ -882,20 +901,6 @@
                   @error('res_historia')<div class="text-danger">{{ $message }}</div>@enderror
                 </div>
               </div>
-              <!--<div class="col-md-6 mt-3">
-                  <div class="col-md-10">
-                    <label class="form-label">Tratamiento</label>
-                    <textarea class="form-control" name="example-textarea-input" rows="6" wire:model.defer="tratamiento"></textarea>
-                  </div>
-                </div>
-                <div class="col-md-6 mt-3">
-                  <div class="col-md-10">
-                    <label class="form-label">Tratamiento Items</label>
-                    @foreach($tratamientos as $trat)
-                      <button class="btn btn-secondary btn-sm btn-pill mb-1 py-1 px-3" wire:click="switchTratamiento({{ $trat->idtrata }})">{{ $trat->tratamiento }}</button>
-                    @endforeach
-                  </div>
-                </div> -->
 
                 <div class="col-md-6 mt-3">
                     <div class="col-md-10">
@@ -940,8 +945,7 @@
               </div>
 
             </div>
-          </div>
-        </div>
+
       </div>
       @endif
 
