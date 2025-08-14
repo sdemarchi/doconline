@@ -9,9 +9,9 @@ use App\Models\Provincia;
 
 class FormGrow extends Component
 {
-    public $nombre, $cbu, $alias, $titular, $mail, $instagram, $celular, $celularConf, $idprovincia, 
+    public $nombre, $cbu, $alias, $titular, $mail, $instagram, $celular, $celularConf, $idprovincia,
     $localidad, $direccion, $cp, $cod_desc, $fe_ingreso;
-    
+
     protected $rules = [
         'nombre' => 'required|max:100',
         'cbu' => 'max:22',
@@ -63,6 +63,6 @@ class FormGrow extends Component
         Grow::create($dataGrow);
 
         return redirect(route('grow.success'));
-        
+
     }
 }

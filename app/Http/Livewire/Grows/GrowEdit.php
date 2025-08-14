@@ -13,6 +13,7 @@ use Carbon\Carbon;
 
 use App\Models\TurnoPaciente;
 use App\Models\Grow;
+use App\Models\TipoGrow;
 use App\Models\Paciente;
 use App\Models\Provincia;
 use App\Models\Pago;
@@ -23,9 +24,10 @@ class GrowEdit extends Component
 {
     use WithFileUploads;
 
-    public $nombre, $cbu, $alias, $titular, $mail, $instagram, $celular, $idprovincia,
+    public $nombre,$tipo, $cbu, $alias, $titular, $mail, $instagram, $celular, $idprovincia,
     $localidad, $direccion, $cp, $cod_desc = '', $fe_ingreso, $observ, $activo, $imagen1, $imagen2;
     public $codigoQR;
+    public $tipos;
 
     public $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
     public $imagen1_path, $imagen2_path,$url;
@@ -62,6 +64,7 @@ class GrowEdit extends Component
 
     protected $rules = [
         'nombre' => 'required|max:100',
+        'tipo' => 'required',
         'cbu' => 'max:22',
         'alias' => 'max:100',
         'titular' => 'max:150',
@@ -94,11 +97,14 @@ class GrowEdit extends Component
         $this->anioReferencia = date('Y');
         $this->anioActual = date('Y');
 
+        $this->tipos = TipoGrow::orderBy('id', 'ASC')->get();
+
         if($this->growId){
             $grow = Grow::find($this->growId);
             $this->growsPacientes = $this->getPacientes();
 
             $this->nombre = $grow->nombre;
+            $this->tipo = $grow->tipo_id;
             $this->cbu = $grow->cbu;
             $this->alias = $grow->alias;
             $this->titular = $grow->titular;
@@ -199,6 +205,7 @@ class GrowEdit extends Component
         $this->validate();
         $dataGrow = [
             'nombre' => $this->nombre,
+            'tipo_id' => $this->tipo,
             'cbu' => $this->cbu,
             'alias' => $this->alias,
             'titular' => $this->titular,

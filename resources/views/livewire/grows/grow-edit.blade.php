@@ -220,6 +220,17 @@
                     @error('nombre')<div class="text-danger">{{ $message }}</div>@enderror
                 </div>
 
+                <div class="grows-input">
+                    <label class="form-label">Tipo</label>
+                    <select class="form-select" wire:model.defer="tipo">
+                        <option value=""></option>
+                        @foreach($tipos as $tipo)
+                            <option value="{{ $tipo->id }}">{{ $tipo->descripcion }}</option>
+                        @endforeach
+                    </select>
+                    @error('tipo')<div class="text-danger">{{ $message }}</div>@enderror
+                </div>
+
                 <div class="grows-input"><label class="form-label">CBU</label>
                     <input type="text" class="form-control" wire:model.defer="cbu">
                     @error('cbu')<div class="text-danger">{{ $message }}</div>@enderror
@@ -246,6 +257,12 @@
                     <label class="form-label">Celular</label>
                     <input type="text" class="form-control" wire:model.defer="celular">
                     @error('celular')<div class="text-danger">{{ $message }}</div>@enderror
+                </div>
+
+                <div class="grows-input">
+                </div>
+
+                <div class="grows-input">
                 </div>
             </div>
         </div>
@@ -339,7 +356,6 @@
                         @error('observ')<div class="text-danger">{{ $message }}</div>@enderror
                     </div>
                 </div>
-
         </div>
     </div>
 
@@ -436,7 +452,7 @@
           @this.on('triggerDeleteGrow', () => {
               Swal.fire({
                   title: 'Está Seguro?',
-                  text: 'Se eliminará el Grow',
+                  text: 'Se eliminará la información de la entidad.',
                   icon: "warning",
                   showCancelButton: true,
                   confirmButtonColor: '#ec536c',

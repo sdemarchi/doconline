@@ -137,11 +137,11 @@ class GrowController extends Controller
             'fe_ingreso' => $fe_ingreso,
             'activo' => true,
             'url' => $url,
-            'descuento' => $request->descuento
+            'descuento' => $request->descuento,
+            'tipo_id' => $request->tipo
         ];
 
         $newGrow = Grow::create($grow);
         return response()->json($newGrow);
     }
-
 }

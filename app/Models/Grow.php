@@ -13,7 +13,7 @@ class Grow extends Model
 
     protected $fillable = ['nombre','cbu','alias','titular','mail','instagram','celular','idprovincia',
                             'localidad','direccion','cp','cod_desc','fe_ingreso','observ','activo','descuento',
-                            'imagen1','imagen2','url'];
+                            'imagen1','imagen2','url','tipo_id'];
 
 
     public function provincia(){
@@ -24,4 +24,9 @@ class Grow extends Model
     public function pacientes(){
         return $this->hasMany(TurnoPaciente::class, 'grow');
     }
+
+    public function tipo(){
+        return $this->belongsTo(TipoGrow::class, 'tipo_id', 'id');
+    }
+
 }

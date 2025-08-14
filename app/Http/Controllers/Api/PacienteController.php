@@ -22,7 +22,6 @@ class pacienteController extends Controller
         ];
 
         if($term != ''){
-
             $pacientes = Paciente::where('nom_ape','like', "%$term%")
             ->select('idpaciente','nom_ape')->limit(10)->get();
 
@@ -35,6 +34,7 @@ class pacienteController extends Controller
             }
 
         }
+
 		return response()->json(['results' => $data, 'pagination' => $pagination]);
 
 	}
