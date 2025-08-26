@@ -30,9 +30,7 @@ class pacienteController extends Controller
                     'id' => $p->idpaciente,
                     'text' => $p->nom_ape,
                 ];
-
             }
-
         }
 
 		return response()->json(['results' => $data, 'pagination' => $pagination]);
@@ -93,4 +91,69 @@ class pacienteController extends Controller
         }
         return response()->json(['items' => $data]);
     }
+
+    public function getPacientesONG($idgrow)
+    {
+        $pacientesONG = \App\Models\PacienteONG::where('idgrow', $idgrow)->get();
+
+        $resultado = $pacientesONG->map(function($pONG) {
+
+            // Valores por defecto (sin "Paciente" ni "Profesional")
+            $tramiteProps = [
+                'Trámite' => '-',
+                'Tipo' => '-',
+                'Modificado' => '-',
+                'Estado' => '-',
+                'Vigencia' => '-',
+                'Inicio' => '-',
+                'Fin' => '-'
+            ];
+
+            if ($pONG->paciente && $pONG->paciente->datos_tramite) {
+                // Separar por tabulaciones
+                $valores = preg_split('/\t+/', $pONG->paciente->datos_tramite);
+
+                // Mapear valores, saltando los índices 2 y 3 (Paciente y Profesional)
+                $keys = array_keys($tramiteProps);
+                foreach ($keys as $index => $key) {
+                    $valoresIndex = $index >= 2 ? $index + 2 : $index;
+                    $tramiteProps[$key] = $valores[$valoresIndex] ?? '-';
+                }
+            }
+
+            return array_merge([
+                'nombre' => $pONG->nombre,
+                'apellido' => $pONG->apellido,
+                'dni' => $pONG->dni,
+                'cod. vinculación' => $pONG->paciente ? $pONG->paciente->cod_vincu : '-',
+            ], $tramiteProps);
+        });
+
+        return $resultado;
+    }
+
+
+    // PacientesController.php
+    public function getONGPorPaciente($dni)
+    {
+        // Buscar el PacienteONG por dni
+        $pacienteONG = \App\Models\PacienteONG::where('dni', $dni)->first();
+
+        if (!$pacienteONG || !$pacienteONG->grow) {
+            // No tiene Grow vinculado
+            return response()->json([
+                'tieneONG' => false,
+                'nombreONG' => '',
+                'idGrow' => null
+            ]);
+        }
+
+        // Tiene Grow vinculado
+        return response()->json([
+            'tieneONG' => true,
+            'nombreONG' => $pacienteONG->grow->nombre,
+            'idGrow' => $pacienteONG->grow->idgrow
+        ]);
+    }
+
 }

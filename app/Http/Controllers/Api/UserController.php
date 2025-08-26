@@ -35,8 +35,10 @@ class userController extends Controller
 
             if($grow){
                 $growAdminId = $grow->idgrow;
+                $tipo_grow = $grow->tipo_id;
             }else{
                 $growAdminId = 0;
+                $tipo_grow = 0;
             }
 
 			if(Hash::check($password, $usuario->password)){
@@ -55,7 +57,8 @@ class userController extends Controller
 		$user = [
 			'id' => $id,
 			'userName' => $nombre,
-            'growAdmin' => $growAdminId
+            'growAdmin' => $growAdminId,
+            'tipoGrow' => $tipo_grow
 		];
 
 
@@ -77,9 +80,10 @@ class userController extends Controller
 
         if($grow){
             $growAdminId = $grow->idgrow;
+            $tipo_grow = $grow->tipo_id;
         }else{
-
             $growAdminId = 0;
+            $tipo_grow = 0;
         }
 
 
@@ -100,7 +104,8 @@ class userController extends Controller
 		$user = [
 			'id' => $id,
 			'userName' => $nombre,
-            'growAdmin' => $growAdminId
+            'growAdmin' => $growAdminId,
+            'tipoGrow' => $tipo_grow
 		];
 
 		return response()->json(['error' => $error, 'user' => $user]);
@@ -189,6 +194,9 @@ class userController extends Controller
 
 	public function profile($id){
 		$paciente = TurnoPaciente::find($id);
+        $growCompleto = $paciente->grow_; // relación belongsTo
+        $pacienteONG = $growCompleto && $growCompleto->tipo_id == 2;
+
 		$data = [
 			'id' => $paciente->id,
 			'dni' => $paciente->dni,
@@ -198,6 +206,7 @@ class userController extends Controller
 			'direccion' => $paciente->direccion,
 			'email' => $paciente->email,
             'grow' => $paciente->grow,
+            'pacienteONG' => $pacienteONG,
 		];
 		return response()->json($data);
 	}

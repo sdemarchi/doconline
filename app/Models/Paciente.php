@@ -118,4 +118,9 @@ class Paciente extends Model
         return null;
     }
 
+    public function paciente_ong()
+    {
+        return $this->hasOne(PacienteONG::class, 'dni', 'dni');
+    }
+
 }

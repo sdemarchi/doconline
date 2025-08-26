@@ -4,6 +4,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Dolencia;
 use App\Models\TurnoPaciente;
+use App\Models\PacienteONG;
 
 class Grow extends Model
 {
@@ -29,4 +30,8 @@ class Grow extends Model
         return $this->belongsTo(TipoGrow::class, 'tipo_id', 'id');
     }
 
+    // Un Grow del tipo ONG tiene muchos pacientes
+    public function pacientesONG(){
+        return $this->hasMany(PacienteONG::class, 'idgrow', 'idgrow');
+    }
 }

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 
 use App\Models\Pago;
+use App\Models\PacienteONG;
 use App\Models\Grow;
 use App\Models\Paciente;
 use App\Models\Setting;
@@ -48,6 +49,42 @@ class GrowController extends Controller
         }
 
         return response()->json($grow);
+    }
+
+
+    public function agregarPacienteONG(Request $request, $growid)
+    {
+        try {
+            // Verificar que exista el grow
+            $grow = Grow::findOrFail($growid);
+
+            // Validar datos
+            $validated = $request->validate([
+                'nombre' => 'required|string|max:100',
+                'apellido' => 'required|string|max:100',
+                'dni' => 'required|string|max:20'
+            ]);
+
+            $paciente = new PacienteONG();
+            $paciente->nombre = $validated['nombre'];
+            $paciente->apellido = $validated['apellido'];
+            $paciente->dni = $validated['dni'];
+            $paciente->idgrow = $grow->idgrow;
+            $paciente->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Paciente registrado correctamente',
+                'paciente' => $paciente
+            ], 201);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al registrar el paciente',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
 

@@ -22,10 +22,10 @@ use Illuminate\Support\Facades\Artisan;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
 Route::post('turnero.login', [UserController::class, 'loginTurnero']);
 
 Route::get('pacienteSelect',[PacienteController::class, 'getSelectSearch'])->name('api.pacienteSelect');
@@ -64,10 +64,14 @@ Route::get('grow.id/{id}', [GrowController::class, 'getGrowById']);
 Route::get('grow.email/{email}', [GrowController::class, 'getGrowByEmail']);
 Route::get('grow.pacientes/{id}', [GrowController::class, 'getGrowPacientes']);
 Route::post('/add-grow', [GrowController::class, 'createGrow'])->name('addGrow');
+Route::post('/grow.agregar-paciente-ong/{growid}', [GrowController::class, 'agregarPacienteONG'])->name('addPacienteONG');
 
 Route::get('contactos', [pacienteController::class, 'getContactos']);
 Route::get('ocupaciones', [pacienteController::class, 'getOcupaciones']);
 Route::get('dolencias', [pacienteController::class, 'getDolencias']);
+Route::get('pacientes-ong/{idgrow}', [pacienteController::class, 'getPacientesONG']);
+Route::get('ong-paciente/{dni}', [pacienteController::class, 'getONGPorPaciente']);
+
 
 Route::post('formulario', [FormController::class, 'guardarFormulario']);
 Route::post('formulario/{id}', [FormController::class, 'actualizarFormulario']);
