@@ -41,7 +41,7 @@
     <p id="vocativo"><b>SEÑOR JUEZ FEDERAL:</b></p>
     <div class="inciso">
         <p>
-            <b>{{$paciente->nom_ape}}</b> DNI <b>{{$paciente->dni}}</b> con el patrocinio letrado del <b>Dr. Guillermo Francisco ROBLES</b>, abogado, T° 509 F° 197, CUIT N° 20374758994, con domicilio real en la calle con domicilio real en <b>{{$paciente->domicilio}}, {{ $paciente->localidad}}, {{$paciente->provincia->Provincia}}</b> y procesal constituido en <b>San Martín 77</b> de esta ciudad. Constituyendo domicilio electrónico en el CUIT: 20374758994 (Datos de Contacto: Estudio Jurídico ROBLES - Tel: 3517685657 - Mail: guifranrob@gmail.com), se presenta y respetuosamente dice:
+            <b>{{ucwords(strtolower($paciente->nom_ape))}}</b> DNI <b>{{$paciente->dni}}</b> con el patrocinio letrado del <b>Dr. Guillermo Francisco ROBLES</b>, abogado, T° 509 F° 197, CUIT N° 20374758994, con domicilio real en la calle con domicilio real en <b>{{$paciente->domicilio}}, {{ $paciente->localidad}}, {{$paciente->provincia->Provincia}}</b> y procesal constituido en <b>San Martín 77</b> de esta ciudad. Constituyendo domicilio electrónico en el CUIT: 20374758994 (Datos de Contacto: Estudio Jurídico ROBLES - Tel: 3517685657 - Mail: guifranrob@gmail.com), se presenta y respetuosamente dice:
         </p>
     </div>
 

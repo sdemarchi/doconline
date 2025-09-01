@@ -99,6 +99,8 @@ class PrintController extends Controller
         $paciente = Paciente::find($idPaciente);
         $pdf = \PDF::loadView('pdf.generador-amparo',compact('paciente'));
 
-        return $pdf->stream("amparo-" . $paciente->dni . ".pdf");
+        $nombreApellidoConGuiones = str_replace(' ', '-', $paciente->nom_ape);
+
+        return $pdf->stream("amparo-" . $nombreApellidoConGuiones . ".pdf");
     }
 }
