@@ -94,4 +94,11 @@ class PrintController extends Controller
 
         return $pdf->stream("receta.pdf");
     }
+
+    public function amparo($idPaciente){
+        $paciente = Paciente::find($idPaciente);
+        $pdf = \PDF::loadView('pdf.generador-amparo',compact('paciente'));
+
+        return $pdf->stream("amparo-" . $paciente->dni . ".pdf");
+    }
 }

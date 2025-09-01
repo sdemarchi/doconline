@@ -15,13 +15,11 @@
     page-break-after: always;
 }
         .pagina1 {
-            /*background: url({{ asset('/img/formularios/declaracion.png') }}) no-repeat;*/
             background-size: 21cm auto;
             color: #000;
         }
 
         .pagina3 {
-            /*background: url({{ asset('/img/titulo.jpg') }}) no-repeat center top;*/
             background-size: 100% auto;
         }
 

@@ -75,6 +75,7 @@ Route::get('/grow-registrado', function () {
 Route::get('paciente/declaracion/{id}', [PrintController::class, 'declaracionPaciente'])->name('paciente.declaracion');
 Route::get('paciente/consentimiento/{id}', [PrintController::class, 'consentimientoPaciente'])->name('paciente.consentimiento');
 Route::get('paciente/pronto-despacho/{id}', [PrintController::class, 'prontoDespacho'])->name('paciente.pronto-despacho');
+Route::get('paciente/amparo/{idPaciente}', [PrintController::class, 'amparo'])->name('paciente.generar-amparo');
 Route::get('receta/impresion/{id}', [PrintController::class, 'receta'])->name('receta.impresion');
 
 //Descargas con token

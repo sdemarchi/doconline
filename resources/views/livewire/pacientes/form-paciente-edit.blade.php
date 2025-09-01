@@ -10,6 +10,10 @@
                 Pronto Despacho
             </a>
 
+            <a  class="ficha-button" href="{{ route('paciente.generar-amparo',$pacienteId) }}" target="_blank">
+                <img src="{{ asset('svg/despacho.svg') }}" alt="Imprimir">
+                Amparo
+            </a>
             <a class="ficha-button" href="{{ route('paciente.consentimiento',$pacienteId) }}" target="_blank">
                 <img src="{{ asset('svg/despacho.svg') }}" alt="Imprimir">
                 Consentimiento
