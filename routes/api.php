@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\GrowController;
 use App\Http\Controllers\Api\ResetPasswordController;
 use App\Http\Controllers\Api\PagoController;
 use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\PrintController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +28,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('turnero.login', [UserController::class, 'loginTurnero']);
+Route::get('paciente/declaracion/{id}', [PrintController::class, 'declaracionPaciente'])->name('paciente.declaracion');
+Route::get('paciente/consentimiento/{id}', [PrintController::class, 'consentimientoPaciente'])->name('paciente.consentimiento');
 
 Route::get('pacienteSelect',[PacienteController::class, 'getSelectSearch'])->name('api.pacienteSelect');
 Route::get('paciente/{id}',[PacienteController::class, 'getPaciente']);
@@ -85,6 +88,7 @@ Route::get('/pagos/ultimo-regalado/{user_id}', [PagoController::class, 'ultimoRe
 Route::get('/pagos/buscar-por-codigo/{codigo}', [PagoController::class, 'buscarPorCodigo']);
 Route::post('/pagos/crear', [PagoController::class, 'nuevoPago']);
 Route::post('/pagos/utilizado', [PagoController::class, 'utilizado']);
+
 
 
 Route::get('/enviar-recordatorio-turnos', function () {

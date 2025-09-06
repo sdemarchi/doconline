@@ -34,7 +34,6 @@ class pacienteController extends Controller
         }
 
 		return response()->json(['results' => $data, 'pagination' => $pagination]);
-
 	}
 
 
@@ -122,6 +121,7 @@ class pacienteController extends Controller
             }
 
             return array_merge([
+                'id' => $pONG->paciente ? $pONG->paciente->idpaciente : null,
                 'nombre' => $pONG->nombre,
                 'apellido' => $pONG->apellido,
                 'dni' => $pONG->dni,
@@ -134,8 +134,7 @@ class pacienteController extends Controller
 
 
     // PacientesController.php
-    public function getONGPorPaciente($dni)
-    {
+    public function getONGPorPaciente($dni){
         // Buscar el PacienteONG por dni
         $pacienteONG = \App\Models\PacienteONG::where('dni', $dni)->first();
 
