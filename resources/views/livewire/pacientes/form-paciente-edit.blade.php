@@ -1,3 +1,7 @@
+@php
+    use App\Lib\CifradoHelper;
+@endphp
+
 <div class="card">
   <link rel="stylesheet" type="text/css" href="{{ asset('css/ficha-paciente.css') }}">
 
@@ -10,21 +14,21 @@
                 Pronto Despacho
             </a>
 
-            <a  class="ficha-button" href="{{ route('paciente.generar-amparo',$pacienteId) }}" target="_blank">
+            <a  class="ficha-button" href="{{ route('paciente.generar-amparo', CifradoHelper::cifrar($pacienteId)) }}" target="_blank">
                 <img src="{{ asset('svg/despacho.svg') }}" alt="Imprimir">
                 Amparo
             </a>
-            <a class="ficha-button" href="{{ route('paciente.consentimiento',$pacienteId) }}" target="_blank">
+            <a class="ficha-button" href="{{ route('paciente.consentimiento', CifradoHelper::cifrar($pacienteId)) }}" target="_blank">
                 <img src="{{ asset('svg/despacho.svg') }}" alt="Imprimir">
                 Consentimiento
             </a>
 
-            <a class="ficha-button" href="{{ route('paciente.declaracion',$pacienteId) }}" target="_blank">
+            <a class="ficha-button" href="{{ route('paciente.declaracion', CifradoHelper::cifrar($pacienteId)) }}" target="_blank">
                 <img src="{{ asset('svg/despacho.svg') }}" alt="Imprimir">
                 Decl. Jurada
             </a>
 
-            <a class="ficha-button" href="{{ route('turnos.create.pacienteId',$pacienteId) }}" target="_blank">
+            <a class="ficha-button" href="{{ route('turnos.create.pacienteId', CifradoHelper::cifrar($pacienteId))}}" target="_blank">
                 Sacar turno
             </a>
 

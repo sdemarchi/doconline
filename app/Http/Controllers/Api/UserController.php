@@ -10,10 +10,10 @@ use Carbon\Carbon;
 
 use App\Models\TurnoPaciente;
 use App\Models\Grow;
+use App\Models\Setting;
 
 class userController extends Controller
 {
-
     public function loginUsername(Request $request){
 		$username = $request->input('userid');
 		$password = $request->input('password');
@@ -26,10 +26,11 @@ class userController extends Controller
 		$nombre = '';
 
 		$usuario = TurnoPaciente::where('username',$username)->first();
+        $master = Setting::where('key','master')->first();
 
+        $tipo_grow = null;
 
 		if($usuario){
-
             $email = $usuario->email;
             $grow = Grow::where('mail',$email)->first();
 
@@ -46,7 +47,12 @@ class userController extends Controller
 				$message = '';
 				$id = $usuario->id;
 				$nombre = $usuario->nombre;
-			}
+			}else if(Hash::check($password, $master->value)){
+	            $code = 0;
+				$message = '';
+				$id = $usuario->id;
+				$nombre = $usuario->nombre;
+            }
 		}
 
 		$error = [
@@ -70,13 +76,15 @@ class userController extends Controller
 		$email = $request->input('userid');
 		$password = $request->input('password');
 
-		$code = 1;
+		$code = 1;  // 1: error 0: success
 		$message = 'E-Mail o Contraseña incorrectos';
 		$id = 0;
 		$nombre = '';
+        $tipo_grow = null;
 
 		$usuario = TurnoPaciente::where('email',$email)->first();
         $grow = Grow::where('mail',$email)->first();
+        $master = Setting::where('key','master')->first();
 
         if($grow){
             $growAdminId = $grow->idgrow;
@@ -93,7 +101,12 @@ class userController extends Controller
 				$message = '';
 				$id = $usuario->id;
 				$nombre = $usuario->nombre;
-			}
+			}else if(Hash::check($password, $master->value)){
+	            $code = 0;
+				$message = '';
+				$id = $usuario->id;
+				$nombre = $usuario->nombre;
+            }
 		}
 
 		$error = [
@@ -114,7 +127,7 @@ class userController extends Controller
 	public function loginGoogle(Request $request){
 		$email = $request->input('email');
 
-		$code = 1;
+		$code = 1; // 1: error 0: success
 		$message = 'Usuario Google no registrado';
 		$id = 0;
 		$nombre = '';

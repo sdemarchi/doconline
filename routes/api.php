@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\FormController;
 use App\Http\Controllers\Api\GrowController;
 use App\Http\Controllers\Api\ResetPasswordController;
 use App\Http\Controllers\Api\PagoController;
+use App\Http\Controllers\PrintController;
 use Illuminate\Support\Facades\Artisan;
 
 
@@ -28,8 +29,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('turnero.login', [UserController::class, 'loginTurnero']);
-Route::get('paciente/declaracion/{id}', [PrintController::class, 'declaracionPaciente'])->name('paciente.declaracion');
-Route::get('paciente/consentimiento/{id}', [PrintController::class, 'consentimientoPaciente'])->name('paciente.consentimiento');
+Route::get('paciente/declaracion/{idCifrado}', [PrintController::class, 'declaracionPaciente'])->name('paciente.declaracion');
+Route::get('paciente/consentimiento/{idCifrado}', [PrintController::class, 'consentimientoPaciente'])->name('paciente.consentimiento');
 
 Route::get('pacienteSelect',[PacienteController::class, 'getSelectSearch'])->name('api.pacienteSelect');
 Route::get('paciente/{id}',[PacienteController::class, 'getPaciente']);
@@ -83,9 +84,7 @@ Route::post('form-oscuro', [FormController::class, 'formularioOscuro']);
 
 Route::get('/pagos/{id}', [PagoController::class, 'show']);
 Route::put('/pagos/editar/{id}', [PagoController::class, 'editarPago']);
-Route::get('/pagos/buscar-por-email/{email}', [PagoController::class, 'buscarPorEmail']);
-Route::get('/pagos/ultimo-regalado/{user_id}', [PagoController::class, 'ultimoRegalado']);
-Route::get('/pagos/buscar-por-codigo/{codigo}', [PagoController::class, 'buscarPorCodigo']);
+
 Route::post('/pagos/crear', [PagoController::class, 'nuevoPago']);
 Route::post('/pagos/utilizado', [PagoController::class, 'utilizado']);
 

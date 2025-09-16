@@ -9,10 +9,13 @@ use Illuminate\Http\Request;
 use App\Models\Paciente;
 use App\Models\DatoMedico;
 use App\Models\Receta;
+use App\Lib\CifradoHelper;
 
 class PrintController extends Controller
 {
-    public function declaracionPaciente($id){
+    public function declaracionPaciente($idCifrado){
+        $id = CifradoHelper::descifrar($idCifrado);
+
         $paciente = Paciente::find($id);
         $medico = DatoMedico::first();
         if($paciente->version == 2){ //formulario creado con la app React
@@ -41,7 +44,9 @@ class PrintController extends Controller
         return $pdf->stream("declaracion.pdf");
     }
 
-    public function consentimientoPaciente($id){
+    public function consentimientoPaciente($idCifrado){
+        $id = CifradoHelper::descifrar($idCifrado);
+
         $paciente = Paciente::find($id);
         $medico = DatoMedico::first();
         setlocale(LC_TIME, 'es_ES', 'Spanish_Spain', 'Spanish');
@@ -95,7 +100,9 @@ class PrintController extends Controller
         return $pdf->stream("receta.pdf");
     }
 
-    public function amparo($idPaciente){
+    public function amparo($idPacienteCifrado){
+        $idPaciente = CifradoHelper::descifrar($idPacienteCifrado);
+
         $paciente = Paciente::find($idPaciente);
         $pdf = \PDF::loadView('pdf.generador-amparo',compact('paciente'));
 
