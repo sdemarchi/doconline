@@ -38,7 +38,7 @@
 
 
 <div id="contenedor-documento">
-   <h4 id="titulo"><u>INTERPONE AMPARO POR MORA</u></h3>
+   <h4 id="titulo"><u>INTERPONE AMPARO POR MORA</u></h4>
     <p id="vocativo"><b>SR JUEZ FEDERAL:</b></p>
     <div class="inciso">
         <p>
@@ -173,14 +173,11 @@
             </p>
 
             <h4>III. INFORMATIVA (en subsidio)</h4>
-            <p>
-                Solicitamos que se libre oficio a la autoridad requerida a fines de que:
-                <ul>
-                    <li>Acompañe copia del expediente respecto a la solicitud de inscripción en el
-                    Registro Nacional de Pacientes en Tratamiento con Cannabis (REPROCANN).</li>
-                </ul>
-            </p>
-        </div>
+            <p>Solicitamos que se libre oficio a la autoridad requerida a fines de que:</p>
+            <ul>
+                <li>Acompañe copia del expediente respecto a la solicitud de inscripción en el Registro Nacional de Pacientes en Tratamiento con Cannabis (REPROCANN).</li>
+            </ul>
+            </div>
     </div>
 
     <h4 class="titulo-inciso">VIII. <u>SOLICITUD DE PLAZO UNIFORME PARA DEOX</u></h4>
@@ -202,10 +199,10 @@
         </p>
     </div>
 
-    <h4 class="titulo-inciso">IX. <u>PETITORIO:<u></h4>
+    <h4 class="titulo-inciso">IX. <u>PETITORIO:</u></h4>
     <div class="inciso">
+       <p> Conforme lo expuesto, solicito a V.S. que: </p>
         <ol>
-            Conforme lo expuesto, solicito a V.S. que:
             <li>Se me tenga por presentado en el carácter invocado y por constituido el domicilio procesal y electrónico.</li>
             <li>Se haga lugar al requerimiento de Amparo por Mora, en los términos del art. 28 de la ley 19549.</li>
             <li>Se tenga presente la documentación acompañada.</li>

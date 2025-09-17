@@ -76,7 +76,6 @@ Route::get('dolencias', [pacienteController::class, 'getDolencias']);
 Route::get('pacientes-ong/{idgrow}', [pacienteController::class, 'getPacientesONG']);
 Route::get('ong-paciente/{dni}', [pacienteController::class, 'getONGPorPaciente']);
 
-
 Route::post('formulario', [FormController::class, 'guardarFormulario']);
 Route::post('formulario/{id}', [FormController::class, 'actualizarFormulario']);
 Route::get('formulario/{dni}', [FormController::class, 'getFormulario']);

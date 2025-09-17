@@ -4,12 +4,17 @@ namespace App\Http\Controllers;
 use Dompdf\Dompdf;
 use Carbon\Carbon;
 
+use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\IOFactory;
+use PhpOffice\PhpWord\Shared\Html;
+
 use Illuminate\Http\Request;
 
 use App\Models\Paciente;
 use App\Models\DatoMedico;
 use App\Models\Receta;
 use App\Lib\CifradoHelper;
+
 
 class PrintController extends Controller
 {
@@ -109,5 +114,34 @@ class PrintController extends Controller
         $nombreApellidoConGuiones = str_replace(' ', '-', $paciente->nom_ape);
 
         return $pdf->stream("amparo-" . $nombreApellidoConGuiones . ".pdf");
+    }
+
+
+    public function amparoWord($idPacienteCifrado)
+    {
+        $idPaciente = CifradoHelper::descifrar($idPacienteCifrado);
+
+        $paciente = Paciente::find($idPaciente);
+
+        // Renderizamos el mismo Blade que usás para el PDF
+        $html = view('pdf.generador-amparo', compact('paciente'))->render();
+
+        // Crear un documento Word
+        $phpWord = new PhpWord();
+        $section = $phpWord->addSection();
+
+        // Insertamos el HTML dentro de la sección
+        Html::addHtml($section, $html, false, false);
+
+        // Nombre del archivo
+        $nombreApellidoConGuiones = str_replace(' ', '-', $paciente->nom_ape);
+        $fileName = "amparo-" . $nombreApellidoConGuiones . ".docx";
+
+        // Guardamos en memoria y devolvemos como descarga
+        $temp_file = tempnam(sys_get_temp_dir(), 'word');
+        $phpWordWriter = IOFactory::createWriter($phpWord, 'Word2007');
+        $phpWordWriter->save($temp_file);
+
+        return response()->download($temp_file, $fileName)->deleteFileAfterSend(true);
     }
 }

@@ -76,6 +76,7 @@ Route::get('paciente/declaracion/{id}', [PrintController::class, 'declaracionPac
 Route::get('paciente/consentimiento/{id}', [PrintController::class, 'consentimientoPaciente'])->name('paciente.consentimiento');
 Route::get('paciente/pronto-despacho/{id}', [PrintController::class, 'prontoDespacho'])->name('paciente.pronto-despacho');
 Route::get('paciente/amparo/{idPaciente}', [PrintController::class, 'amparo'])->name('paciente.generar-amparo');
+Route::get('paciente/amparo-doc/{idPaciente}', [PrintController::class, 'amparoWord'])->name('paciente.generar-amparo-doc');
 Route::get('receta/impresion/{id}', [PrintController::class, 'receta'])->name('receta.impresion');
 
 //Descargas con token
@@ -122,9 +123,6 @@ Route::group(['middleware' => ['auth']], function () {
         return view('backend.grows.form-grow-edit', compact('id'));
     })->name('grows.edit');
 
-    /*Route::get('/datos-medico/{id}/edit',function($id){
-        return view('backend.datos-medico', compact('id'));
-    })->name('datos-medico.edit');*/
 
     Route::view('/recetas', 'backend.pacientes.recetas')->name('recetas');
     Route::view('/recetas/create', 'backend.pacientes.receta-create')->name('recetas.create');
