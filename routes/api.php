@@ -88,6 +88,10 @@ Route::post('/pagos/crear', [PagoController::class, 'nuevoPago']);
 Route::post('/pagos/utilizado', [PagoController::class, 'utilizado']);
 
 
+Route::get('/pagos/buscar-por-email/{email}', [PagoController::class, 'buscarPorEmail']);
+Route::get('/pagos/ultimo-regalado/{user_id}', [PagoController::class, 'ultimoRegalado']);
+Route::get('/pagos/buscar-por-codigo/{codigo}', [PagoController::class, 'buscarPorCodigo']);
+
 
 Route::get('/enviar-recordatorio-turnos', function () {
     Artisan::call('turnos:recordatorio');
