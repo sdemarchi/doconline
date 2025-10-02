@@ -18,6 +18,12 @@
                 <img src="{{ asset('svg/despacho.svg') }}" alt="Imprimir">
                 Amparo
             </a>
+
+            <a  class="ficha-button" href="{{ route('paciente.generar-amparo-doc', CifradoHelper::cifrar($pacienteId)) }}" target="_blank">
+                <img src="{{ asset('svg/despacho.svg') }}" alt="Imprimir">
+                Amparo (Word)
+            </a>
+
             <a class="ficha-button" href="{{ route('paciente.consentimiento', CifradoHelper::cifrar($pacienteId)) }}" target="_blank">
                 <img src="{{ asset('svg/despacho.svg') }}" alt="Imprimir">
                 Consentimiento

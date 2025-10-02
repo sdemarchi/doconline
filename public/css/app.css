@@ -681,6 +681,10 @@ select {
   margin-top: 0.25rem;
   margin-bottom: 0.25rem;
 }
+.mx-3 {
+  margin-left: 0.75rem;
+  margin-right: 0.75rem;
+}
 .mx-2 {
   margin-left: 0.5rem;
   margin-right: 0.5rem;
@@ -737,11 +741,11 @@ select {
 .-mt-px {
   margin-top: -1px;
 }
-.mb-1 {
-  margin-bottom: 0.25rem;
-}
 .mt-10 {
   margin-top: 2.5rem;
+}
+.mb-1 {
+  margin-bottom: 0.25rem;
 }
 .mt-6 {
   margin-top: 1.5rem;
@@ -1472,6 +1476,12 @@ select {
 
   .sm\:pt-0 {
     padding-top: 0px;
+  }
+}
+@media (min-width: 768px) {
+
+  .md\:flex {
+    display: flex;
   }
 }
 @media (min-width: 1024px) {

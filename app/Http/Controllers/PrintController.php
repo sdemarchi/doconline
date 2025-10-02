@@ -123,14 +123,17 @@ class PrintController extends Controller
 
         $paciente = Paciente::find($idPaciente);
 
-        // Renderizamos el mismo Blade que usás para el PDF
+        // Renderizamos el Blade
         $html = view('pdf.generador-amparo', compact('paciente'))->render();
+
+        // Reemplazamos los h4 por h4 con estilo inline para negrita
+        $html = str_replace('<h4>', '<h4 style="font-weight:bold;">', $html);
 
         // Crear un documento Word
         $phpWord = new PhpWord();
         $section = $phpWord->addSection();
 
-        // Insertamos el HTML dentro de la sección
+        // Insertamos el HTML
         Html::addHtml($section, $html, false, false);
 
         // Nombre del archivo
@@ -144,4 +147,5 @@ class PrintController extends Controller
 
         return response()->download($temp_file, $fileName)->deleteFileAfterSend(true);
     }
+
 }
