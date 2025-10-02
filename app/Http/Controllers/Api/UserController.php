@@ -137,6 +137,7 @@ class userController extends Controller
 
         if($grow){
             $growAdminId = $grow->idgrow;
+            $tipo_grow = $grow->tipo_id;
         }else{
             $growAdminId = 0;
         }
@@ -156,7 +157,8 @@ class userController extends Controller
 		$user = [
 			'id' => $id,
 			'userName' => $nombre,
-            'growAdmin' => $growAdminId
+            'growAdmin' => $growAdminId,
+            'tipoGrow' => $tipo_grow
 		];
 
 		return response()->json(['error' => $error, 'user' => $user]);
