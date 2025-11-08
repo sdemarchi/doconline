@@ -73,8 +73,14 @@ Route::post('/grow.agregar-paciente-ong/{growid}', [GrowController::class, 'agre
 Route::get('contactos', [pacienteController::class, 'getContactos']);
 Route::get('ocupaciones', [pacienteController::class, 'getOcupaciones']);
 Route::get('dolencias', [pacienteController::class, 'getDolencias']);
+
 Route::get('pacientes-ong/{idgrow}', [pacienteController::class, 'getPacientesONG']);
 Route::get('ong-paciente/{dni}', [pacienteController::class, 'getONGPorPaciente']);
+Route::delete('pacientes-ong/{idPaciente}', [pacienteController::class, 'eliminarPacienteONG']);
+Route::put('pacientes-ong/{idPaciente}', [pacienteController::class, 'editarPacienteONG']);
+Route::get('paciente-ong/{idPaciente}', [pacienteController::class, 'obtenerPacienteONG']);
+
+Route::put('/ong/editar-datos-titular/{idgrow}', [GrowController::class, 'editarGrow']);
 
 Route::post('formulario', [FormController::class, 'guardarFormulario']);
 Route::post('formulario/{id}', [FormController::class, 'actualizarFormulario']);

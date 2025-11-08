@@ -6,11 +6,9 @@ use App\Models\Dolencia;
 use App\Models\TurnoPaciente;
 use App\Models\PacienteONG;
 
-class Grow extends Model
-{
+class Grow extends Model {
     public $timestamps = false;
     protected $primaryKey = 'idgrow';
-
 
     protected $fillable = ['nombre','cbu','alias','titular','mail','instagram','celular','idprovincia',
                             'localidad','direccion','cp','cod_desc','fe_ingreso','observ','activo','descuento',

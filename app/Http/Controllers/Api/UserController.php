@@ -135,6 +135,8 @@ class userController extends Controller
 		$usuario = TurnoPaciente::where('email',$email)->first();
         $grow = Grow::where('mail',$email)->first();
 
+        $tipo_grow = null;
+
         if($grow){
             $growAdminId = $grow->idgrow;
             $tipo_grow = $grow->tipo_id;

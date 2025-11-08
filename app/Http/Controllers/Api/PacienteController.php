@@ -121,7 +121,7 @@ class pacienteController extends Controller
             }
 
             return array_merge([
-                'id' => $pONG->paciente ? $pONG->paciente->idpaciente : null,
+                'id' => $pONG->id,
                 'nombre' => $pONG->nombre,
                 'apellido' => $pONG->apellido,
                 'dni' => $pONG->dni,
@@ -153,6 +153,70 @@ class pacienteController extends Controller
             'nombreONG' => $pacienteONG->grow->nombre,
             'idGrow' => $pacienteONG->grow->idgrow
         ]);
+    }
+
+    public function eliminarPacienteONG($idPaciente){
+        $pacienteONG = \App\Models\PacienteONG::find($idPaciente);
+
+        if (!$pacienteONG) {
+            return response()->json(['mensaje' => 'Paciente ONG no encontrado.'], 404);
+        }
+
+        $pacienteONG->delete();
+
+        return response()->json(['mensaje' => 'Paciente ONG eliminado correctamente.']);
+    }
+
+
+    public function editarPacienteONG(Request $request, $pacienteId){
+        try {
+            // Buscar el paciente existente
+            $paciente = \App\Models\PacienteONG::findOrFail($pacienteId);
+
+            // Validar datos
+            $validated = $request->validate([
+                'nombre' => 'required|string|max:100',
+                'apellido' => 'required|string|max:100',
+                'dni' => 'required|string|max:20'
+            ]);
+
+            // Actualizar datos
+            $paciente->nombre = $validated['nombre'];
+            $paciente->apellido = $validated['apellido'];
+            $paciente->dni = $validated['dni'];
+            $paciente->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Paciente actualizado correctamente',
+                'paciente' => $paciente
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al actualizar el paciente',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function obtenerPacienteONG($idPaciente){
+        try {
+            $paciente =  \App\Models\PacienteONG::findOrFail($idPaciente);
+
+            return response()->json([
+                'success' => true,
+                'paciente' => $paciente
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Paciente no encontrado',
+                'error' => $e->getMessage()
+            ], 404);
+        }
     }
 
 }

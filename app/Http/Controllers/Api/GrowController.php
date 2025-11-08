@@ -11,9 +11,9 @@ use App\Models\PacienteONG;
 use App\Models\Grow;
 use App\Models\Paciente;
 use App\Models\Setting;
+use App\Models\TurnoPaciente;
 
-class GrowController extends Controller
-{
+class GrowController extends Controller{
 
     private function getMetaInf(){
         $setting = new Setting;
@@ -52,8 +52,7 @@ class GrowController extends Controller
     }
 
 
-    public function agregarPacienteONG(Request $request, $growid)
-    {
+    public function agregarPacienteONG(Request $request, $growid){
         try {
             // Verificar que exista el grow
             $grow = Grow::findOrFail($growid);
@@ -103,7 +102,6 @@ class GrowController extends Controller
 
     public function pago($paciente){
         $ficha = Paciente::where('dni', $paciente->dni)->first();
-
         $pago = Pago::where('id_paciente', $paciente->id)
         ->latest('created_at')
         ->first();
@@ -116,10 +114,9 @@ class GrowController extends Controller
 
         if($ficha) {
             return (boolean) $ficha->pagado2023 || $ficha->pagado2024 || $pagoVerificado;
-        } else if($pago){
+        }else if($pago){
             return (boolean) $pagoVerificado;
-        } else
-        {
+        }else{
             return (boolean) 0;
         }
     }
@@ -140,7 +137,6 @@ class GrowController extends Controller
         }
 
         $grow['pacientes'] = $pacientes;
-
         return response()->json($grow);
     }
 
@@ -180,5 +176,39 @@ class GrowController extends Controller
 
         $newGrow = Grow::create($grow);
         return response()->json($newGrow);
+    }
+
+
+
+    public function editarGrow(Request $request,$idgrow){
+
+        // Buscar el Grow
+        $grow = Grow::find($idgrow);
+
+        if (!$grow) {
+            return response()->json(['error' => 'Grow no encontrado'], 404);
+        }
+
+        // Buscar el paciente (TurnoPaciente) asociado
+        $paciente = TurnoPaciente::where('grow', $grow->idgrow)->first();
+
+        if (!$paciente) {
+            return response()->json(['error' => 'Paciente asociado no encontrado'], 404);
+        }
+
+        // Actualizar datos
+        $grow->titular = $request->nombreApellido;
+        $paciente->nombre = $request->nombreApellido;
+        $paciente->dni = $request->dni;
+
+        // Guardar ambos modelos
+        $grow->save();
+        $paciente->save();
+
+        return response()->json([
+            'message' => 'Datos actualizados correctamente',
+            'grow' => $grow,
+            'paciente' => $paciente
+        ], 200);
     }
 }
