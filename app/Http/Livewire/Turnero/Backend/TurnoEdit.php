@@ -3,10 +3,11 @@
 namespace App\Http\Livewire\Turnero\Backend;
 
 use Livewire\Component;
-
+use App\Lib\CifradoHelper;
 use App\Models\Turno;
 use App\Models\Prestador;
 use App\Models\Paciente;
+use Carbon\Carbon;
 use App\Models\TurnoPaciente;
 
 
@@ -32,8 +33,13 @@ class TurnoEdit extends Component{
     }
 
     public function getPaciente(){
-        if($this->pacienteId){
 
+        // Descifro el id del paciente
+        if ($this->pacienteId) {
+            $this->pacienteId = CifradoHelper::descifrar($this->pacienteId);
+        }
+
+        if($this->pacienteId){
             $paciente = Paciente::find($this->pacienteId);
                 $dni = $paciente->dni;
                 $nombApe = $paciente->nom_ape;
@@ -68,18 +74,22 @@ class TurnoEdit extends Component{
 
     public function update(){
         $this->validate();
+
         if($this->pacienteTurneroId !== 0){
             $dataTurno = [
                 'fecha' => $this->fecha,
                 'hora' => $this->hora,
                 'prestador_id' => $this->prestadorId,
-                'paciente_id' => $this->pacienteTurneroId
+                'paciente_id' => $this->pacienteTurneroId,
+                'fecha_emision' =>   Carbon::now()->format('Y-m-d')
             ];
+
         }else{
             $dataTurno = [
                 'fecha' => $this->fecha,
                 'hora' => $this->hora,
                 'prestador_id' => $this->prestadorId,
+                'fecha_emision' =>   Carbon::now()->format('Y-m-d')
             ];
         }
 

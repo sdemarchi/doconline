@@ -83,8 +83,7 @@ class PagoDetalles extends Component
         $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Cambio aplicado"]);
     }
 
-    public function subirComprobante()
-    {
+    public function subirComprobante() {
         if (!$this->comprobanteFile) {
             return $this->dispatchBrowserEvent('alert', ['type' => 'error', 'message' => 'No seleccionaste ningún archivo.']);
         }
