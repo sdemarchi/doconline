@@ -82,6 +82,9 @@
         <button wire:click="cambiarPestana(4)" class="{{$pestMedClass}}">Datos medicos</button>
 
         <button wire:click="cambiarPestana(5)" class="{{$pestDefClass}}">Por defecto</button>
+
+        <button wire:click="cambiarPestana(6)" class="{{$pestSegClass}}">Seguimiento</button>
+
     </div>
 
     <!--
@@ -1076,6 +1079,133 @@
       </div>
       @endif
 
+
+
+    <!--
+    /////////////////////////////////////////////////
+    //----------------- SEGUIMIENTO --------------///
+    /////////////////////////////////////////////////
+    -->
+    @if($paginaSeleccionada == 6)
+    <div style='border:none !important;' class="accordion-item theme-dark ficha-page">
+        <h2 class="ficha-subtitulo">
+            Seguimiento Médico
+        </h2>
+
+        <div style="padding:15px 20px">
+
+        <div class="ficha-inputs-row">
+            <div class="ficha-input-container">
+                <label class="form-label ficha-label">Nombre de la ONG</label>
+                <select class="form-select" wire:model.defer="ong_seguimiento">
+                <option value="">No Asignado</option>
+                @foreach($ongs as $o)
+                    <option value="{{ $o->idgrow }}">{{ $o->nombre }}</option>
+                @endforeach
+                </select>
+                @error('ong')<div class="text-danger">{{ $message }}</div>@enderror
+            </div>
+
+            <div class="ficha-input-container">
+                <label readonly disabled class="form-label ficha-label">Apellido y Nombre</label>
+                <input disabled type="text" class="form-control" style="background-color:#1e293b" value="{{ $nom_ape }}">
+                @error('apellido_nombre')<div class="text-danger">{{ $message }}</div>@enderror
+            </div>
+
+            <div class="ficha-input-container">
+                <label class="form-label ficha-label">DNI</label>
+                <input readonly disabled type="text" class="form-control" style="background-color:#1e293b" value="{{ $dni }}">
+                @error('dni')<div class="text-danger">{{ $message }}</div>@enderror
+            </div>
+
+            <div class="ficha-input-container">
+                <label class="form-label ficha-label">Edad</label>
+                <input disabled type="text" class="form-control" style="background-color:#1e293b" value="{{ $edad }}">
+                @error('edad')<div class="text-danger">{{ $message }}</div>@enderror
+            </div>
+
+            <div class="ficha-input-container">
+                <label class="form-label ficha-label">Diagnóstico</label>
+                <input type="text" class="form-control" wire:model.defer="diagnostico">
+                @error('diagnostico')<div class="text-danger">{{ $message }}</div>@enderror
+            </div>
+
+        </div>
+
+            <div class="ficha-row-full">
+                <div class="ficha-input-container mitad">
+                    <label class="form-label ficha-label">Procedimiento Propuesto</label>
+                    <textarea class="form-control textarea-limit" rows="3" wire:model.defer="proc_propuesto"></textarea>
+                    @error('proc_propuesto')<div class="text-danger">{{ $message }}</div>@enderror
+                </div>
+
+                <div class="ficha-input-container mitad">
+                    <label class="form-label ficha-label">Dosis</label>
+                    <textarea class="form-control textarea-limit" rows="3" wire:model.defer="dosis_text"></textarea>
+                    @error('dosis_text')<div class="text-danger">{{ $message }}</div>@enderror
+                </div>
+            </div>
+
+            <div class="ficha-grid-2-1">
+
+                <div class="fila-doble">
+                    <div class="ficha-input-container">
+                        <label class="form-label ficha-label">Concentración</label>
+                        <input type="text" class="form-control" wire:model.defer="concentracion">
+                        @error('concentracion')<div class="text-danger">{{ $message }}</div>@enderror
+                    </div>
+
+                    <div class="ficha-input-container">
+                        <label class="form-label ficha-label">Ratio</label>
+                        <input type="text" class="form-control" wire:model.defer="ratio">
+                        @error('ratio')<div class="text-danger">{{ $message }}</div>@enderror
+                    </div>
+                </div>
+
+                <div class="ficha-input-container ficha-full">
+                    <label class="form-label ficha-label">Disolución</label>
+                    <input type="text" class="form-control" wire:model.defer="disolucion">
+                    @error('disolucion')<div class="text-danger">{{ $message }}</div>@enderror
+                </div>
+
+            </div>
+
+           <div class="ficha-grid">
+                <div class="ficha-item">
+                    <label class="form-label ficha-label">Tipo y Frecuencia Analítica</label>
+                    <textarea class="form-control textarea-limit"  rows="3" wire:model.defer="tipo_frec_analitica"></textarea>
+                    @error('tipo_frec_analitica')<div class="text-danger">{{ $message }}</div>@enderror
+                </div>
+
+                <div class="ficha-item">
+                    <label class="form-label ficha-label">Dosificaciones</label>
+                    <textarea class="form-control textarea-limit" rows="3" wire:model.defer="dosificaciones"></textarea>
+                    @error('dosificaciones')<div class="text-danger">{{ $message }}</div>@enderror
+                </div>
+
+                <div class="ficha-item">
+                    <label class="form-label ficha-label">Beneficios Razonables del Tratamiento</label>
+                    <textarea class="form-control textarea-limit" rows="3" wire:model.defer="beneficios_razonables"></textarea>
+                    @error('beneficios_razonables')<div class="text-danger">{{ $message }}</div>@enderror
+                </div>
+
+                <div class="ficha-item">
+                    <label class="form-label ficha-label">Evolución</label>
+                    <textarea class="form-control textarea-limit" rows="3" wire:model.defer="evolucion"></textarea>
+                    @error('evolucion')<div class="text-danger">{{ $message }}</div>@enderror
+                </div>
+
+                <div class="ficha-item">
+                    <label class="form-label ficha-label">Observaciones</label>
+                    <textarea class="form-control textarea-limit" rows="3" wire:model.defer="observaciones"></textarea>
+                    @error('observaciones')<div class="text-danger">{{ $message }}</div>@enderror
+                </div>
+            </div>
+            </div>
+        </div>
+
+    @endif
+
     </div>
 
 </div>
@@ -1185,7 +1315,6 @@
               });
           });
       })
-
 </script>
 
 

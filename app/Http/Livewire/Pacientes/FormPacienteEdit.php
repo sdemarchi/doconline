@@ -40,12 +40,14 @@ class FormPacienteEdit extends Component
     public $paginaSeleccionada = 1;
     public $pestPacClass = 'ficha-pestaña-select';
     public $pestMedClass = 'ficha-pestaña-button';
+    public $pestSegClass = 'ficha-pestaña-button';
     public $pestPatClass  = 'ficha-pestaña-button';
     public $pestTutorClass = 'ficha-pestaña-button';
     public $pestDefClass = 'ficha-pestaña-button';
     public $pago_verificado;
     public $pago_utilizado;
     public $test;
+    public $ongs = [];
 
     public $pagado, $estado, $fe_carga, $fe_aprobacion, $email, $nom_ape, $dni, $fe_nacim, $cod_vincu,
             $edad, $domicilio, $localidad, $idprovincia, $cp, $ocupacion, $celular, $osocial,
@@ -114,7 +116,6 @@ class FormPacienteEdit extends Component
         'pagado2023' => '',
         'pagado2024' => '',
         'instagram' => 'max:150',
-        //'patologias.*.item' => '',
         'patologias.*.anio_aprox' => 'numeric|nullable|max:9999|min:1900',
         'patologias.*.medicacion' => 'max:100',
         'patologias.*.prob_trabajo' => '',
@@ -151,6 +152,7 @@ class FormPacienteEdit extends Component
         $this->pestPatClass  = 'ficha-pestaña-button';
         $this->pestTutorClass = 'ficha-pestaña-button';
         $this->pestDefClass = 'ficha-pestaña-button';
+        $this->pestSegClass = 'ficha-pestaña-button';
 
         if($pest  === 1 ){
             $this->pestPacClass = 'ficha-pestaña-select';
@@ -166,6 +168,9 @@ class FormPacienteEdit extends Component
         }
         if($pest  == 5 ){
             $this->pestDefClass= 'ficha-pestaña-select';
+        }
+        if($pest  == 6 ){
+            $this->pestSegClass= 'ficha-pestaña-select';
         }
 
     }
@@ -209,9 +214,7 @@ class FormPacienteEdit extends Component
                 $pago_->verificado = $this->pago_verificado;
                 $pago_->save();
 
-
                 $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Cambios guardados"]);
-
             }
         }
     }
@@ -359,6 +362,8 @@ class FormPacienteEdit extends Component
             $this->producto = ['1','2'];
             if($this->diagnostico == '') $this->diagnostico = $this->_generarDoloresNombres();
 
+            $this->montarSeguimiento($paciente);
+
         } else {  //Nuevo paciente
             $this->fe_carga = date('Y-m-d');
             $this->dolores = [];
@@ -385,9 +390,70 @@ class FormPacienteEdit extends Component
             $this->conc_cbd = "5.00";
             $this->tratam_previo = "No medicado";
 
-        }
 
+            $this->montarSeguimiento(null);
+
+        }
     }
+
+
+    private function montarSeguimiento($paciente){
+       $this->ongs = Grow::obtenerOngs();
+
+        // valores por defecto para el seguimiento
+        $this->ong_seguimiento = null;
+        $this->proc_propuesto = "Tratamiento con aceite de cannabis + vía inhalatoria con flores secas.";
+        $this->dosis_text = "2 gotas cada 12 horas.\n1 a 2 inhalaciones (equivalentes a 0,05 - 0,1 g de flores secas) por sesión, hasta 2 veces al día, según necesidad terapéutica y tolerancia.";
+        $this->concentracion = "1% CBD / 1% THC";
+        $this->ratio = "1:1";
+        $this->disolucion = "Base oleosa en aceite de oliva";
+        $this->tipo_frec_analitica = "No se requiere control laboratorial rutinario; seguimiento clínico mensual.";
+        $this->dosificaciones = "Evaluar incremento o ajuste en la próxima consulta según evolución clínica y analítica.";
+        $this->beneficios_razonables = "Disminución de la ingesta de fármacos convencionales y mejora del estado funcional diario.";
+        $this->evolucion = "Se reporta _______";
+        $this->observaciones = "";
+
+        if($paciente){
+            $seguimiento = $paciente->seguimiento;
+
+            if($seguimiento){
+                $this->ong_seguimiento = $seguimiento->ong ? $seguimiento->ong->idgrow : null;
+                $this->proc_propuesto = $seguimiento->proc_propuesto;
+                $this->dosis_text = $seguimiento->dosis_text;
+                $this->concentracion = $seguimiento->concentracion;
+                $this->ratio = $seguimiento->ratio;
+                $this->disolucion = $seguimiento->disolucion;
+                $this->tipo_frec_analitica = $seguimiento->tipo_frec_analitica;
+                $this->dosificaciones = $seguimiento->dosificaciones;
+                $this->beneficios_razonables = $seguimiento->beneficios_razonables;
+                $this->evolucion = $seguimiento->evolucion;
+                $this->observaciones = $seguimiento->observaciones;
+            }
+        }
+    }
+
+
+    private function guardarSeguimiento($paciente){
+        $datosSeguimiento = [
+            'ong_id'              => $this->ong_seguimiento ?? null,
+            'proc_propuesto'      => $this->proc_propuesto,
+            'dosis_text'          => $this->dosis_text,
+            'concentracion'       => $this->concentracion,
+            'ratio'               => $this->ratio,
+            'disolucion'          => $this->disolucion,
+            'tipo_frec_analitica' => $this->tipo_frec_analitica,
+            'dosificaciones'      => $this->dosificaciones,
+            'beneficios_razonables' => $this->beneficios_razonables,
+            'evolucion'           => $this->evolucion,
+            'observaciones'       => $this->observaciones,
+        ];
+
+        $seguimiento = $paciente->seguimiento()->updateOrCreate(
+            ['paciente_id' => $paciente->idpaciente],
+            $datosSeguimiento
+        );
+    }
+
 
     public function generarHistoria(){
         $patologiasText = '';
@@ -568,11 +634,17 @@ class FormPacienteEdit extends Component
         ];
 
         if($this->pacienteId){
-            Paciente::find($this->pacienteId)->update($dataPaciente);
+            $paciente = Paciente::find($this->pacienteId);
+            $paciente->update($dataPaciente);
+            $this->guardarSeguimiento($paciente);
+
         } else {
             $dataPaciente['firma_v2'] = $this->firma;
             $dataPaciente['aclaracion_v2'] = $this->aclaracion;
-            $this->pacienteId = Paciente::create($dataPaciente)->idpaciente;
+            $paciente = Paciente::create($dataPaciente);
+            $this->pacienteId = $paciente->idpaciente;
+            $this->guardarSeguimiento($paciente);
+
         }
 
         $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "El Paciente se modificó con éxito"]);

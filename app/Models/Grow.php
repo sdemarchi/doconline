@@ -32,4 +32,10 @@ class Grow extends Model {
     public function pacientesONG(){
         return $this->hasMany(PacienteONG::class, 'idgrow', 'idgrow');
     }
+
+    public static function obtenerOngs()
+    {
+        return self::where('tipo_id', 2)->get();
+    }
+
 }

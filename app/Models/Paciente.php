@@ -123,4 +123,9 @@ class Paciente extends Model
         return $this->hasOne(PacienteONG::class, 'dni', 'dni');
     }
 
+
+    public function seguimiento()
+    {
+        return $this->hasOne(SeguimientoPaciente::class, 'paciente_id');
+    }
 }

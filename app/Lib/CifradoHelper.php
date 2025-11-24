@@ -17,6 +17,7 @@ class CifradoHelper
     }
 
     public static function cifrar($texto) {
+        $texto = (string) $texto;
         $key = self::getKey();
         $out = '';
         for ($i = 0; $i < strlen($texto); $i++) {
