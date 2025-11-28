@@ -825,7 +825,7 @@ class FormPacienteEdit extends Component
         } else {
             $mailTo = $paciente->email;
             Mail::to($mailTo)->send(new EnviarFormularios($paciente));
-            $this->dispatchBrowserEvent('alert', ['type' => 'warning',  'message' => "Formularios enviados."]);
+            $this->dispatchBrowserEvent('alert', ['type' => 'warning',  'success' => "Formularios enviados."]);
         }
     }
 }
