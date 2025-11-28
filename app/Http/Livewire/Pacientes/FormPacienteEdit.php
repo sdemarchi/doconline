@@ -823,10 +823,9 @@ class FormPacienteEdit extends Component
         if (!filter_var($paciente->email, FILTER_VALIDATE_EMAIL)) {
             $this->dispatchBrowserEvent('alert', ['type' => 'error',  'message' => "El paciente no tiene un E-Mail válido registrado. No se enviaron los formularios."]);
         } else {
-            //$mailTo = $paciente->email;
-            $mailTo = "joaquinjozami@gmail.com";
+            $mailTo = $paciente->email;
             Mail::to($mailTo)->send(new EnviarFormularios($paciente));
-            $this->dispatchBrowserEvent('alert', ['type' => 'warning',  'message' => "Enviar Formularios. Función en Desarrollo!!!!"]);
+            $this->dispatchBrowserEvent('alert', ['type' => 'warning',  'message' => "Formularios enviados."]);
         }
     }
 }
