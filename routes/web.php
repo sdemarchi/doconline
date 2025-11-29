@@ -79,6 +79,10 @@ Route::get('paciente/amparo/{idPaciente}', [PrintController::class, 'amparo'])->
 Route::get('paciente/amparo-doc/{idPaciente}', [PrintController::class, 'amparoWord'])->name('paciente.generar-amparo-doc');
 Route::get('receta/impresion/{id}', [PrintController::class, 'receta'])->name('receta.impresion');
 
+// Rutas de Grow / ONG
+Route::get('ong/segiumiento-medico/{growIdCifrado}', [PrintController::class, 'seguimientoMedico'])->name('ong.seguimiento-medico');
+
+
 //Descargas con token
 Route::get('downloads/1/{token}', [PrintController::class, 'declaracionPacienteToken']);
 Route::get('downloads/2/{token}', [PrintController::class, 'consentimientoPacienteToken']);

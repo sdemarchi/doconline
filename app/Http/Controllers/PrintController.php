@@ -9,11 +9,13 @@ use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\Shared\Html;
 
 use Illuminate\Http\Request;
+use App\Lib\CifradoHelper;
 
 use App\Models\Paciente;
 use App\Models\DatoMedico;
 use App\Models\Receta;
-use App\Lib\CifradoHelper;
+use App\Models\Grow;
+use App\Models\SeguimientoPaciente;
 
 
 class PrintController extends Controller
@@ -148,4 +150,26 @@ class PrintController extends Controller
         return response()->download($temp_file, $fileName)->deleteFileAfterSend(true);
     }
 
+
+
+    public function seguimientoMedico($idGrowCifrado)
+    {
+        $idGrow = CifradoHelper::descifrar($idGrowCifrado);
+        $medico = DatoMedico::first();
+        $segList = SeguimientoPaciente::where('ong_id', $idGrow)
+                ->with('paciente')
+                ->get();
+
+        if ($segList->isEmpty()) {
+            return "No hay seguimientos para este Grow.";
+        }
+
+        // usar DOMPDF de Barryvdh
+        $pdf = \PDF::loadView('pdf.seguimiento-medico', [
+            'segList' => $segList,
+            'medico' => $medico
+        ]);
+
+        return $pdf->stream("seguimiento_medico.pdf");
+    }
 }

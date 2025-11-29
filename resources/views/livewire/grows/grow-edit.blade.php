@@ -1,3 +1,8 @@
+@php
+    use App\Lib\CifradoHelper;
+@endphp
+
+
 <div>
     <style>
         .grows-inputs-container{
@@ -119,7 +124,6 @@
 
 
         @media only screen and (max-width:700px){
-
             .grow-header{
                 padding:5px;
                 flex-wrap: wrap;
@@ -183,6 +187,10 @@
             </label>
 
             <div class="grow-buttons">
+                <a  class="ficha-button" href="{{ route('ong.seguimiento-medico', CifradoHelper::cifrar($growId)) }}" target="_blank">
+                <img src="{{ asset('svg/despacho.svg') }}" alt="Imprimir">
+            Seguimiento
+            </a>
                 <button wire:click="update" class="btn btn-primary grow-button grows-save-button">Guardar</button>
 
                 @if($growId)

@@ -18,6 +18,7 @@ use App\Models\Paciente;
 use App\Models\Provincia;
 use App\Models\Pago;
 
+use App\Lib\CifradoHelper;
 //use chillerlan\QRCode\{QRCode, QROptions};
 
 class GrowEdit extends Component
