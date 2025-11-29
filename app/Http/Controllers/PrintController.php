@@ -160,10 +160,6 @@ class PrintController extends Controller
                 ->with('paciente')
                 ->get();
 
-        if ($segList->isEmpty()) {
-            return "No hay seguimientos para este Grow.";
-        }
-
         // usar DOMPDF de Barryvdh
         $pdf = \PDF::loadView('pdf.seguimiento-medico', [
             'segList' => $segList,

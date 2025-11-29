@@ -21,11 +21,14 @@
         <hr>
     @endforeach
 
-    <br><br>
+    @if($segList->count() == 0)
+        <p>No hay seguimientos médicos disponibles para esta ONG.</p>
+    @endif
+
     @if($medico->firma)
-    <img class="imagen firma" src="{{ asset('/img/uploads/' . $medico->firma) }}" height="70" />
+    <img class="imagen firma" src="{{ asset('/img/uploads/' . $medico->firma) }}" height="75" />
     @endif
     @if($medico->sello)
-    <img class="imagen sello" src="{{ asset('/img/uploads/' . $medico->sello) }}" height="70" />
+    <img class="imagen sello" src="{{ asset('/img/uploads/' . $medico->sello) }}" height="50" />
     @endif
 </body

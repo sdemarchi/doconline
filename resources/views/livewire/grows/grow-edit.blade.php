@@ -123,6 +123,31 @@
         }
 
 
+        .grow-seguimiento-button{
+            background-color:#626976;
+            border:none;
+            border-radius: 4px;
+            color:rgb(255, 255, 255);
+            font-weight: 500;
+            padding:4px 12px;
+            margin:0px 4px;
+            height:fit-content;
+            min-width: max-content;
+            font-size:13px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            min-height: 30px;
+        }
+
+        .grow-seguimiento-button:hover{
+            text-decoration: none;
+            color:rgb(236, 236, 236);
+            opacity:90%;
+        }
+
+
+
         @media only screen and (max-width:700px){
             .grow-header{
                 padding:5px;
@@ -187,10 +212,12 @@
             </label>
 
             <div class="grow-buttons">
-                <a  class="ficha-button" href="{{ route('ong.seguimiento-medico', CifradoHelper::cifrar($growId)) }}" target="_blank">
+                @if($growId && $tipo == 2)
+                <a class="grow-seguimiento-button" href="{{ route('ong.seguimiento-medico', CifradoHelper::cifrar($growId)) }}" target="_blank">
                 <img src="{{ asset('svg/despacho.svg') }}" alt="Imprimir">
-            Seguimiento
-            </a>
+                Seguimiento
+                </a>
+                @endif
                 <button wire:click="update" class="btn btn-primary grow-button grows-save-button">Guardar</button>
 
                 @if($growId)

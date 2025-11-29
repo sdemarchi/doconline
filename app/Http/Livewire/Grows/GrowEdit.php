@@ -139,6 +139,14 @@ class GrowEdit extends Component
 
     public function render(){
         $provincias = Provincia::orderBy('Provincia', 'ASC')->get();
+
+        if (session()->has('alert_message')) {
+            $this->dispatchBrowserEvent('alert', [
+                'type' => session('alert_type'),
+                'message' => session('alert_message')
+            ]);
+        }
+
         return view('livewire.grows.grow-edit', [
             'provincias' => $provincias,
         ]);
