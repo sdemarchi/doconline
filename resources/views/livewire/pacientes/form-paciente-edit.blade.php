@@ -1108,26 +1108,22 @@
 
             <div class="ficha-input-container">
                 <label readonly disabled class="form-label ficha-label">Apellido y Nombre</label>
-                <input disabled type="text" class="form-control" style="background-color:#1e293b" value="{{ $nom_ape }}">
-                @error('apellido_nombre')<div class="text-danger">{{ $message }}</div>@enderror
+                <input disabled type="text" class="form-control" style="background-color:#1e293b" value="{{ $nom_ape ? $nom_ape : ' '}}">
             </div>
 
             <div class="ficha-input-container">
                 <label class="form-label ficha-label">DNI</label>
-                <input readonly disabled type="text" class="form-control" style="background-color:#1e293b" value="{{ $dni }}">
-                @error('dni')<div class="text-danger">{{ $message }}</div>@enderror
+                <input readonly disabled type="text" class="form-control" style="background-color:#1e293b" value="{{ $dni ? $dni : ' '}}">
             </div>
 
             <div class="ficha-input-container">
                 <label class="form-label ficha-label">Edad</label>
-                <input disabled type="text" class="form-control" style="background-color:#1e293b" value="{{ $edad }}">
-                @error('edad')<div class="text-danger">{{ $message }}</div>@enderror
+                <input disabled type="text" class="form-control" style="background-color:#1e293b" value="{{ $edad ? $edad : ' '}}">
             </div>
 
             <div class="ficha-input-container">
                 <label class="form-label ficha-label">Diagnóstico</label>
-                <input type="text" class="form-control" wire:model.defer="diagnostico">
-                @error('diagnostico')<div class="text-danger">{{ $message }}</div>@enderror
+                <input readonly disabled type="text" class="form-control" value="{{ $diagnostico ? $diagnostico:''}}" style="background-color:#1e293b">
             </div>
 
         </div>
