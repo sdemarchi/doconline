@@ -156,14 +156,18 @@ class PrintController extends Controller
     {
         $idGrow = CifradoHelper::descifrar($idGrowCifrado);
         $medico = DatoMedico::first();
-        $segList = SeguimientoPaciente::where('ong_id', $idGrow)
-                ->with('paciente')
-                ->get();
 
-        // usar DOMPDF de Barryvdh
+        $segList = SeguimientoPaciente::where('ong_id', $idGrow)
+            ->with('paciente')
+            ->get()
+            ->filter(function ($seguimiento) {
+                return $seguimiento->paciente !== null;
+            })
+            ->values(); // reindexa la colección
+
         $pdf = \PDF::loadView('pdf.seguimiento-medico', [
             'segList' => $segList,
-            'medico' => $medico
+            'medico'   => $medico,
         ]);
 
         return $pdf->stream("seguimiento_medico.pdf");
