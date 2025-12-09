@@ -94,7 +94,7 @@ EOT;
 
             $this->info("Enviar resumen al prestador " . $emailPrestador);
             Mail::raw($mensajePacientes, function ($message) use ($emailPrestador) {
-                $message->to("agugodzic@gmail.com")
+                $message->to($emailPrestador)
                         ->subject('Turnos asignados para hoy')
                         ->setCharset('UTF-8')
                         ->setContentType('text/plain; charset=UTF-8');
