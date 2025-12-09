@@ -42,7 +42,8 @@ class EnviarRecordatorioTurnos extends Command
 
             $mensaje = <<<EOT
 Hola {$nombrePaciente}.
-Te recordamos que hoy tenés programado el turno con Doc Online. La llamada será por WhatsApp.
+Te recordamos que hoy tenés programado el turno con Doc Online.
+Unite a la llamada desde este enlace del consultorio virtual 01 https://meet.google.com/myp-gkzo-iuh
 
 Fecha: {$fecha}
 Hora: {$hora}
@@ -88,12 +89,12 @@ EOT;
                 $hora = $turno->hora;
                 $lugar = $turno->lugar ?? 'Virtual';
 
-                $mensajePacientes .= " • {$nombrePaciente} a las {$hora} -  {$lugar}\n";
+                $mensajePacientes .= " • {$nombrePaciente} a las {$hora} -  {$lugar}\n\nUnite desde el enlace https://meet.google.com/myp-gkzo-iuh";
             }
 
             $this->info("Enviar resumen al prestador " . $emailPrestador);
             Mail::raw($mensajePacientes, function ($message) use ($emailPrestador) {
-                $message->to($emailPrestador)
+                $message->to("agugodzic@gmail.com")
                         ->subject('Turnos asignados para hoy')
                         ->setCharset('UTF-8')
                         ->setContentType('text/plain; charset=UTF-8');
