@@ -38,8 +38,7 @@
             </tr>
             <tr>
                 <td align="left" bgcolor="#ffffff" style="padding: 40px 20px 20px 20px; color: #555555; font-family: Arial, sans-serif; font-size: 16px; border-bottom: 0px;">
-                    Estimado/a <strong>{{ $paciente->nom_ape }},</strong> <br/><br/>
-                    Tu vinculación fue realizada exitosamente. Recordá que, desde la fecha de vinculación, deben transcurrir dos meses y medio para poder iniciar un reclamo, como el recurso de amparo. Luego de presentar el amparo, se debe esperar entre 5 y 50 días hábiles para que un juez ordene la aprobación en REPROCANN.<br/>
+                    Tu vinculación fue realizada exitosamente. Desde la fecha de tu vinculación (ver más abajo en este correo), debes esperar 2 meses y 2 semanas para poder reclamar tu aprobación. Cumplido ese plazo, contacta al estudio Robles (351-600-3759) para que te inicien un recurso de amparo. Este trámite suele tardar 2 meses y 2 semanas adicionales en surtir efecto. Es decir, tu permiso demorará aproximadamente 6 meses. Recordá que los tiempos de demora no son responsabilidad del médico, sino del Ministerio de Salud.<br/><br/>
                     A continuación, te compartimos los datos de tu trámite y la fecha en que se realizó:<br/><br/>
 
                     <table border="0" cellpadding="8" cellspacing="0" width="100%" style="border-collapse: collapse; font-size: 15px;">
