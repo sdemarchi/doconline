@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Pacientes;
 
 use App\Mail\EnviarFormularios;
+use App\Mail\AvisoDeVinculacion;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Str;
@@ -825,7 +826,25 @@ class FormPacienteEdit extends Component
         } else {
             $mailTo = $paciente->email;
             Mail::to($mailTo)->send(new EnviarFormularios($paciente));
-            $this->dispatchBrowserEvent('alert', ['type' => 'warning',  'success' => "Formularios enviados."]);
+            $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Formularios enviados."]);
+        }
+    }
+
+        public function enviarAvisoVinculacion(){
+        $paciente = Paciente::find($this->pacienteId);
+        if(!$paciente->token){
+            $token = bin2hex(random_bytes(16));
+            $paciente->token = $token;
+            $paciente->save();
+        }
+        if (!filter_var($paciente->email, FILTER_VALIDATE_EMAIL)) {
+            $this->dispatchBrowserEvent('alert', ['type' => 'error',  'message' => "El paciente no tiene un E-Mail válido registrado. No se enviaron los formularios."]);
+        }else if(!$paciente->datos_tramite){
+            $this->dispatchBrowserEvent('alert', ['type' => 'error',  'message' => "Debe completar los datos del trámite."]);
+        } else {
+            $mailTo = $paciente->email;
+            Mail::to($mailTo)->send(new AvisoDeVinculacion($paciente));
+            $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Se envio el aviso de vinculación."]);
         }
     }
 }

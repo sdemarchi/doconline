@@ -42,6 +42,10 @@
                 Enviar Formularios
             </button>
 
+            <button class="ficha-button" wire:click="enviarAvisoVinculacion">
+                Aviso de vinculación
+            </button>
+
             <a class="ficha-button ficha-wsp-button" href="https://wa.me/{{$this->formatearTelefono($celular)}}" target="_blank">
                 <img src="{{ asset('svg/wsp.svg') }}" alt="Whatsapp">
                 Whatsapp
