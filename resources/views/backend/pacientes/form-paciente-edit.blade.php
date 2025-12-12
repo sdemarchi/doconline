@@ -1,7 +1,21 @@
 <x-backend-layout>
+    <style>
+        .tarjeta_nombre_back {
+            font-size: 16px;
+            background-color: rgba(255, 255, 255, 0.049);
+            color: #ebebeb;
+            padding:2px 10px;
+            border-radius: 5px;
+            display:inline-flex;
+            align-items: center;
+            justify-content: center;
+            max-width: fit-content;
+        }
+        </style>
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Editar Paciente #{{ $id }}
+            Editar Paciente #{{ $id }} <span class="tarjeta_nombre_back"> {{ $nom_ape }} -  DNI {{ $dni }} </span>
         </h2>
     </x-slot>
 

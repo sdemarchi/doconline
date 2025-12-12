@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Pacientes;
 
 use App\Mail\EnviarFormularios;
 use App\Mail\AvisoDeVinculacion;
+use App\Mail\EmailPaciente;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Str;
@@ -48,6 +49,7 @@ class FormPacienteEdit extends Component
     public $pago_verificado;
     public $pago_utilizado;
     public $test;
+    public $mensaje;
     public $ongs = [];
 
     public $pagado, $estado, $fe_carga, $fe_aprobacion, $email, $nom_ape, $dni, $fe_nacim, $cod_vincu,
@@ -845,6 +847,20 @@ class FormPacienteEdit extends Component
             $mailTo = $paciente->email;
             Mail::to($mailTo)->send(new AvisoDeVinculacion($paciente));
             $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Se envio el aviso de vinculación."]);
+        }
+    }
+
+    public function enviarEmailPaciente(){
+           $paciente = Paciente::find($this->pacienteId);
+
+        if (!filter_var($paciente->email, FILTER_VALIDATE_EMAIL)) {
+            $this->dispatchBrowserEvent('alert', ['type' => 'error',  'message' => "El paciente no tiene un E-Mail válido registrado. No se enviaron los formularios."]);
+        }else if(!$this->mensaje || trim($this->mensaje) == ''){
+            $this->dispatchBrowserEvent('alert', ['type' => 'error',  'message' => "El mensaje no puede estar vacio."]);
+        } else {
+            $mailTo = $paciente->email;
+            Mail::to($mailTo)->send(new EmailPaciente($paciente, $this->mensaje));
+            $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Email enviado al paciente."]);
         }
     }
 }

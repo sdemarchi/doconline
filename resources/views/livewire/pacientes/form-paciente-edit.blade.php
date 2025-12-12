@@ -69,6 +69,20 @@
         </div>
     </div>
 
+    <div id="contenedor-mensaje-paciente">
+        <textarea
+                class="form-control"
+                wire:model="mensaje"
+                placeholder="Mensaje para el paciente"
+                style="flex:1; height:60px; margin-bottom:10px;">
+        </textarea>
+
+        <button class="ficha-button ficha-save-button" style="margin-bottom:10px" wire:click="enviarEmailPaciente">
+            <img height="18" style="margin-right:5px;"  src="{{ asset('svg/email-blanco.svg') }}" alt="Mail">
+            Enviar
+        </button>
+    </div>
+
 
   <div class="card-body" style='margin-top:0'>
 

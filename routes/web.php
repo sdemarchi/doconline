@@ -114,9 +114,15 @@ Route::group(['middleware' => ['auth']], function () {
     Route::view('/pacientes/estadisticas', 'backend.pacientes.pacientes-estadisticas')->name('pacientes.estadisticas');
     Route::view('/pacientes', 'backend.pacientes.pacientes')->name('pacientes');
     Route::view('/pacientes/create', 'backend.pacientes.form-paciente')->name('pacientes.create');
-    Route::get('/pacientes/{id}/edit',function($id){
-        return view('backend.pacientes.form-paciente-edit', compact('id'));
-    })->name('pacientes.edit');
+
+Route::get('/pacientes/{id}/edit', function ($id) {
+    $paciente = \App\Models\Paciente::findOrFail($id);
+    $nom_ape = $paciente->nom_ape;
+    $dni = $paciente->dni;
+    return view('backend.pacientes.form-paciente-edit', compact('id', 'nom_ape', 'dni'));
+})->name('pacientes.edit');
+
+
     Route::get('/pacientes/{id}/editFirma',function($id){
         return view('backend.pacientes.form-firmas-edit', compact('id'));
     })->name('pacientes.editFirma');
