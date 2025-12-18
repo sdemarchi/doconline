@@ -75,7 +75,7 @@ EOT;
                 continue;
             }
 
-            $emailPrestador = $prestador->email;
+            $emailPrestador =  $prestador->email;
             $nombrePrestador = $prestador->nombre;
 
             $mensajePacientes = "Hola {$nombrePrestador}. Tenés turnos asignados para hoy:\n\n";
@@ -89,10 +89,10 @@ EOT;
                 $hora = $turno->hora;
                 $lugar = $turno->lugar ?? 'Virtual';
 
-                $mensajePacientes .= " • {$nombrePaciente} a las {$hora} -  {$lugar}";
+                $mensajePacientes .= " • {$nombrePaciente} a las {$hora} -  {$lugar}\n";
             }
 
-            $mensajePacientes .= "\n\nUnite desde el enlace https://meet.google.com/myp-gkzo-iuh"
+            $mensajePacientes .= "\nUnite desde el enlace https://meet.google.com/myp-gkzo-iuh";
 
             $this->info("Enviar resumen al prestador " . $emailPrestador);
             Mail::raw($mensajePacientes, function ($message) use ($emailPrestador) {

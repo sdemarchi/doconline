@@ -9,7 +9,7 @@ use Carbon\CarbonPeriod;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 
-use App\Mail\FormularioCompleto;
+use App\Mail\SolicitarDatosPersonales;
 
 use Livewire\WithFileUploads;
 
@@ -131,10 +131,10 @@ class Calendario extends Component
                     <thead>
                     <th style="background-color:white;color:black;">'.$this->fechaSelFormateada.'</th>
                         <tr>
-                        <th style="background-color:#a4c2f4;color:black;">Paciente</th>
                         <th style="background-color:#a4c2f4;color:black;">Patologias</th>
                         <th style="background-color:#a4c2f4;color:black;">Pago</th>
                         <th style="background-color:#a4c2f4;color:black;">Hora</th>
+                        <th style="background-color:#a4c2f4;color:black;">Paciente</th>
                         <th style="background-color:#a4c2f4;color:black;">Telefono</th>
                         <th style="background-color:#a4c2f4;color:black;">DNI</th>
                         <th style="background-color:#a4c2f4;color:black;">Email</th>
@@ -443,10 +443,10 @@ class Calendario extends Component
         $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Cambio guardado"]);
     }
 
-    public function mailFormulario($pacienteId){
-        $paciente = Paciente::find($pacienteId);
-        $mailTo = $paciente->email;
-        Mail::to($mailTo)->send(new FormularioCompleto($paciente));
-        $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Se envió la Ficha al Paciente"]);
+
+    public function mailSolicitarDatosPersonales($email, $nombrePaciente){
+        $mailTo = $email;
+        Mail::to($mailTo)->send(new SolicitarDatosPersonales($nombrePaciente));
+        $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Se envió el mail al Paciente"]);
     }
 }

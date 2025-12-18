@@ -171,11 +171,12 @@
                                         <a class="ficha-button btn btn-ghost-light btn-icon" href="{{route('pacientes.edit',$turno['fichaId'])}}" data-toggle="tooltip" data-placement="right" title="Ficha del Paciente">
                                             <img class="icon calendario-icon" src={{asset('svg/ficha.svg')}} >
                                         </a>
+                                    @endif
 
-                                        <button class="email-button btn btn-ghost-light btn-icon" wire:click="mailFormulario({{ $turno['fichaId'] }})" data-toggle="tooltip" data-placement="right" title="Enviar Ficha">
+                                        <button class="email-button btn btn-ghost-light btn-icon" wire:click="mailSolicitarDatosPersonales('{{$turno['email']}}','{{$turno['paciente']}}')" data-toggle="tooltip" data-placement="right" title="Solicitar datos personales">
                                             <img class="icon calendario-icon" src={{asset('svg/email.svg')}} >
                                         </button>
-                                    @endif
+
                                 </td>
 
                                 <td>
