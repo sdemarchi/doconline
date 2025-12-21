@@ -115,12 +115,20 @@ Route::group(['middleware' => ['auth']], function () {
     Route::view('/pacientes', 'backend.pacientes.pacientes')->name('pacientes');
     Route::view('/pacientes/create', 'backend.pacientes.form-paciente')->name('pacientes.create');
 
-Route::get('/pacientes/{id}/edit', function ($id) {
-    $paciente = \App\Models\Paciente::findOrFail($id);
-    $nom_ape = $paciente->nom_ape;
-    $dni = $paciente->dni;
-    return view('backend.pacientes.form-paciente-edit', compact('id', 'nom_ape', 'dni'));
-})->name('pacientes.edit');
+    Route::post('/pacientes/buscar', function (\Illuminate\Http\Request $request) {
+        session([
+            'pacienteSearchString' => trim($request->input('search')),
+        ]);
+
+        return redirect()->route('pacientes');
+    })->name('pacientes.buscar');
+
+    Route::get('/pacientes/{id}/edit', function ($id) {
+        $paciente = \App\Models\Paciente::findOrFail($id);
+        $nom_ape = $paciente->nom_ape;
+        $dni = $paciente->dni;
+        return view('backend.pacientes.form-paciente-edit', compact('id', 'nom_ape', 'dni'));
+    })->name('pacientes.edit');
 
 
     Route::get('/pacientes/{id}/editFirma',function($id){

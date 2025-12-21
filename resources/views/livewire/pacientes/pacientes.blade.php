@@ -32,10 +32,6 @@
                         <button class="btn btn-primary" style="height:30px !important;margin-left:8px;" wire:click="buscarPorDatos">Buscar</button>
                     </div>
 
-                    <div id="buscar-dni">
-                        <button class="btn btn-primary" style="height:30px !important;margin-left:8px;" wire:click="buscarPorDNI">Buscar por DNI</button>
-                    </div>
-
                     <div id="generar-csv">
                         <button class="btn btn-success" style="height:30px !important;margin-left:8px;" wire:click="generarCsv">Generar CSV</button>
                     </div>

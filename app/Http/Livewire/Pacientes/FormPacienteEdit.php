@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Pacientes;
 
 use App\Mail\EnviarFormularios;
+use App\Mail\EmailSolicitudCodVinculacion;
 use App\Mail\AvisoDeVinculacion;
 use App\Mail\EmailPaciente;
 use Livewire\Component;
@@ -860,6 +861,19 @@ class FormPacienteEdit extends Component
         } else {
             $mailTo = $paciente->email;
             Mail::to($mailTo)->send(new EmailPaciente($paciente, $this->mensaje));
+            $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Email enviado al paciente."]);
+        }
+    }
+
+
+    public function emailSolicitarCodVinc(){
+           $paciente = Paciente::find($this->pacienteId);
+
+        if (!filter_var($paciente->email, FILTER_VALIDATE_EMAIL)) {
+            $this->dispatchBrowserEvent('alert', ['type' => 'error',  'message' => "El paciente no tiene un E-Mail válido registrado. No se enviaron los formularios."]);
+        } else {
+            $mailTo = $paciente->email;
+            Mail::to($mailTo)->send(new EmailSolicitudCodVinculacion($paciente));
             $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Email enviado al paciente."]);
         }
     }

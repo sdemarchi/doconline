@@ -46,7 +46,7 @@
                 Aviso de vinculación
             </button>
 
-            <a class="ficha-button ficha-wsp-button" href="https://wa.me/{{$this->formatearTelefono($celular)}}" target="_blank">
+            <a class="ficha-button ficha-green-button" href="https://wa.me/{{$this->formatearTelefono($celular)}}" target="_blank">
                 <img src="{{ asset('svg/wsp.svg') }}" alt="Whatsapp">
                 Whatsapp
             </a>
@@ -214,7 +214,7 @@
                 <!-------------------->
 
                 <!------ ROW 2 ------->
-                <div class="ficha-row ficha-inputs-row">
+                <div class="ficha-row ficha-inputs-row pb-0">
                     <div class="ficha-input-container">
                         <label class="form-label">Estado</label>
                         <select class="form-select" wire:model.defer="estado">
@@ -244,8 +244,9 @@
                       </div>
                       <div class="ficha-input-container">
                         <label class="form-label">Código de vinculación</label>
-                        <input type="text" class="form-control" wire:model.defer="cod_vincu">
-                        @error('cod_vinco')<div class="text-danger">{{ $message }}</div>@enderror
+                        <input type="text" class="form-control mb-2" wire:model.defer="cod_vincu">
+                        @error('cod_vincu')<div class="text-danger">{{ $message }}</div>@enderror
+                        <button class="ficha-button ficha-green-button" style="margin-top: 10px;" wire:click="emailSolicitarCodVinc()">Solicitar código de vinculación</button>
                       </div>
 
                 </div>
@@ -256,7 +257,7 @@
 
             <!--////////// datos de ubicacion /////////-->
 
-            <h2 class="ficha-subtitulo ficha-sub-in">Domicilio</h2>
+            <h2 class="ficha-subtitulo ficha-sub-in" style="padding-top: 0px !important; margin-top:0; ">Domicilio</h2>
 
                 <!------ ROW 1 ------->
                 <div class="ficha-row ficha-inputs-row">

@@ -3,6 +3,20 @@
         .ingreso-button:hover{
             text-decoration:none;
         }
+
+        #navbar-buscador{
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding:0;
+        }
+
+        #navbar-buscador button{
+            margin-left: 5px;
+            height: fit-content;
+            padding: 5px 10px;
+
+        }
     </style>
 
     <div class="collapse navbar-collapse" id="navbar-menu">
@@ -181,6 +195,18 @@
               </div>
             </li>
          </ul>
+
+        <form method="POST" action="{{ route('pacientes.buscar') }}" id="navbar-buscador">
+            @csrf
+            <input
+                class="form-control"
+                type="search"
+                name="search"
+                placeholder="Buscar paciente"
+                required
+            >
+            <button class="btn btn-primary" type="submit">Buscar</button>
+        </form>
 
         </div>
       </div>

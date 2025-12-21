@@ -6,6 +6,8 @@ use Livewire\Component;
 use Livewire\WithPagination;
 
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 use App\Lib\convertBase30;
 use Maatwebsite\Excel\Facades\Excel;
@@ -28,12 +30,11 @@ class Pacientes extends Component
             $doloresSort, $conc_thcSort, $conc_cbdSort, $cant_plantasSort, $dosisSort, $frecuenciaSort, $domicilioSort,
             $localidadSort, $idprovinciaSort, $cpSort, $fe_nacimSort, $osocialSort, $emailSort, $celularSort, $es_menorSort,
             $tut_apeynomSort, $tut_tipo_nro_docSort, $tut_vinculoSort;
-    public $searchMode, $searchString;
+    public $searchString;
 
     public function mount(){
         $this->anioActual = Carbon::now()->year;
-        $this->searchString = session('pacienteSearchString');
-        $this->searchMode = session('pacienteSearchMode');
+        $this->searchString = session()->pull('pacienteSearchString');
         $this->sortField = 'idpaciente';
         $this->sortDir = 'DESC';
     }
@@ -43,41 +44,46 @@ class Pacientes extends Component
         return view('livewire.pacientes.pacientes', compact('pacientes'));
     }
 
-    private function _query(){
-        session(['pacienteSearchString' => $this->searchString]);
-        session(['pacienteSearchMode' => $this->searchMode]);
+    private function _query()
+    {
+        $search = trim($this->searchString);
 
-        $pacientes = Paciente::where('idpaciente','>',0);
-
-        if($this->searchMode == 'datos'){
-            if($this->searchString != ''){
-                if(is_numeric($this->searchString)){
-                    $pacientes->where('idpaciente', $this->searchString)
-                        ->orWhere('email','like', '%' . $this->searchString . '%')
-                        ->orWhere('celular','like', '%' . $this->searchString . '%');
-                } else {
-                    $pacientes->where('nom_ape','like', '%' . $this->searchString . '%')
-                        ->orWhere('email','like', '%' . $this->searchString . '%')
-                        ->orWhere('celular','like', '%' . $this->searchString . '%');
-                }
-            }
+        if ($search === '') {
+            return Paciente::orderBy($this->sortField, $this->sortDir)->paginate(10);
         }
 
-        if($this->searchMode == 'dni'){
-            if($this->searchString != ''){
-                $pacientes->where('dni', $this->searchString);
-            }
-        }
+        $dniQuery = Paciente::where('dni', $search);
+        $idQuery = Paciente::where('idpaciente', $search);
+        $celularQuery = Paciente::where('celular', 'like', "%{$search}%");
+        $datosQuery = Paciente::where('nom_ape', 'like', "%{$search}%")
+            ->orWhere('email', 'like', "%{$search}%");
 
+        $union = $dniQuery
+            ->unionAll($idQuery)
+            ->unionAll($celularQuery)
+            ->unionAll($datosQuery);
 
-        $this->_setSortClasses();
-        $this->emit('searchCompleted');
-        return $pacientes->orderBy($this->sortField,$this->sortDir)->paginate(10);
+        $rows = \DB::query()
+            ->fromSub($union, 'pacientes')
+            ->select('pacientes.*')
+            ->distinct()
+            ->orderBy($this->sortField, $this->sortDir)
+            ->paginate(10);
+
+        $pacientes = Paciente::hydrate($rows->items());
+
+        return new LengthAwarePaginator(
+            $pacientes,
+            $rows->total(),
+            $rows->perPage(),
+            $rows->currentPage(),
+            ['path' => request()->url()]
+        );
     }
+
 
     public function limpiarBusqueda(){
         $this->resetPagination();
-        $this->searchMode = '';
         $this->searchString = '';
     }
 
@@ -103,13 +109,8 @@ class Pacientes extends Component
 
     public function buscarPorDatos(){
         $this->resetPagination();
-        $this->searchMode = 'datos';
     }
 
-    public function buscarPorDNI(){
-        $this->resetPagination();
-        $this->searchMode = 'dni';
-    }
 
     public function convertirFirmaAclaracion($id){
         $paciente = Paciente::find($id);
