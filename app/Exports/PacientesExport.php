@@ -15,7 +15,6 @@ class PacientesExport implements FromCollection, ShouldAutoSize, WithHeadings, W
 
     public function collection()
     {
-        // 2) Invertir el orden de los registros
         return Paciente::orderBy('idpaciente', 'desc')->get();
     }
 
@@ -58,7 +57,6 @@ class PacientesExport implements FromCollection, ShouldAutoSize, WithHeadings, W
             $this->pagado2024 = $paciente->pagado2024 ? 'Sí' : '-';
         }
 
-        // 3) Parseo de datos_tramite (tabulado)
         $datosTramite = array_fill(0, 8, '');
 
         if (!empty($paciente->datos_tramite)) {
