@@ -44,42 +44,102 @@ class Pacientes extends Component
         return view('livewire.pacientes.pacientes', compact('pacientes'));
     }
 
-    private function _query()
-    {
+    private function _query(){
         $search = trim($this->searchString);
+        $search = str_replace('+', '', $search);
 
         if ($search === '') {
-            return Paciente::orderBy($this->sortField, $this->sortDir)->paginate(10);
+            return Paciente::orderBy($this->sortField, $this->sortDir)
+                ->paginate(10);
         }
 
-        $dniQuery = Paciente::where('dni', $search);
-        $idQuery = Paciente::where('idpaciente', $search);
-        $celularQuery = Paciente::where('celular', 'like', "%{$search}%");
-        $datosQuery = Paciente::where('nom_ape', 'like', "%{$search}%")
-            ->orWhere('email', 'like', "%{$search}%");
+        $hasSpace   = str_contains($search, ' ');
+        $hasAt      = str_contains($search, '@');
+        $isNumeric  = ctype_digit($search);
+        $length     = strlen($search);
+        $hasLetters = preg_match('/[a-zA-Z]/', $search);
+        $hasNumbers = preg_match('/\d/', $search);
 
-        $union = $dniQuery
-            ->unionAll($idQuery)
-            ->unionAll($celularQuery)
-            ->unionAll($datosQuery);
+        /*
+        |--------------------------------------------------------------------------
+        | CASO ESPECIAL: EXACTAMENTE 8 DÍGITOS (PRIORIDAD DNI)
+        |--------------------------------------------------------------------------
+        */
+        if ($isNumeric && $length === 8) {
 
-        $rows = \DB::query()
-            ->fromSub($union, 'pacientes')
-            ->select('pacientes.*')
-            ->distinct()
+            $dniQuery = Paciente::where('dni', $search)
+                ->orderBy($this->sortField, $this->sortDir)
+                ->paginate(10);
+
+            if ($dniQuery->total() > 0) {
+                return $dniQuery;
+            }
+
+            return Paciente::where('celular', 'like', "%{$search}%")
+                ->orderBy($this->sortField, $this->sortDir)
+                ->paginate(10);
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | RESTO DE LOS CASOS
+        |--------------------------------------------------------------------------
+        */
+
+        $query = Paciente::query();
+
+        // Contiene @ → solo email
+        if ($hasAt) {
+            $query->where('email', 'like', "%{$search}%");
+        }
+
+        // Solo letras
+        elseif ($hasLetters && !$hasNumbers) {
+
+            // Letras con espacio → solo nom_ape
+            if ($hasSpace) {
+                $query->where('nom_ape', 'like', "%{$search}%");
+            }
+            // Letras sin espacio → nom_ape y email
+            else {
+                $query->where(function ($q) use ($search) {
+                    $q->where('nom_ape', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%");
+                });
+            }
+        }
+
+        // Letras + números → solo email
+        elseif ($hasLetters && $hasNumbers) {
+            $query->where('email', 'like', "%{$search}%");
+        }
+
+        // Numéricos
+        elseif ($isNumeric) {
+
+            // > 8 cifras → solo celular
+            if ($length > 8) {
+                $query->where('celular', 'like', "%{$search}%");
+            }
+            // > 5 cifras → dni y celular
+            elseif ($length > 5) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('dni', $search)
+                    ->orWhere('celular', 'like', "%{$search}%");
+                });
+            }
+            // <= 5 cifras → id
+            else {
+                $query->where('idpaciente', $search);
+            }
+        }
+
+
+        return $query
             ->orderBy($this->sortField, $this->sortDir)
             ->paginate(10);
-
-        $pacientes = Paciente::hydrate($rows->items());
-
-        return new LengthAwarePaginator(
-            $pacientes,
-            $rows->total(),
-            $rows->perPage(),
-            $rows->currentPage(),
-            ['path' => request()->url()]
-        );
     }
+
 
 
     public function limpiarBusqueda(){

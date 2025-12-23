@@ -1,5 +1,6 @@
 <div class="navbar-expand-md">
     <style>
+
         .ingreso-button:hover{
             text-decoration:none;
         }
@@ -12,11 +13,10 @@
         }
 
         #navbar-buscador button{
-            margin-left: 5px;
-            height: fit-content;
+            margin-left: 2px;
             padding: 5px 10px;
-
         }
+
     </style>
 
     <div class="collapse navbar-collapse" id="navbar-menu">
@@ -205,7 +205,11 @@
                 placeholder="Buscar paciente"
                 required
             >
-            <button class="btn btn-primary" type="submit">Buscar</button>
+            <button class="btn btn-primary" type="submit">
+                <img src="{{ URL::asset('svg/search.svg') }}"/>
+            </button>
+
+
         </form>
 
         </div>

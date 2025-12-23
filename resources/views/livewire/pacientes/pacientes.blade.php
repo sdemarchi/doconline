@@ -38,11 +38,6 @@
                 </div>
             </div>
 
-            <div id="loader">
-                @include('components.loader')
-            </div>
-
-
             <div id="pacientes-table-container" class="table-responsive">
                <table class="table table-vcenter card-table" style="margin-bottom:20px !important;">
                     <thead>
