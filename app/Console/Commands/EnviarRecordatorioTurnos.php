@@ -40,27 +40,85 @@ class EnviarRecordatorioTurnos extends Command
             $lugar = $turno->lugar ?? 'Virtual';
             $medico = $prestador->nombre;
 
-            $mensaje = <<<EOT
-Hola {$nombrePaciente}.
-Te recordamos que hoy tenés programado el turno con Doc Online.
-Unite a la llamada desde este enlace del consultorio virtual 01 https://meet.google.com/rgh-rqaw-kyf
+           $mensaje = "
+            <!DOCTYPE html>
+            <html>
+            <body style='margin:0; padding:20px; font-family:Arial, sans-serif; background-color:#f4f6f8;'>
 
-Fecha: {$fecha}
-Hora: {$hora}
-Lugar: {$lugar}
-Profesional: {$medico}
+            <table width='100%' cellpadding='0' cellspacing='0'>
+            <tr>
+            <td align='center'>
 
-Por favor, asegúrese de estar disponible y conectado a tiempo.
-Cualquier duda, podés contactarnos.
-¡Gracias por confiar en nosotros!
-EOT;
+            <table width='600' cellpadding='0' cellspacing='0'
+                style='background:#ffffff; padding:30px; border-radius:8px;'>
 
-            Mail::raw($mensaje, function ($message) use ($email) {
+            <tr><td>
+
+            <h2 style='margin-top:0; color:#2c3e50;'>Hola {$nombrePaciente}</h2>
+
+            <p>Te recordamos que hoy tenés programado tu turno con <strong>Doc Online</strong>.</p>
+
+            <p>
+            <strong>Fecha:</strong> {$fecha}<br>
+            <strong>Hora:</strong> {$hora}<br>
+            <strong>Lugar:</strong> {$lugar}<br>
+            <strong>Profesional:</strong> {$medico}
+            </p>
+
+            <p>En la fecha y hora indicados, podés ingresar al turno desde el siguiente botón:</p>
+
+            <p style='text-align:center; margin:30px 0;'>
+            <a href='https://meet.google.com/rgh-rqaw-kyf'
+            style='display:inline-block;
+                    background-color:#27ae60;
+                    padding:12px 25px;
+                    border-radius:30px;
+                    color:#ffffff;
+                    text-decoration:none;
+                    font-weight:bold;'>
+            Ingresar al turno
+            </a>
+            </p>
+
+            <hr style='border:none; border-top:1px solid #e0e0e0; margin:30px 0;'>
+
+            <p style='text-align:center; font-size:12px; color:#777;'>
+            Seguinos en nuestras redes
+            </p>
+
+            <p style='text-align:center;'>
+            <a href='https://instagram.com/doconlineargentina'
+            style='display:inline-block;
+                    background-color:#dce9ef;
+                    padding:8px 18px;
+                    border-radius:25px;
+                    text-decoration:none;
+                    font-size:14px;
+                    color:#000;'>
+            <img src='https://cdn-icons-png.flaticon.com/512/2111/2111463.png'
+                    width='16'
+                    style='vertical-align:middle; margin-right:6px;'>
+            <span style='vertical-align:middle;'>DocOnline</span>
+            </a>
+            </p>
+
+            </td>
+            </tr>
+            </table>
+
+            </td>
+            </tr>
+            </table>
+
+            </body>
+            </html>
+            ";
+
+            Mail::html($mensaje, function ($message) use ($email) {
                 $message->to($email)
-                        ->subject('Recordatorio de turno')
-                        ->setCharset('UTF-8')
-                        ->setContentType('text/plain; charset=UTF-8');
+                        ->subject('Recordatorio de turno');
             });
+
         }
 
 

@@ -12,6 +12,9 @@ use App\Models\Paciente;
 use App\Models\Ocupacion;
 use App\Models\PacientePatologia;
 
+use Illuminate\Support\Facades\Mail;
+use App\Mail\EmailSolicitudCodVinculacion;
+
 class formController extends Controller
 {
     public function guardarFormulario(Request $request){
@@ -28,9 +31,15 @@ class formController extends Controller
         }
 
         $data = $this->_get_data($request);
-        $id = Paciente::create($data)->idpaciente;
+        $paciente = Paciente::create($data);
 
-        $patologias = $this->_get_patologias_data($id, $request);
+        // Si no completo el código de vinculación le envio un email automaticamente.
+        if(empty($data['cod_vincu'])) {
+            $mailTo = $paciente->email;
+            Mail::to($mailTo)->send(new EmailSolicitudCodVinculacion($paciente));
+        }
+
+        $patologias = $this->_get_patologias_data($paciente->idpaciente, $request);
         foreach($patologias as $pat){
             PacientePatologia::create($pat);
         }
@@ -63,7 +72,14 @@ class formController extends Controller
         }
 
         $data = $this->_get_data($request);
-        Paciente::find($id)->update($data);
+
+        $paciente = Paciente::find($id);
+        $paciente->update($data);
+
+        if(empty($data['cod_vincu'])) {
+            $mailTo = $paciente->email;
+            Mail::to($mailTo)->send(new EmailSolicitudCodVinculacion($paciente));
+        }
 
         $patologias = $this->_get_patologias_data($id, $request);
         PacientePatologia::where('idpaciente',$id)->delete();
