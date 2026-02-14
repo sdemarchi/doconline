@@ -43,7 +43,7 @@ class EnviarRecordatorioTurnos extends Command
             $mensaje = <<<EOT
 Hola {$nombrePaciente}.
 Te recordamos que hoy tenés programado el turno con Doc Online.
-Unite a la llamada desde este enlace del consultorio virtual 01 https://meet.google.com/myp-gkzo-iuh
+Unite a la llamada desde este enlace del consultorio virtual 01 https://meet.google.com/rgh-rqaw-kyf
 
 Fecha: {$fecha}
 Hora: {$hora}
@@ -92,7 +92,7 @@ EOT;
                 $mensajePacientes .= " • {$nombrePaciente} a las {$hora} -  {$lugar}\n";
             }
 
-            $mensajePacientes .= "\nUnite desde el enlace https://meet.google.com/myp-gkzo-iuh";
+            $mensajePacientes .= "\nUnite desde el enlace https://meet.google.com/rgh-rqaw-kyf";
 
             $this->info("Enviar resumen al prestador " . $emailPrestador);
             Mail::raw($mensajePacientes, function ($message) use ($emailPrestador) {
