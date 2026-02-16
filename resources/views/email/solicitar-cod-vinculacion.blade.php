@@ -28,7 +28,7 @@
                 <td align="left" bgcolor="#ffffff" style="padding: 40px 20px 0 20px; color: #3c3c3c; font-family: Arial, sans-serif; font-size: 16px; border-bottom: 0px;">
                     <p style="margin-bottom:15px">Para poder iniciar tu trámite de Reprocann, necesitamos que nos compartas tu <mark>Código de Vinculación</mark>.</p>
                     <p style="margin-bottom:15px">En este Formulario: <a href="https://forms.gle/cxLH5RFfaDLY6pvf7">https://forms.gle/cxLH5RFfaDLY6pvf7</a></p>
-                    <p>Mira cómo obtenerlo y enviárnoslo en el siguiente video: <a href="https://youtube.com/shorts/Px85cYeR4xM?si=zPFs4z67wF6hR_WD">https://youtube.com/shorts/Px85cYeR4xM?si=zPFs4z67wF6hR_WD</a></p>
+                    <p>Mira cómo obtenerlo y enviárnoslo en el siguiente video: <a href="https://youtube.com/shorts/TMWXpWEk03Y?si=SMqKkoUCCG7MimjR">https://youtube.com/shorts/TMWXpWEk03Y?si=SMqKkoUCCG7MimjR</a></p>
                     <br/><br/>
                 </td>
             </tr>
