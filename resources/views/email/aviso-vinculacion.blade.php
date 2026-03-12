@@ -19,75 +19,55 @@
     </head>
     <body bgcolor="#13A8C6" style="margin: 0; padding: 0;" yahoo="fix">
         <table align="center" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse; width: 100%; max-width: 600px;" class="content">
-
             <tr>
                 <td style="padding: 15px 10px 15px 10px;">
                     <table border="0" cellpadding="0" cellspacing="0" width="100%">
                         <tr>
                             <td align="center" style="color: #aaaaaa; font-family: Arial, sans-serif; font-size: 12px;">
-
                             </td>
                         </tr>
                     </table>
                 </td>
             </tr>
+
             <tr>
                 <td align="center" bgcolor="#4d4d4d" style="padding: 20px 20px 20px 20px; color: #ffffff; font-family: Arial, sans-serif; font-size: 26px; font-weight: bold;">
                     Aviso de vinculación
                 </td>
             </tr>
+
             <tr>
                 <td align="left" bgcolor="#ffffff" style="padding: 40px 20px 20px 20px; color: #555555; font-family: Arial, sans-serif; font-size: 16px; border-bottom: 0px;">
-                    Tu vinculación fue realizada exitosamente. Desde la fecha de tu vinculación (ver más abajo en este correo), debes esperar 2 meses y 2 semanas para poder reclamar tu aprobación. Cumplido ese plazo, contacta al estudio Robles (351-600-3759) para que te inicien un recurso de amparo. Este trámite suele tardar 2 meses y 2 semanas adicionales en surtir efecto. Es decir, tu permiso demorará aproximadamente 6 meses. Recordá que los tiempos de demora no son responsabilidad del médico, sino del Ministerio de Salud.<br/><br/>
-                    A continuación, te compartimos los datos de tu trámite y la fecha en que se realizó:<br/><br/>
+                    Hola,<br/>
+                    ¡Tu vinculación en REPROCANN ya fue realizada! ✅ <br/><br/>
 
-                    <table border="0" cellpadding="8" cellspacing="0" width="100%" style="border-collapse: collapse; font-size: 15px;">
-                        <tr>
-                            <td><strong>Trámite:</strong></td>
-                            <td>{{ $datosTramite['tramite'] }}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Tipo:</strong></td>
-                            <td>{{ $datosTramite['tipo'] }}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Paciente:</strong></td>
-                            <td>{{ $datosTramite['paciente'] }}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Profesional:</strong></td>
-                            <td>{{ $datosTramite['profesional'] }}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Fecha de modificación:</strong></td>
-                            <td>{{ $datosTramite['fecha'] }}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Estado:</strong></td>
-                            <td>{{ $datosTramite['estado'] }}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Vigencia:</strong></td>
-                            <td>{{ $datosTramite['vigencia'] }}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Inicio:</strong></td>
-                            <td>{{ $datosTramite['inicio'] }}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Fin:</strong></td>
-                            <td>{{ $datosTramite['fin'] }}</td>
-                        </tr>
-                    </table>
+                    Para aceptarla, ingresá a tu cuenta desde el siguiente enlace y seguí las instrucciones del video: <br/><br/>
 
-                    <br/><br/>
+                    🔗 <a href="https://reprocann.msal.gob.ar" target="_blank">https://reprocann.msal.gob.ar</a> <br/>
+                    🎥 Tutorial: <a href="https://youtube.com/shorts/nIlEyJOZg80" target="_blank">https://youtube.com/shorts/nIlEyJOZg80</a> <br/><br/>
 
-                    En los siguientes enlaces podrá descargar su Declaración Jurada y Consentimiento Informado.<br/><br/>
+                    Una vez que tu solicitud sea aprobada, podrás <b>descargar e imprimir tu credencial</b> siguiendo este tutorial: <br/><br/>
+                    🎥 Tutorial para imprimir credencial: (agregar video) <a href="https://www.instagram.com/p/DE3DerixgQs/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank">https://www.instagram.com/p/DE3DerixgQs/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==</a> <br/><br/>
 
-                    <a href="https://v2.doconlineargentina.com/downloads/1/{{ $paciente->token }}" target="_blank">Declaración Jurada</a><br/>
-                    <a href="https://v2.doconlineargentina.com/downloads/2/{{ $paciente->token }}" target="_blank">Consentimiento</a><br/>
+                    <hr/><br/><br/>
 
-                    <br/><br/><br/><br/>
+                    Si sentís que el servicio fue satisfactorio, nos ayudaría mucho que compartas uno de nuestros reels o nos etiquetes en una historia en tus redes:<br/><br/>
+
+                    📱<a href="https://www.instagram.com/doconlineargentina" target="_blank">https://www.instagram.com/doconlineargentina</a><br/><br/>
+
+
+                    También podés dejarnos una reseña en Google, lo cual nos ayuda a seguir creciendo:<br/><br/>
+
+                    ⭐<a href="https://g.page/r/CSR-oenqN8Q5EBM/review" target="_blank"> https://g.page/r/CSR-oenqN8Q5EBM/review </a><br/><br/>
+
+                    <hr/><br/><br/>
+
+                    Muchas gracias por confiar en <b>Doc Online.</b><br/><br/>
+                    Saludos,<br/>
+                    <b>Dr. Joaquin A. Jozami</b><br/>
+                    Doc Online<br/>
+
+                    <br/>
                 </td>
             </tr>
 
