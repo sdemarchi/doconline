@@ -86,7 +86,11 @@
                             </button>
                         </td>
                         <td>{{$turno->hora}}</td>
-                       <td> <span class="badge bg-danger me-1"></span>No</td>
+                        @if ($turno->atendido)
+                            <td> <span class="badge bg-success me-1"></span>Si</td>
+                        @else
+                            <td> <span class="badge bg-danger me-1"></span>No</td>
+                        @endif
                     </tr>
                     @endforeach
                 </tbody>
