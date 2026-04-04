@@ -19,16 +19,6 @@
                 Amparo
             </a>
 
-            <a  class="ficha-button" href="{{ route('paciente.generar-amparo-doc', CifradoHelper::cifrar($pacienteId)) }}" target="_blank">
-                <img src="{{ asset('svg/despacho.svg') }}" alt="Imprimir">
-                Amparo (Word)
-            </a>
-
-            <a class="ficha-button" href="{{ route('paciente.consentimiento', CifradoHelper::cifrar($pacienteId)) }}" target="_blank">
-                <img src="{{ asset('svg/despacho.svg') }}" alt="Imprimir">
-                Consentimiento
-            </a>
-
             <a class="ficha-button" href="{{ route('paciente.declaracion', CifradoHelper::cifrar($pacienteId)) }}" target="_blank">
                 <img src="{{ asset('svg/despacho.svg') }}" alt="Imprimir">
                 Decl. Jurada
@@ -54,7 +44,6 @@
         </div>
 
         <div class="ficha-buttons-edit-delete">
-
             @if($pacienteId)
                 <button class="ficha-button ficha-delete-button" wire:click="$emit('triggerDeletePaciente')">
                     <img src="{{ asset('svg/white-delete.svg') }}" alt="Delete">
@@ -69,18 +58,53 @@
         </div>
     </div>
 
-    <div id="contenedor-mensaje-paciente">
-        <textarea
-                class="form-control"
-                wire:model="mensaje"
-                placeholder="Mensaje para el paciente"
-                style="flex:1; height:60px; margin-bottom:10px;">
-        </textarea>
+    <div id="ficha-contenedor-paneles">
+        <div id="panel-turnos">
+            @if($turnosPaciente && count($turnosPaciente) > 0)
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Turno</th>
+                        <th>Hora</th>
+                        <th>Atendido</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($turnosPaciente as $turno)
+                    <tr>
+                        <td>{{date_format(date_create($turno->fecha),"d/m/Y")}}
+                           <button wire:click="irCalendario({{ $turno->id }})
+                                   data-toggle="tooltip" data-placement="right" title="Ir al Calendario">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-event icon-calendario" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                        <rect x="4" y="5" width="16" height="16" rx="2"></rect>
+                                        <line x1="16" y1="3" x2="16" y2="7"></line>
+                                        <line x1="8" y1="3" x2="8" y2="7"></line>
+                                        <line x1="4" y1="11" x2="20" y2="11"></line>
+                                        <rect x="6" y="13" width="2" height="2"></rect>
+                                    </svg>
+                            </button>
+                        </td>
+                        <td>{{$turno->hora}}</td>
+                       <td> <span class="badge bg-danger me-1"></span>No</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            @else
+                <p>No hay turnos registrados para este paciente.</p>
+            @endif
+        </div>
 
-        <button class="ficha-button ficha-save-button" style="margin-bottom:10px" wire:click="enviarEmailPaciente">
-            <img height="18" style="margin-right:5px;"  src="{{ asset('svg/email-blanco.svg') }}" alt="Mail">
-            Enviar
-        </button>
+        <div id="panel-email">
+            <textarea class="form-control" wire:model="mensaje" placeholder="Mensaje para el paciente">
+            </textarea>
+
+            <button class="ficha-button ficha-save-button" wire:click="enviarEmailPaciente">
+                <img height="18" src="{{ asset('svg/email-blanco.svg') }}" alt="Mail">
+                Enviar
+            </button>
+        </div>
     </div>
 
 
@@ -153,8 +177,8 @@
                                 </span>
 
                                 @if($pago->comprobante)
-                                    <span style="min-width: fit-content">Comprobante:
-                                        <a href="{{ url('img/uploads/' . $pago->comprobante) }}" target="_blank" class="btn btn-primary" style="transform:translateY(-2px);width:fit-content;max-height:16px !important;padding:0px 3px !important;font-size:13px;margin-left:4px;margin-right:0;">ver</a>
+                                    <span style="min-width: fit-content; text-align:end">Comprobante:
+                                        <a href="{{ url('img/uploads/' . $pago->comprobante) }}" target="_blank" class="btn btn-primary" id="ficha-boton-ver">ver</a>
                                     </span>
                                 @else
                                     <span>Comprobante: No</span>
@@ -326,91 +350,6 @@
 
                 </div>
                 <!----------------->
-
-            <!--//////---------------------///////-->
-      @if($pacienteId)
-            <h2 class="ficha-subtitulo ficha-sub-in">Firma y aclaracion</h2>
-
-            <!--/////// firma y aclaracion ///////-->
-
-
-            <div class="ficha-row ficha-inputs-row">
-
-            <!------ COL ------->
-              @if(!$pacienteId && false)
-                <div class="col-md-6 mt-3" style:"overflow:hidden;">
-                  <div class="col-md-10">
-                    <label class="form-label">Firma *</label>
-                    <div id="firma"></div>
-                    <button class="btn btn-primary ms-auto" wire:click="$emit('limpiarFirma')">Limpiar</button>
-                    <button class="btn btn-success btn-icon" wire:click="$emit('guardarFirma')">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                        <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2"></path>
-                        <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
-                        <path d="M14 4l0 4l-6 0l0 -4"></path>
-                    </svg>
-                    </button>
-                  </div>
-                </div>
-                <!------------------>
-
-
-                <!------ COL ------->
-                <div class="col-md-6 mt-3" style:"overflow:hidden;">
-                    <div class="col-md-10">
-                        <label class="form-label">Aclaración *</label>
-                        <div id="aclaracion"></div>
-                        <button class="btn btn-primary ms-auto" wire:click="$emit('limpiarAclaracion')">Limpiar</button>
-                        <button class="btn btn-success btn-icon" wire:click="$emit('guardarAclaracion')">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2"></path>
-                                <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
-                                <path d="M14 4l0 4l-6 0l0 -4"></path>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-                <!------------------>
-
-
-                <!------ COLS IN ROW ------->
-                @else
-                    @if($firma)
-                        <div class="ficha-input-container">
-                            <label class="form-label pb-3">Firma *</label>
-                            <img class="ficha-firma" src="{{$firma}}" />
-                        </div>
-                    @endif
-                    @if($aclaracion)
-                        <div class="ficha-input-container">
-                            <label class="form-label pb-3">Aclaración *</label>
-                            <img class="ficha-firma" src="{{$aclaracion}}" />
-                        </div>
-                    @endif
-                @endif
-                <!------------------>
-
-                <!------ ROW ------->
-                <div class="col-md-6 mt-3" style='display:flex;align-items:flex-end;margin-bottom:20px'>
-                    @if($foto_firma_img)
-                        <img src="{{asset('img/uploads/' . $foto_firma_img)}}" width="250" /><br />
-                        <button class="btn btn-ghost-danger mt-3" wire:click="eliminarFotoFirma">Eliminar Foto</button>
-                    @endif
-                    <div class="col-md-10">
-                        <label class="form-label">Foto de la FIRMA y ACLARACION</label>
-                        <input type="file" wire:model="foto_firma" />
-                    </div>
-                </div>
-
-            <!------------------>
-
-            <!--/////// ----------------------- ///////-->
-
-            </div>
-            @endif
-
 
             <h2 class="ficha-subtitulo ficha-sub-in">¿Otra persona cultivará para el paciente</h2>
 

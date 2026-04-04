@@ -76,12 +76,6 @@
                                 <x-sort-icon :sortField="$celularSort" />
                             </th>
 
-                            <th>Foto Firma</th>
-
-                            <th style='text-align:center'>Firma</th>
-
-                            <th>Aclaración</th>
-
                             <th class="sorting" wire:click="sort('dni')">DNI
                                 <x-sort-icon :sortField="$dniSort" />
                             </th>
@@ -140,27 +134,6 @@
                             <td id="fecha-aprovacion" wire:click='abrirFicha({{$paciente->idpaciente}})'>@if($paciente->fe_aprobacion){{date_format(date_create($paciente->fe_aprobacion),"d/m/Y") }}@endif</td>
                             <td id="email" wire:click='abrirFicha({{$paciente->idpaciente}})'>{{ $paciente->email }}</td>
                             <td id="cel" wire:click='abrirFicha({{$paciente->idpaciente}})'>{{ $paciente->celular }}</td>
-
-
-                            <td id="foto-firma">
-                                @if($paciente->foto_firma)
-                                <img src="{{ asset("img/uploads/$paciente->foto_firma")}}" style='max-width:70px;max-height:20px;margin:0 10px;'/>
-                                @endif
-                            </td>
-
-
-                            <td id="firma">
-                                <button id="importar-firma" class="btn btn-ghost-light btn-icon" style="margin:0 !important;padding:0;" wire:click="convertirFirmaAclaracion({{ $paciente->idpaciente }})" data-toggle="tooltip" data-placement="right" title="Importar Firma y Aclaración">
-                                    <img src="{{ asset('svg/refresh.svg') }}" alt="refresh">
-                                </button>
-                                <a class="btn btn-ghost-light btn-icon" style="margin:0 !important;padding:0;" href="{{route('pacientes.editFirma',$paciente->idpaciente)}}" data-toggle="tooltip" data-placement="right" title="Editar Firma y Aclaración">
-                                    <img src="{{ asset('svg/edit.svg') }}" alt="edit">
-                                </a>
-                                <img src="{{ $paciente->firma_v2 }}" style='max-width:70px;max-height:20px;margin:0 10px;'/>
-                            </td>
-
-
-                            <td id="aclaracion"><img src="{{ $paciente->aclaracion_v2 }}"  style='max-width:70px;max-height:20px;margin:0 10px;'/></td>
                             <td id="dni" wire:click='abrirFicha({{$paciente->idpaciente}})'>{{ $paciente->dni }}</td>
                             <td id="provincia" wire:click='abrirFicha({{$paciente->idpaciente}})'>@if($paciente->provincia){{ $paciente->provincia->Provincia }}@endif</td>
                             <td id="cant-plantas" wire:click='abrirFicha({{$paciente->idpaciente}})'>{{ $paciente->cant_plantas }}</td>

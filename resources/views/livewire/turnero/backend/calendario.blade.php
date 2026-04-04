@@ -31,6 +31,12 @@
             height:120px;
         }
 
+        .dia-seleccionado {
+            border-color: #3b82f6 !important; /* azul */
+            color: white !important;
+            border-radius: 4px;
+        }
+
         .calendario-mensaje{
             width: 100%;
             text-align: center;
@@ -84,7 +90,10 @@
 
                 @foreach($calendario as $dia)
                     <?php $i++; ?>
-                    <button onClick="calendarioLoading()" class="item-calendario {{$dia['enmes']}} {{$dia['turnos']}}" wire:click="fechaSelect('{{ $dia['fecha']}}')"> {{ $dia['dia'] }}</button>
+                    <button
+                        onClick="calendarioLoading()"
+                        class="item-calendario {{$dia['enmes']}} {{$dia['turnos']}} {{ $fechaSeleccionada == $dia['fecha'] ? 'dia-seleccionado' : '' }}"
+                        wire:click="fechaSelect('{{ $dia['fecha']}}')"> {{ $dia['dia'] }}</button>
                     <?php if($i == 7){echo '<br/>';$i = 0;}?>
                 @endforeach
             </div>
@@ -105,11 +114,11 @@
                 <div  class="table-responsive turnos-table">
                     <table id="calendario-table" class="table table-vcenter card-table">
                         @if($fechaSeleccionada && count($turnos) == 0)
-                            <div class="calendario-mensaje">No hay turnos para la fecha seleccionada</div>
+                            <div id="calendario-mensaje"  class="calendario-mensaje">No hay turnos para la fecha seleccionada</div>
                         @endif
 
                         @if(!$fechaSeleccionada && count($turnos) == 0)
-                            <div class="calendario-mensaje mt-3">Selecciona un día en el calendario</div>
+                            <div id="calendario-mensaje" class="calendario-mensaje mt-3">Selecciona un día en el calendario</div>
                         @endif
 
                         @if(count($turnos) > 0)

@@ -205,7 +205,7 @@
 .ficha-pagado-body p{
     display:flex;
     flex-direction:row;
-    justify-content:space-between;
+    justify-content:space-evenly;
     font-size: 13px;
     margin:0;
     margin-top:12px;
@@ -213,6 +213,16 @@
 
 .ficha-pagado-body span{
    width: 100%;
+}
+
+#ficha-boton-ver{
+    transform:translateY(-2px);
+    width:30px;
+    max-height:16px !important;
+    font-size:13px;
+    margin-left:4px;
+    line-height: 0;
+    margin-right:0;
 }
 
 .ficha-pago{
@@ -320,19 +330,122 @@
 }
 
 
-#contenedor-mensaje-paciente{
-    width:100%;
+
+#ficha-contenedor-paneles{
+    display:flex;
+    flex-direction: row;
+    width: 100%;
+    flex-wrap: wrap;
+    padding: 0 12px;
+}
+
+#panel-turnos{
+    display: flex;
+    flex: 25;
+    overflow-y: scroll;
+    display: block;
+    overflow-x: hidden;
+    font-size: 12.5px;
+    max-height: 90px;
+}
+
+#panel-turnos h4{
+    font-size: 13px;
+    margin-bottom: 2px;
+}
+
+
+#panel-turnos *{
+    border: none !important;
+}
+
+#panel-turnos P{
+    color: rgba(255, 255, 255, 0.524);
+    font-size: 14px;
+    margin:0;
+}
+
+#panel-turnos td{
+    padding:0px 6px;
+    padding-top: 6px;
+    color: rgba(255, 255, 255, 0.653);
+}
+
+#panel-turnos td button,svg{
+    display: absolute;
+    padding:0px;
+    margin:0px;
+}
+
+#panel-turnos td button{
+    min-width: none;
+    background-color:transparent;
+    max-width: fit-content;
+}
+
+#panel-turnos td button:hover{
+    background-color:transparent;
+}
+
+#panel-turnos th{
+    color:#f0fbff7a !important;
+    padding:4px 6px;
+    height: 20px;
+    border-bottom: 1.5px solid #41506a90 !important;
+}
+
+#panel-turnos::-webkit-scrollbar {
+    width: 5px;
+}
+
+#panel-turnos::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#panel-turnos::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0);
+    border-radius: 4px;
+}
+
+.icon-calendario{
+    width: 17px !important;
+    height: 17px !important;
+    color:#ececec44;
+}
+
+#panel-email{
     display:flex;
     align-items:flex-end;
     flex-direction:row;
     flex-wrap:nowrap;
     gap:10px;
-    width: 97%;
+    max-height: 90px;
+    flex: 75;
+}
+
+#ficha-contenedor-paneles div{
     padding:10px 15px 0px 15px;
     border-radius: 8px;
     margin:auto;
     background-color: rgba(0, 0, 0, 0.135);
+    margin:5px;
 }
+
+#ficha-contenedor-paneles textarea{
+    flex:1;
+    height:70px;
+    margin-bottom:10px
+}
+
+#ficha-contenedor-paneles button{
+    margin-bottom:10px
+}
+
+
+#ficha-contenedor-paneles button img{
+    margin-right:5px
+}
+
 
 
 /* cuando la pantalla es chica: 1 columna */

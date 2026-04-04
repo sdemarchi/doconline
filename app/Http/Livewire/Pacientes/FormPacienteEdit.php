@@ -38,6 +38,7 @@ class FormPacienteEdit extends Component
     public $pacienteId, $patologias, $patologiaAgregar;
     public $_turno = ['hola'];
     public $turnoPaciente;
+    public $turnosPaciente;
     public $pago;
     public $cupon = 'No uso cupon';
     public $paginaSeleccionada = 1;
@@ -183,10 +184,13 @@ class FormPacienteEdit extends Component
         $_turno = Turno::where('paciente_id', $this->pacienteId)->first();
     }
 
-    public function getPago(){
+    public function getPagoYTurnos(){
         $this->turnoPaciente = TurnoPaciente::where('dni', $this->dni)->first();
 
         if($this->turnoPaciente){
+
+            $this->turnosPaciente = Turno::where('paciente_id', $this->turnoPaciente->id)->orderBy('fecha','DESC')->get();
+
             $this->pago = Pago::where('id_paciente', $this->turnoPaciente->id)
             ->latest('created_at')
             ->first(['*', DB::raw("DATE_FORMAT(created_at, '%d/%m/%Y') as fecha")]);
@@ -239,7 +243,6 @@ class FormPacienteEdit extends Component
             $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Cambios guardados"]);
         }
     }
-
 
     public function getCupon($paciente){
         if ($paciente) {
@@ -394,12 +397,18 @@ class FormPacienteEdit extends Component
             $this->conc_cbd = "5.00";
             $this->tratam_previo = "No medicado";
 
-
             $this->montarSeguimiento(null);
 
         }
     }
 
+    public function irCalendario($turnoId){
+        $turno = Turno::find($turnoId);
+        session(['mesActual' =>  date_format(date_create($turno->fecha),"n")]);
+        session(['anioActual' =>  date_format(date_create($turno->fecha),"Y")]);
+        session(['fechaActual' => $turno->fecha]);
+        return redirect(route('calendario'));
+    }
 
     private function montarSeguimiento($paciente){
        $this->ongs = Grow::obtenerOngs();
@@ -436,7 +445,6 @@ class FormPacienteEdit extends Component
         }
     }
 
-
     private function guardarSeguimiento($paciente){
         $datosSeguimiento = [
             'ong_id'              => $this->ong_seguimiento ?? null,
@@ -457,7 +465,6 @@ class FormPacienteEdit extends Component
             $datosSeguimiento
         );
     }
-
 
     public function generarHistoria(){
         $patologiasText = '';
@@ -531,7 +538,7 @@ class FormPacienteEdit extends Component
     }
 
     public function render(){
-        $this -> getPago();
+        $this -> getPagoYTurnos();
         $provincias = Provincia::orderBy('Provincia', 'ASC')->get();
         $dolencias = Dolencia::get();
         $modos_contacto = ModoContacto::get();
@@ -548,26 +555,6 @@ class FormPacienteEdit extends Component
 
     public function refresh(){
         //$this->dispatchBrowserEvent('refresh');
-    }
-
-    public function setFirma($firma){
-        $this->firma = $firma;
-    }
-
-    public function setAclaracion($aclaracion){
-        $this->aclaracion = $aclaracion;
-    }
-
-    public function guardarFirma($firma){
-        $this->firma = $firma;
-        Paciente::find($this->pacienteId)->update(['firma_v2' => $this->firma]);
-        $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Se guardó la firma"]);
-    }
-
-    public function guardarAclaracion($aclaracion){
-        $this->aclaracion = $aclaracion;
-        Paciente::find($this->pacienteId)->update(['aclaracion_v2' => $this->aclaracion]);
-        $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Se guardó la aclaracion"]);
     }
 
     public function update(){
@@ -655,35 +642,6 @@ class FormPacienteEdit extends Component
 
     }
 
-    public function updatedFotoFirma(){
-        $this->_actualizarFotoFirma();
-        $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Se subió la foto"]);
-    }
-
-    private function _actualizarFotoFirma(){
-        $fileName = 'firma_'.date_format(Carbon::now(),'Y-m-d_hiu') .'.png';
-        $storagePath = storage_path('app/assets/img/uploads/');
-        $path = public_path('img/uploads/');
-
-        $this->foto_firma->storeAs('assets/img/uploads', $fileName);
-        rename($storagePath . $fileName, $path . $fileName);
-
-        $this->foto_firma_img = $fileName;
-
-        if($this->pacienteId){ //Si está editando, actualiza el registro directamente
-            Paciente::find($this->pacienteId)->update(['foto_firma' => $this->foto_firma_img]);
-        }
-    }
-
-    public function eliminarFotoFirma(){
-        $path = public_path('img/uploads/');
-        if(file_exists($path . $this->foto_firma_img)) unlink($path . $this->foto_firma_img);
-        $this->foto_firma_img = '';
-        if($this->pacienteId){
-            Paciente::find($this->pacienteId)->update(['foto_firma' => '']);
-        }
-        $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Se eliminó la foto"]);
-    }
 
     public function switchDolencia($id,$dolencia){
         $val = strval($id);
@@ -833,7 +791,7 @@ class FormPacienteEdit extends Component
         }
     }
 
-        public function enviarAvisoVinculacion(){
+    public function enviarAvisoVinculacion(){
         $paciente = Paciente::find($this->pacienteId);
         if(!$paciente->token){
             $token = bin2hex(random_bytes(16));
@@ -864,7 +822,6 @@ class FormPacienteEdit extends Component
             $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => "Email enviado al paciente."]);
         }
     }
-
 
     public function emailSolicitarCodVinc(){
            $paciente = Paciente::find($this->pacienteId);

@@ -31,22 +31,26 @@ class Calendario extends Component
     public $dias = array("Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado");
 
     public function mount(){
-
         $this->prestadorId = 1;
-        if(session('mesActual')){
+
+        $hoy = Carbon::now();
+
+        if (session('mesActual') && session('anioActual')) {
             $this->mesActual = session('mesActual');
             $this->anioActual = session('anioActual');
         } else {
-            $this->mesActual = Carbon::now()->addDays(3)->format('n');
-            $this->anioActual = Carbon::now()->addDays(3)->format('Y');
+            $this->mesActual = $hoy->format('n');
+            $this->anioActual = $hoy->format('Y');
         }
-        if(session('fechaActual')){
+
+        if (session('fechaActual') && session('fechaActual') != '') {
             $this->fechaSeleccionada = session('fechaActual');
-            if($this->fechaSeleccionada <> '') $this->fechaSelect($this->fechaSeleccionada);
         } else {
-            $this->fechaSeleccionada = '';
-            $this->fechaSelFormateada = '';
+            $this->fechaSeleccionada = $hoy->toDateString();
         }
+
+        $this->fechaSelFormateada = Carbon::parse($this->fechaSeleccionada)->format('d/m/Y');
+        $this->fechaSelect($this->fechaSeleccionada);
     }
 
     public function render(){
@@ -62,8 +66,8 @@ class Calendario extends Component
             $this->fechaSeleccionada = session('fechaActual');
             if($this->fechaSeleccionada <> '') $this->fechaSelect($this->fechaSeleccionada);
         } else {
-            $this->fechaSeleccionada = '';
-            $this->fechaSelFormateada = '';
+            $this->fechaSeleccionada = Carbon::now()->toDateString();
+            $this->fechaSelFormateada = Carbon::now()->format('d/m/Y');
         }
         $this->mesTexto = $this->meses[$this->mesActual-1];
         $this->_armarCalendario();
