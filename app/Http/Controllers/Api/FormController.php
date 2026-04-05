@@ -103,8 +103,6 @@ class formController extends Controller
         $part3b = $request->input('part3b');
         $tut1 = $request->input('tut1');
         $tut2 = $request->input('tut2');
-        $firma = array_key_exists('firma',$request->input()) ? $request->input('firma') : '';
-        $aclaracion = array_key_exists('aclarac',$request->input()) ? $request->input('aclarac') : '';
 
         $ocupacion = Ocupacion::find($part2['ocupacion_id'])->ocupacion;
 
@@ -126,8 +124,6 @@ class formController extends Controller
             'celular' => $part1['celular'],
             'osocial' => $part2['osocial'],
             'comentario' => $part2['comentario'],
-            'firma_v2' => $firma,
-            'aclaracion_v2' => $aclaracion,
             'arritmia' => $part3['arritmia'],
             'salud_mental' => $part3['salud_mental'],
             'salud_ment_esp' => $part3['salud_ment_esp'],
@@ -158,8 +154,10 @@ class formController extends Controller
                 'tut_osocial' => $tut2['tut_osocial'],
                 'tut_osocial' => $tut2['tut_osocial'],
             ];
+
             $data = array_merge($dataPaciente, $dataTutor);
-        } else {
+
+            } else {
             $data = $dataPaciente;
         }
 
