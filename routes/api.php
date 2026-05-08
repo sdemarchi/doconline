@@ -99,8 +99,13 @@ Route::get('/pagos/ultimo-regalado/{user_id}', [PagoController::class, 'ultimoRe
 Route::get('/pagos/buscar-por-codigo/{codigo}', [PagoController::class, 'buscarPorCodigo']);
 
 
+Route::post('/user/enviar-verificacion-email',[userController::class, 'enviarVerificacionEmail']);
+
+Route::post('/user/validar-email',[userController::class, 'validarEmail']);
+
 Route::get('/enviar-recordatorio-turnos', function () {
-    Artisan::call('turnos:recordatorio');
+
+Artisan::call('turnos:recordatorio');
 
     $output = Artisan::output();
 

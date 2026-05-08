@@ -13,7 +13,7 @@ class TurnoPaciente extends Model
     protected $table = "turn_pacientes";
 
     protected $fillable = ['dni','fecha_nac','nombre','telefono','direccion','email','es_gmail','temp_turno',
-                            'username','password','grow'];
+                            'username','password','grow','email_verificado'];
 
     public function ultimo_turno(){
         $turno = Turno::where('paciente_id',$this->id)
@@ -54,4 +54,8 @@ class TurnoPaciente extends Model
         return $query->latest()->first();
     }
 
+    public function emailVerificado(): bool
+{
+    return (bool) $this->email_verificado;
+}
 }
