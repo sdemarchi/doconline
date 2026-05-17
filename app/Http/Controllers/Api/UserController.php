@@ -264,18 +264,18 @@ public function loginUsername(Request $request){
 	public function register(Request $request){
 		$data = [
 			'email' => $request->input('email'),
-			'username' => $request->input('username'),
 			'nombre' => $request->input('nombre'),
 			'fecha_nac' => Carbon::createFromFormat('d-m-Y',str_replace('/','-',$request->input('fecha_nac'))),
 			'dni' => $request->input('dni'),
-			'domicilio' => $request->input('domicilio'),
 			'telefono' => $request->input('telefono'),
 			'password' => Hash::make($request->input('password')),
             'grow'=>$request->input('grow'),
 		];
 
-
+        $data['username'] = trim($data['dni']);  // El campo username se eliminó del registro, por eso se le asigna el dni como username para evitar errores en el resto de la aplicación
 		$user = TurnoPaciente::where('dni',$data['dni'])->first();
+
+
 
 		if($user){
 			$error = [
@@ -333,7 +333,7 @@ public function loginUsername(Request $request){
 			'domicilio' => $request->input('domicilio'),
 			'telefono' => $request->input('telefono'),
 			'password' => '',
-            'grow'=>$request->input('grow'),
+            'grow' => $request->input('grow'),
 		];
 
 

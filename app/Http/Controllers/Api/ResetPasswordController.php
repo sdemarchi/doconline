@@ -11,31 +11,57 @@ use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 
-
 class ResetPasswordController extends Controller
 {
     public function enviarMail(Request $request)
     {
-        $email = $request->input('email');
-        $paciente = TurnoPaciente::where('email', $email)->first();
-        $token = Str::random(40);
-        $url = 'https://doconlineargentina.com/turnero/restablecer-password/'.$token;
+        $dni = $request->input('dni');
+
+        $paciente = TurnoPaciente::where('dni', $dni)->first();
+
         if ($paciente) {
+
+            $token = Str::random(40);
+
+            $url = 'https://doconlineargentina.com/turnero/restablecer-password/' . $token;
+
             $data = [
                 'username' => $paciente->username,
-                'nombre' => $paciente->nombre,
-                'email' => $paciente->email,
-                'token' => $token,
-                'url'=> $url
+                'nombre'   => $paciente->nombre,
+                'email'    => $paciente->email,
+                'token'    => $token,
+                'url'      => $url
             ];
 
-            $repassToken = RepassToken::create($data);
+            RepassToken::create($data);
 
-            Mail::to($paciente->email)->send(new ResetPasswordMail($data));
+            Mail::to($paciente->email)
+                ->send(new ResetPasswordMail($data));
 
-            return response()->json('Ok', 200, [], JSON_UNESCAPED_SLASHES);
+            $email = $paciente->email;
+            [$usuario, $dominio] = explode('@', $email);
+            $usuarioCensurado = substr($usuario, 0, 2) . str_repeat('*', max(strlen($usuario) - 2, 0));
+            $emailCensurado = $usuarioCensurado . '@' . $dominio;
+
+            return response()->json(
+                [
+                    'message' => 'Ok',
+                    'email' => $emailCensurado
+                ],
+                200,
+                [],
+                JSON_UNESCAPED_SLASHES
+            );
         }
+
+        return response()->json(
+            'No existe un paciente con ese DNI',
+            404,
+            [],
+            JSON_UNESCAPED_SLASHES
+        );
     }
+
 
     public function restablecer(Request $request)
     {

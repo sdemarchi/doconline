@@ -34,15 +34,14 @@
         display: inline-block;
         padding: 10px 20px;
         font-size: 16px;
-        color: #fff;
-        text-decoration: none;
-        background-color: #007bff;
+        background-color: #1da1f2;
         border-radius: 5px;
         text-decoration: none;
+        cursor: pointer;
       }
 
       .button:hover {
-        background-color: #0056b3;
+        background-color: #229eeb;
       }
     </style>
   </head>
@@ -55,7 +54,25 @@
         el botón a continuación para restablecerla:
       </p>
 
-      <a href={{$data['url']}} class="button">Restablecer Contraseña</a>
+      <a href={{$data['url']}}
+      class="button"
+      style="
+            background:#1da1f2;
+            border-radius:6px;
+            color:#ffffff;
+            display:block;
+            font-family:Arial, sans-serif;
+            font-size:16px;
+            font-weight:bold;
+            text-decoration:none;
+            text-align:center;
+            padding:10px 30px;
+            width:100%;
+            max-width:320px;
+            box-sizing:border-box;
+    ">
+    Restablecer Contraseña
+    </a>
 
       <p>
         Si no has solicitado un restablecimiento de contraseña, puedes ignorar

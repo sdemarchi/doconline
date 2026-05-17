@@ -9,10 +9,10 @@ use App\Http\Controllers\Api\CalendarioController;
 use App\Http\Controllers\Api\FormController;
 use App\Http\Controllers\Api\GrowController;
 use App\Http\Controllers\Api\ResetPasswordController;
+use App\Http\Controllers\Api\LoginDniController;
 use App\Http\Controllers\Api\PagoController;
 use App\Http\Controllers\PrintController;
 use Illuminate\Support\Facades\Artisan;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -98,11 +98,18 @@ Route::get('/pagos/buscar-por-email/{email}', [PagoController::class, 'buscarPor
 Route::get('/pagos/ultimo-regalado/{user_id}', [PagoController::class, 'ultimoRegalado']);
 Route::get('/pagos/buscar-por-codigo/{codigo}', [PagoController::class, 'buscarPorCodigo']);
 
+Route::post(
+    '/user/login-dni',
+    [LoginDniController::class, 'enviarMail']
+);
+
+Route::post(
+    '/user/login-token',
+    [LoginDniController::class, 'loginConToken']
+);
 
 Route::post('/user/enviar-verificacion-email',[userController::class, 'enviarVerificacionEmail']);
-
 Route::post('/user/validar-email',[userController::class, 'validarEmail']);
-
 Route::get('/enviar-recordatorio-turnos', function () {
 
 Artisan::call('turnos:recordatorio');
