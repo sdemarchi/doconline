@@ -135,6 +135,7 @@ class Calendario extends Component
                     <thead>
                     <th style="background-color:white;color:black;">'.$this->fechaSelFormateada.'</th>
                         <tr>
+                        <th style="background-color:#a4c2f4;color:black;">Id Paciente</th>
                         <th style="background-color:#a4c2f4;color:black;">Patologias</th>
                         <th style="background-color:#a4c2f4;color:black;">Pago</th>
                         <th style="background-color:#a4c2f4;color:black;">Hora</th>
@@ -169,7 +170,7 @@ class Calendario extends Component
                 $pago = 'Si';
                };
             }
-
+            $html .='<td style="background-color:#e9effc;color:black;text-align:left;">'.htmlspecialchars((string)$turno['fichaId']).'</td>';
             $html .='<td style="background-color:#e9effc;color:black;text-align:left;">'.htmlspecialchars($patologias).'</td>';
             $html .='<td style="background-color:#e9effc;color:black;text-align:left;">'.htmlspecialchars($pago).'</td>';
             $html .='<td style="background-color:#e9effc;color:black;text-align:left;">'.htmlspecialchars((string)$turno['hora']) .'</td>';

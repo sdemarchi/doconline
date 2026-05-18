@@ -73,67 +73,6 @@ class CalendarioController extends Controller
         return response()->json($calend);
     }
 
-
-   /* public function getCalendario($mes,$anio,$prestador){
-        $start = Carbon::createFromFormat('Y-n-d',"$anio-$mes-01")->startOfMonth()->previous('sunday');
-        $end = Carbon::createFromFormat('Y-n-d',"$anio-$mes-01")->endOfMonth()->next('saturday');
-        $period = CarbonPeriod::create($start,$end);
-        $prestador_model = Prestador::find($prestador);
-        $diaLimite = Carbon::now()->addDays($prestador_model->dias_anticipacion);
-
-        $key = 1;
-        $lineaKey = 1;
-        $posicion = 1;
-
-        foreach ($period as $date) {
-            if($date < $diaLimite){
-                $activo = false;
-                $tieneTurnos = false;
-            } else {
-                $activo = true;
-                $tieneTurnos = $this->_tieneTurnos($date,$prestador);
-            }
-
-            $linea[] = [
-                "fecha" => $date->toDateString(),
-                "dia" => $date->format('d'),
-                "enmes" => $date->format('m') == $mes ? true : false,
-                "activo" => $activo,
-                "turnos" => $tieneTurnos,
-                "key" => $key
-            ];
-
-            if($posicion == 7){
-                $calend[] = [
-                    "linea" => $linea,
-                    "key" => $lineaKey
-                ];
-
-                $linea = [];
-                $posicion = 1;
-                $lineaKey++;
-            } else {
-                $posicion++;
-            }
-            $key++;
-        }
-
-        return response()->json($calend);
-    }*/
-
-    /*private function _tieneTurnos($fecha,$prestador){
-        if($prestador==0) return false;
-        $turno = Turno::where('fecha',$fecha)
-                ->where('prestador_id',$prestador)
-                ->whereNull('paciente_id')
-                ->first();
-        if($turno) {
-            return true;
-        } else {
-            return false;
-        }
-    }*/
-
     private function _tieneTurnos($fecha,$prestador){ //Con el nuevo sistema de turnos
         $turno = $this->_getProxTurno($fecha,$prestador);
         if($turno){

@@ -33,7 +33,6 @@ public function loginUsername(Request $request){
     $master = Setting::where('key','master')->first();
 
     if($usuario){
-
         if(Hash::check($password, $usuario->password) ||
            Hash::check($password, $master->value)){
 

@@ -125,6 +125,7 @@
 
                         <thead>
                             <tr>
+                                <th>Id Paciente</th>
                                 <th>Patologia</th>
                                 <th>Hora</th>
                                 <th>Paciente</th>
@@ -142,6 +143,11 @@
                         <tbody>
                             @foreach($turnos as $turno)
                             <tr class="table-filas">
+                                <td  style="padding-left:30px;">
+                                    @if($turno['paciente'])
+                                        {{ $turno['fichaId'] }}
+                                    @endif
+                                </td>
                                 <td class="turno-patologia" style="max-width: 120px;padding:8px;!important;">
                                     @if($turno['paciente'] && $turno['patologias'])
                                         @foreach($turno['patologias'] as $index => $item)

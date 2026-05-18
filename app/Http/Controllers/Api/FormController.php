@@ -18,38 +18,73 @@ use App\Mail\EmailSolicitudCodVinculacion;
 class formController extends Controller
 {
     public function guardarFormulario(Request $request){
+
         $part1 = $request->input('part1');
 
-        $resp = $this->_checkEmail($part1['email']);
-        $resp = $this->_checkDni($part1['dni']);
-        if($resp != ""){
-            $error = [
-                'code' => 1,
-                'message' => $resp
-            ];
-            return response()->json($error);
+        $paciente = Paciente::where('dni', $part1['dni'])->first();
+
+        // Si existe, validar solo email si cambió
+        if($paciente){
+
+            if($part1['email'] <> $paciente->email){
+                $resp = $this->_checkEmail($part1['email']);
+
+                if($resp != ""){
+                    return response()->json([
+                        'code' => 1,
+                        'message' => $resp
+                    ]);
+                }
+            }
+
+        } else {
+
+            // Si no existe, validar email y dni normalmente
+            $resp = $this->_checkEmail($part1['email']);
+
+            if($resp == ""){
+                $resp = $this->_checkDni($part1['dni']);
+            }
+
+            if($resp != ""){
+                return response()->json([
+                    'code' => 1,
+                    'message' => $resp
+                ]);
+            }
         }
 
         $data = $this->_get_data($request);
-        $paciente = Paciente::create($data);
 
-        // Si no completo el código de vinculación le envio un email automaticamente.
-        if(empty($data['cod_vincu'])) {
-            $mailTo = $paciente->email;
-            Mail::to($mailTo)->send(new EmailSolicitudCodVinculacion($paciente));
+        if($paciente){
+            $paciente->update($data);
+
+            $idpaciente = $paciente->idpaciente;
+
+        } else {
+
+            $paciente = Paciente::create($data);
+
+            $idpaciente = $paciente->idpaciente;
         }
 
-        $patologias = $this->_get_patologias_data($paciente->idpaciente, $request);
+        if(empty($data['cod_vincu'])) {
+            Mail::to($paciente->email)
+                ->send(new EmailSolicitudCodVinculacion($paciente));
+        }
+
+        PacientePatologia::where('idpaciente', $idpaciente)->delete();
+
+        $patologias = $this->_get_patologias_data($idpaciente, $request);
+
         foreach($patologias as $pat){
             PacientePatologia::create($pat);
         }
 
-        $error = [
-			'code' => 0,
-			'message' => ''
-		];
-
-        return response()->json($error);
+        return response()->json([
+            'code' => 0,
+            'message' => ''
+        ]);
     }
 
     public function actualizarFormulario($id, Request $request){
@@ -116,13 +151,11 @@ class formController extends Controller
             'fe_nacim' => Carbon::createFromFormat('d-m-Y',str_replace('/','-',$part1['fe_nacim'])),
             'cod_vincu' => $part1['cod_vincu'],
             'edad' => $part1['edad'],
-            'domicilio' => $part2['domicilio'],
             'localidad' => $part2['localidad'],
             'idprovincia' => $part2['idprovincia'],
             'cp' => $part2['cp'],
             'ocupacion' => $ocupacion == "Otra" ? $part2['ocupacion'] : $ocupacion,
             'celular' => $part1['celular'],
-            'osocial' => $part2['osocial'],
             'comentario' => $part2['comentario'],
             'arritmia' => $part3['arritmia'],
             'salud_mental' => $part3['salud_mental'],
