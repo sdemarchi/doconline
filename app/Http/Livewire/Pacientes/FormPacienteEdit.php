@@ -76,7 +76,6 @@ class FormPacienteEdit extends Component
         'fe_nacim' => 'required',
         'cod_vincu' => '',
         'edad' => 'required|numeric',
-        'domicilio' => 'required',
         'localidad' => 'required',
         'idprovincia' => 'required',
         'cp' => 'required',

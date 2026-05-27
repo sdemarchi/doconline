@@ -291,7 +291,7 @@
                 <div class="ficha-row ficha-inputs-row">
 
                     <div class="ficha-input-container">
-                        <label class="form-label">Domicilio *</label>
+                        <label class="form-label">Domicilio</label>
                         <input type="text" class="form-control" wire:model.defer="domicilio">
                         @error('domicilio')<div class="text-danger">{{ $message }}</div>@enderror
                     </div>
