@@ -117,10 +117,6 @@
     <div class="ficha-pestañas">
         <button wire:click="cambiarPestana(1)" class="{{$pestPacClass}}">Datos del paciente</button>
 
-        @if($es_menor)
-            <button wire:click="cambiarPestana(2)" class="{{$pestTutorClass}}">Padre Madre Tutor</button>
-        @endif
-
         @if($pacienteId)
             <button wire:click="cambiarPestana(3)" class="{{$pestPatClass}}">Patologias</button>
         @endif
@@ -355,20 +351,6 @@
                 </div>
                 <!----------------->
 
-            <h2 class="ficha-subtitulo ficha-sub-in">¿Otra persona cultivará para el paciente</h2>
-
-            </div>
-                <label class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" wire:model.defer="es_menor" value="1"
-                    wire:click="refresh()"><span class="form-check-label">Sí</span>
-                </label>
-                <label class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" wire:model.defer="es_menor" value="0"
-                    wire:click="refresh()"><span class="form-check-label">No</span>
-                </label>
-            <div>
-
-
 
             <!--/////// otros ///////-->
 
@@ -383,7 +365,7 @@
                     </div>
 
                     <div class="ficha-input-container">
-                        <label class="form-label">Obra Social *</label>
+                        <label class="form-label">Obra Social</label>
                         <input type="text" class="form-control" wire:model.defer="osocial">
                         @error('osocial')<div class="text-danger">{{ $message }}</div>@enderror
                     </div>
@@ -443,136 +425,7 @@
       </div>
       @endIf
 
-      <!--
-      /////////////////////////////////////////////////
-      //------------- PADRE MADRE TUTOR -------------//
-      /////////////////////////////////////////////////
-      -->
 
-      @if($es_menor && $paginaSeleccionada == 2)
-      <div  style='border:none !important;' class="accordion-item theme-dark ficha-page">
-        <span></span>
-        <h2 class="ficha-subtitulo">
-            Datos del Padre / Madre / Tutor o Encargado
-        </h2>
-
-        <div id="collapse-2" class="accordion-collapse collapse show" data-bs-parent="#acc-datos-tutor">
-          <div class="accordion-body pt-0">
-            <div class="row">
-
-              <div class="col-md-6 mt-3">
-                <div class="col-md-8">
-                  <label class="form-label">Apellido y Nombre *</label>
-                  <input type="text" class="form-control" wire:model.defer="tut_apeynom">
-                  @error('tut_apeynom')<div class="text-danger">{{ $message }}</div>@enderror
-                </div>
-              </div>
-              <div class="col-md-6 mt-3">
-                <div class="col-md-6">
-                  <label class="form-label">Tipo y N° Documento *</label>
-                  <input type="text" class="form-control" wire:model.defer="tut_tipo_nro_doc">
-                  @error('tut_tipo_nro_doc')<div class="text-danger">{{ $message }}</div>@enderror
-                </div>
-              </div>
-
-              <div class="col-md-6 mt-3">
-                <div class="col-md-8">
-                  <label class="form-label">Fecha Nacimiento *</label>
-                  <input class="form-control" type="date" wire:model.defer="tut_fe_nacim" style="width:150px">
-                  @error('tut_fe_nacim')<div class="text-danger">{{ $message }}</div>@enderror
-                </div>
-              </div>
-              <div class="col-md-6 mt-3">
-                <div class="col-md-8">
-                  <label class="form-label">Domicilio</label>
-                  <input type="text" class="form-control" wire:model.defer="tut_domicilio">
-                  @error('tut_domicilio')<div class="text-danger">{{ $message }}</div>@enderror
-                </div>
-              </div>
-
-              <div class="col-md-6 mt-3">
-                <div class="col-md-8">
-                  <label class="form-label">Localidad *</label>
-                  <input type="text" class="form-control" wire:model.defer="tut_localidad">
-                  @error('tut_localidad')<div class="text-danger">{{ $message }}</div>@enderror
-                </div>
-              </div>
-              <div class="col-md-6 mt-3">
-                <div class="col-md-8">
-                  <label class="form-label">Provincia *</label>
-                  <select class="form-select" wire:model.defer="tut_idprovincia">
-                    <option value="0">Seleccione Provincia</option>
-                    @foreach($provincias as $pcia)
-                    <option value="{{ $pcia->Id }}">{{ $pcia->Provincia }}</option>
-                    @endforeach
-                  </select>
-                </div>
-              </div>
-
-              <div class="col-md-6 mt-3">
-                <div class="col-md-4">
-                  <label class="form-label">Código Postal *</label>
-                  <input type="text" class="form-control" wire:model.defer="tut_cp">
-                  @error('tut_cp')<div class="text-danger">{{ $message }}</div>@enderror
-                </div>
-              </div>
-              <div class="col-md-6 mt-3">
-                <div class="col-md-8">
-                  <label class="form-label">Vínculo con la persona que requiere la inscripción *</label>
-                  <input type="text" class="form-control" wire:model.defer="tut_vinculo">
-                  @error('tut_vinculo')<div class="text-danger">{{ $message }}</div>@enderror
-                </div>
-              </div>
-
-              <div class="col-md-6 mt-3">
-                <div class="col-md-4">
-                  <label class="form-label">Teléfono Particular</label>
-                  <input type="text" class="form-control" wire:model.defer="tut_tel_part">
-                  @error('tut_tel_part')<div class="text-danger">{{ $message }}</div>@enderror
-                </div>
-              </div>
-              <div class="col-md-6 mt-3">
-                <div class="col-md-4">
-                  <label class="form-label">Teléfono Celular *</label>
-                  <input type="text" class="form-control" wire:model.defer="tut_tel_cel">
-                  @error('tut_tel_cel')<div class="text-danger">{{ $message }}</div>@enderror
-                </div>
-              </div>
-
-              <div class="col-md-6 mt-3">
-                <div class="col-md-6">
-                  <label class="form-label">Correo Electrónico *</label>
-                  <input type="text" class="form-control" wire:model.defer="tut_mail">
-                  @error('tut_mail')<div class="text-danger">{{ $message }}</div>@enderror
-                </div>
-              </div>
-              <div class="col-md-6 mt-3">
-                <div class="col-md-6">
-                  <label class="form-label">Obra Social *</label>
-                  <input type="text" class="form-control" wire:model.defer="tut_osocial">
-                  @error('tut_osocial')<div class="text-danger">{{ $message }}</div>@enderror
-                </div>
-              </div>
-
-              <div class="col-md-6 mt-3">
-                <div class="col-lg-10 col-md-8">
-                  <label class="form-label">¿Registro de Familiares?</label>
-                  <label class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" wire:model="tut_reg_fam" value="1">
-                    <span class="form-check-label">Sí</span>
-                  </label>
-                  <label class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" wire:model="tut_reg_fam" value="0">
-                    <span class="form-check-label">No</span>
-                  </label>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div>
-      </div>
-      @endif
 
       <!--
       /////////////////////////////////////////////////
@@ -1185,11 +1038,6 @@
       });
       document.addEventListener('DOMContentLoaded', function () {
             @this.on('guardar', ()  => {
-              //e.preventDefault();
-              let firmaData =  $('#firma').jSignature('getData', 'default');
-              let aclaracData =  $('#aclaracion').jSignature('getData', 'default');
-              @this.call('setFirma',firmaData);
-              @this.call('setAclaracion',aclaracData);
               @this.call('update');
             });
         });

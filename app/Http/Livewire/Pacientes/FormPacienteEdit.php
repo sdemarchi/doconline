@@ -58,7 +58,7 @@ class FormPacienteEdit extends Component
             $edad, $domicilio, $localidad, $idprovincia, $cp, $ocupacion, $celular, $osocial,
             $comentario, $foto_firma, $foto_firma_img, $firma, $aclaracion, $arritmia, $salud_mental,
             $salud_ment_esp, $alergia, $embarazada, $maneja_maq, $dolores = [], $doloresNombres = [], $patologia, $idcontacto,
-            $contacto_otro, $es_menor, $tut_apeynom, $tut_tipo_nro_doc, $tut_fe_nacim,
+            $contacto_otro, $tut_apeynom, $tut_tipo_nro_doc, $tut_fe_nacim,
             $tut_domicilio, $tut_localidad, $tut_idprovincia, $tut_cp, $tut_vinculo, $tut_tel_part,
             $tut_tel_cel, $tut_mail, $tut_osocial, $tut_reg_fam,
             $res_historia, $beneficios, $justificacion, $diagnostico, $tratamiento, $cant_plantas,
@@ -81,7 +81,6 @@ class FormPacienteEdit extends Component
         'cp' => 'required',
         'ocupacion' => '',
         'celular' => 'required',
-        'osocial' => '',
         'comentario' => '',
         'arritmia' => '',
         'salud_mental' => '',
@@ -91,7 +90,6 @@ class FormPacienteEdit extends Component
         'maneja_maq' => '',
         'patologia' => '',
         'contacto_otro' => '',
-        'es_menor' => '',
         'tut_apeynom' => '',
         'tut_tipo_nro_doc' => '',
         'tut_fe_nacim' => '',
@@ -300,7 +298,6 @@ class FormPacienteEdit extends Component
             $this->patologia = $paciente->patologia;
             $this->idcontacto = $paciente->idcontacto;
             $this->contacto_otro = $paciente->contacto_otro;
-            $this->es_menor = $paciente->es_menor;
             $this->tut_apeynom = $paciente->tut_apeynom;
             $this->tut_tipo_nro_doc = $paciente->tut_tipo_nro_doc;
             $this->tut_fe_nacim = $paciente->tut_fe_nacim;
@@ -589,7 +586,6 @@ class FormPacienteEdit extends Component
             'patologia' =>  $this->patologia,
             'idcontacto' => $this->idcontacto,
             'contacto_otro' => $this->contacto_otro,
-            'es_menor' =>  $this->es_menor,
             'tut_apeynom' =>  $this->tut_apeynom,
             'tut_tipo_nro_doc' =>  $this->tut_tipo_nro_doc,
             'tut_fe_nacim' =>  $this->tut_fe_nacim,
